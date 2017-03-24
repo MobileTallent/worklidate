@@ -1,0 +1,135 @@
+
+
+<ion-view view-title="Project Details" class="gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+           <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+        <div class="header-btn" ng-click="share();"><i class="ion-android-share-alt"></i> </div>
+    </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader no-bottom" overflow-scroll="true">
+    <div class="list card" ng-init="p_user=(project.userid | getUser)" ng-if="project.userid">
+        <div class="item projectdetails">
+          <div class="project-unlike" ng-if="(project.likes | checkPresent : loggedUserId) != true" ><i class="likeview" ng-click="showLikers(project.likes)">{{getObjectLength(project.likes)}}</i><i ng-click="like(project.userid);"  class="material-icons">favorite_border</i> </div>
+                    <div class="project-like" ng-if="(project.likes | checkPresent : loggedUserId) == true">  <i class="likeview" ng-click="showLikers(project.likes)">{{getObjectLength(project.likes)}}</i><i ng-click="unlike(project.userid);" class="material-icons">favorite</i></div>
+
+
+            <div class="projectby" ng-if="p_user"> {{ 'by' | translate }} <span ng-if="loggedUserId" ng-click="gotouserDetails(project.userid)" >{{p_user.name}}</span> <span ng-if="!loggedUserId"  >{{p_user.name}}</span><br>on {{project.publishAt | date : 'MMM dd,yyyy'}}</div>
+            <div class="item item-body project-body">
+          <div ng-repeat="image in project.images">
+            <div class="projectdetails-img" ng-if="image.type=='image'">
+              <img ng-src="{{image.data}}"    />
+            </div>
+            <p ng-if="image.type=='text'" ng-bind-html="image.data"></p>
+          </div>
+          </div><!-- end of item item-body project-body div -->
+
+              <h1 class="padding disable-word-ellipses" on-hold="moreoptions('projecttitle-'+projectid,project.projectTitle)" id="projecttitle-{{projectid}}">{{project.projectTitle}}</h1>
+              <!--<div class="card-sub-tag"><i ng-repeat="category in project.categories">{{category.name}}, </i></div>-->
+              <div  class="padding project-description" on-hold="moreoptions('description-'+projectid,project.description)" id="description-{{projectid}}">
+                {{project.description}}
+              </div><!-- end of project-description div -->
+              <!-- <div class="down-part">
+                    <div class="card-view"><img src="img/eye.png"/> {{getObjectLength(project.views)}}</div>
+                    <div class="card-like" ng-if="(project.likes | checkPresent : loggedUserId) != true" ><img ng-click="like(project.userid);" src="img/like.png"/> <i class="likeview" ng-click="showLikers(project.likes)">{{getObjectLength(project.likes)}}</i></div>
+                    <div class="card-like" ng-if="(project.likes | checkPresent : loggedUserId) == true"><img  ng-click="unlike(project.userid);" src="img/icon_2.png"/> <i class="likeview" ng-click="showLikers(project.likes)">{{getObjectLength(project.likes)}}</i></div>
+                     <div class="card-like"><i class="icon ion-chatboxes" style="color: #111;font-size: 14px;"></i> {{getObjectLength(project.comments)}}</div>
+              </div>--><!-- end of down-part div -->
+          </div><!-- end of item projectdetails div -->
+          <!--Related Projects -->
+    <div class="relatedproject" ng-if="relatedprojects.length>0">
+        <div class="title">{{ 'Similar Projects' | translate }}</div>
+          <div class="custom-card" ng-repeat="p in relatedprojects track by $index " ng-init="project=(p.project_id | getProject);">
+               <div class="custom-card-image" style="background: transparent;" ng-click="gotoprojectDetails(p.project_id)"  ng-if="project.coverPicture && project.coverPicture.type=='image'"><img ng-src="{{project.coverPicture.data}}"/></div>
+              
+               <div class="custom-card-image textdata" ng-click="gotoprojectDetails(p.project_id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'" ng-bind-html="project.coverPicture.data"></div>
+              
+          </div><!-- end of custom-card div -->
+    </div><!--End relatedproject -->
+    <div class="comments-count">
+      {{ 'Comments' | translate }} : {{getObjectLength(project.comments)}}
+    </div>
+    <div class="comment-message-input" ng-if="$root.loggedUserId">
+      <textarea ng-model="data.message" placeholder="write a comment here"></textarea>
+      <div class="chatsend" ng-click="send();"><i class="material-icons md-48">keyboard_arrow_right</i></div>
+  </div><!-- end of chat-message-input div -->
+          <div ng-repeat="comment in project.comments" ng-init="user=(comment.userid | getUser)" class="comment">
+                  <div class="user-pic-comment" ng-if="loggedUserId" ng-click="gotouserDetails(comment.userid)">
+                   <img ng-if="!user.picture" src="img/user.png"  />
+                  <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+                  </div>
+                  <div class="user-pic-comment" ng-if="!loggedUserId">
+                   <img ng-if="!user.picture" src="img/user.png"  />
+                  <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+                  </div>
+                <div>{{user.name}}</div>
+                <div on-hold="moreoptions('comment-'+$index+'-'+projectid,project.description)" id="comment-{{$index}}-{{projectid}}">{{comment.comment}}</div>
+                <div class="date">{{comment.publishAt | date:'dd-MM-yyyy' }}</div>
+
+
+          </div><!-- end of comment div -->
+    </div>
+
+    
+  </ion-content><!-- end of ion-content div -->
+  
+
+        <script id="share.html" type="text/ng-template">
+        <ion-modal-view class="gradient-red">
+         
+          <ion-content>
+              <i class="material-icons popupheader">share</i>
+              <button class="button button-clear ion-close popupclose" ng-click="modal.hide()"></button>
+            <ion-list style="float: left; width: 100%;">
+            <div class="w100">
+            <div class="socialw50">
+                <a socialshare socialshare-provider="facebook" socialshare-type="feed" socialshare-text="{{project.projectTitle}}"  socialshare-url="{{currentURL}}" socialshare-via="1590017174646118" socialshare-display="popup" socialshare-description="{{project.description}}" socialshare-media="{{project.images[0].data}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <i class="fa fa-facebook-square socialicon"  aria-hidden="true"></i> </a>
+            </div> 
+             <div class="socialw50">
+                <a  socialshare socialshare-provider="twitter" socialshare-text="{{project.projectTitle}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-description="{{project.description}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <i class="fa fa-twitter-square socialicon" aria-hidden="true"></i> </a>
+               </div>
+              <div class="socialw50">
+                <a  socialshare socialshare-provider="google" socialshare-text="{{project.projectTitle}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-description="{{project.description}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"><i class="fa fa-google-plus-square socialicon" aria-hidden="true"></i></i> </a>
+              </div>
+              <!--<ion-item>
+                <a socialshare socialshare-provider="linkedin" socialshare-text="{{project.projectTitle}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-description="{{project.description}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"> Linkedin </a>
+              </ion-item>-->
+             
+             <div class="socialw50">
+                <a  socialshare socialshare-provider="whatsapp" socialshare-text="{{project.projectTitle}} :- {{project.description}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()" > <i class="fa fa-whatsapp socialicon" aria-hidden="true"></i> </a>
+               </div>
+                <div class="socialw50">
+                <a socialshare socialshare-provider="skype" socialshare-text="{{project.projectTitle}} :- {{project.description}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <i class="fa fa-skype socialicon" aria-hidden="true"></i> </a>
+               </div>
+                <div class="socialw50">
+                <a socialshare socialshare-provider="email" socialshare-subject="{{project.projectTitle}}" socialshare-body="{{project.description}}"  socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <i class="fa fa-envelope socialicon" aria-hidden="true"></i> </a>
+              </div>
+               <div class="socialw50">
+
+                <a socialshare socialshare-provider="pinterest" socialshare-text="{{project.projectTitle}} :- {{project.description}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}"  socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <i class="fa fa-pinterest-square socialicon" aria-hidden="true"></i> </a>
+               </div>
+              <div class="socialw50">
+                <a socialshare socialshare-provider="facebook-messenger" socialshare-text="{{project.projectTitle}} :- {{project.description}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()">   <i class="fa fa-weixin socialicon" aria-hidden="true"></i> </a>
+               </div>
+             <!--<div class="socialw50">
+                <a  socialshare socialshare-provider="lineapp" socialshare-text="{{project.projectTitle}} :- {{project.description}}"  socialshare-media="{{project.images[0].data}}" socialshare-url="{{currentURL}}" socialshare-source="www.worklidate.com" ng-click="modal.hide()"> <img src="img/line.png" style="width: 55px;height: 55px;"> </a>
+              </div>-->
+             
+             <div class="socialw50">
+         
+              <img src="img/sharelink.png" style="width: 44px;margin: 6px;" clipboard supported="supported" text="currentURL" on-copied="success()" on-error="fail(err)" />
+               </div>
+             
+              
+
+             </div>
+            </ion-list>
+
+          </ion-content>
+        </ion-modal-view>
+      </script>
+</ion-view><!-- end of ion-view div -->

@@ -1,0 +1,47 @@
+
+<ion-view view-title="My group" class="group-page gradient-red" hide-back-button="true" >
+   <div class="header-bar">
+      <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="back();" />
+      </div>--><!-- end of backbtn div -->
+      <div class="menubtn" ng-click="popover.show($event)">
+        <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+      </div>
+      <div class="title"> {{ 'Groups' | translate }}</div>
+  </div><!-- end of header-bar div -->
+
+ <ion-content has-bouncing="false" class="hasheader-nofooter" overflow-scroll="true">
+
+      <div class="groups-container">
+            
+              <div>
+                  <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" id="myInput_1" placeholder="{{ 'Search' | translate }}" ng-model="search.groupsearch">
+                  </label>
+             </div><!-- end of  div -->
+              <div class="group-card" ng-repeat="u in searched_result" ng-if="search.groupsearch || search.groupsearch.length>0" ng-init="user=(u.userid | getUser); invitedata=(u.userid | checkInvites:groupId);">
+                    <div class="groups_info" >
+                       <div class="left_box" ng-if="user.image">
+                          <img ng-if="!user.picture" src="img/user.png"  />
+                          <img ng-if="user.picture" ng-src="{{user.picture}}"  />
+                       </div><!-- end of left_box div -->
+
+                       <div class="right_box">
+                            <h2 >{{user.name}}</h2>
+                            <p >{{user.location}}<br> <i ng-repeat="cat in user.profession">{{cat.name}}</i><br>
+                            </p>
+                            <p >{{user.description}}
+                            </p>
+                            <button class="join-btn"  ng-if="(typeof(invitedata.$value))!='undefined'" ng-click="inviteMember(u.userid)" > {{ 'Invite' | translate }}</button>
+                            <a href="#/app/profileview/{{u.userid}}"><button class="join-btn" >  {{ 'View Profile' | translate }}</button></a>
+                       </div>  <!--end of div right box here-->
+
+                    </div>  <!-- end of div group info here -->
+
+            </div> <!-- end of div group-card here -->
+          <div ng-if="!searched_result && search.groupsearch.length>0 && displayNotFound" class="error">{{ 'No group found.' | translate }}</div>
+      </div><!-- end of group-container div -->
+ </ion-content><!-- end of ion-content div -->
+
+</ion-view><!-- end of ion-view div -->

@@ -1,0 +1,34 @@
+
+<ion-view view-title="Work organizer" class="gradient-red">
+    <div class="header-bar">
+          <!--<div class="backbtn">
+              <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+          </div>--><!-- end of  backbtn div -->
+         <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+          <div class="title"></div>
+    </div><!-- end of  header-bar div -->
+    <ion-content class="hasheader hasbottom" overflow-scroll="true">
+     <div class="talent_tpl_row" ng-repeat="jobs in userOpenJobs" style="margin-top:10px;">
+                    <div class="telent-tab-details" ng-init="invitedata=(jobs.invites | checkPresent:uid);">
+                    
+                      <div>{{ 'Title' | translate }} : {{jobs.title}}</div>                
+                      <div>{{ 'Description' | translate }} : <div ng-bind-html="jobs.description"></div></div> 
+                      <div>{{ 'Budget' | translate }} : {{jobs.currency}} {{jobs.budget}}</div>
+                      <div>{{ 'Job posted' | translate }} :{{convertToDate(jobs.publishAt) | date : 'MMM dd,yyyy'}}</div>  
+                      <div ng-if="!invitedata">
+                          <button class="button button-small button-calm" ng-click="inviteTalent(jobs)">
+                            {{ 'Invite for this job' | translate }}
+                          </button>
+                      </div>
+                      <div ng-if="invitedata" style="color:red;">
+                          <button class="button button-small button-assertive">
+                            {{ 'Invitation sent.' | translate }}
+                          </button>
+                      </div>
+                   </div>
+                   
+                </div>
+    </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of ion-view div -->

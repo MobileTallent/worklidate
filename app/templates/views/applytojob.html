@@ -1,0 +1,164 @@
+
+<ion-view view-title="Apply For Job" class="gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of  backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)">
+        <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+        <div class="title"></div>
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom end-contract-page" overflow-scroll="true" id="scroll-content-applyjob" >
+    <div ng-if="job" style="padding:10px;">
+  <!--   <p class="proposal-quastion" ng-if="$root.user_projects.length>0">{{'Your most relevant project for this job proposal' | translate}}</p> -->
+     <select class="select" ng-change="showProject(jobproposal.mostRelevantProject)"  ng-model="jobproposal.mostRelevantProject" ng-if="$root.user_projects.length>0">
+          <option value="">{{'Your most relevant project for this job proposal' | translate}}</option>
+          <option ng-repeat="project in $root.user_projects" value="{{project.id}}">{{project.projectTitle}}</option>
+          <option  value="0">{{'No related project to show' | translate}}</option>
+           
+     </select>
+      <div class="custom-card" ng-if="jobproposal.mostRelevantProject && jobproposal.mostRelevantProject !=0">
+  
+               <div class="custom-card-image" ng-click="gotoprojectDetails(jobproposal.mostRelevantProject)"  ng-if="project.coverPicture && project.coverPicture.type=='image'"><img ng-src="{{project.coverPicture.data}}"></div>
+              
+               <div class="custom-card-image textdata" ng-click="gotoprojectDetails(jobproposal.mostRelevantProject)"  ng-if="project.coverPicture && project.coverPicture.type=='text'" ng-bind-html="project.coverPicture.data"></div>
+
+                <div class="details" ng-if="project.userid" ng-init="user=(project.userid | getUser)" style="background-color: rgba(204, 204, 204, 0.66);">
+                     
+                      <div class="user-details">
+                                <div class="user-heading">
+                                          <h5 ng-click="gotoprojectDetails(jobproposal.mostRelevantProject)">{{project.projectTitle}}</h5>
+                                          <div> {{ 'by' | translate }} <span ng-click="gotouserDetails(project.userid)" ng-if="loggedUserId">{{user.name}}</span> <span  ng-if="!loggedUserId">{{user.name}}</span> on {{project.publishAt | date : 'MMM dd,yyyy'}}</div>
+                                         
+                                </div><!-- end of user-heading div -->
+                                <div class="user-action">
+                                             <div class="up-part" ng-if="project.type">
+                                                    <div class="card-tag" >{{project.type}}</div>
+                                                    <div class="card-star">
+                                                       <i class="icon ion-android-star-outline"></i>
+                                                    </div><!-- end of card-star div -->
+                                             </div><!-- end of up-part div -->
+                                            
+                                </div><!-- end of user-action div -->
+                      </div><!-- end of user-details div -->
+                </div><!-- end of details div -->
+          </div><!-- end of custom-card div -->
+
+     
+<div style="float:left;width:100%;margin-top: 10px;margin-bottom: 10px;min-height: 100px;">
+
+            <div class="bgwhite placeholder-grey" tabindex="-1" text-angular ng-model="jobproposal.description" placeholder="{{'Your Proposal' | translate}}"></div>
+           </div>
+
+    
+    <div class="proposal-quastion" ng-repeat="(id,screeningQuestions) in job.screeningQuestions track by $index">
+
+      <div class="jobproposal-quastion" ng-init="jobproposal.screeningQuestions[id]=screeningQuestions">{{screeningQuestions}}</div>
+      <div style="color:red;">{{jobproposal.screeningQuestionsAnswerError[id]}}</div>
+
+     <div style="float:left;width:100%;margin-top: 10px;margin-bottom: 10px;min-height: 100px;">
+            <div text-angular ng-model="jobproposal.screeningQuestionsAnswer[id]" placeholder="{{'Write your answer here...' | translate}}"></div>
+           </div>
+    </div>
+      <div class="milestone-details"><div class="m-title">{{"Milestones" | translate}}</div>
+      <div class="m-budget">{{"Employer budget" | translate}}</div>
+      <div class="bidval"> {{job.currency}} {{job.budget}}</div>
+      <div style="float: left;width: 100%;">
+        <div><b>{{"Your Bid" | translate}}</b></div>
+          <i>{{"This is the amount your employer will see" | translate}}</i> 
+          <div ng-init="jobproposal.budget=job.budget" >
+            <input class="bgwhite placeholder-grey" style="padding-left: 5px;;float: left;font-size: 20px;margin: 0px;height: 40px;padding-bottom: 5px; width: 75%;margin-top:10px;" type="text" name="budgetedit" ng-model="jobproposal.budget" ng-change="reCalculateMilestone(jobproposal.budget)" only-digits/>
+            <i class="bgwhite" style="margin-top:10px;float:left;font-size: 20px;margin-left: 5%;width: 20%;height: 40px;line-height: 40px;text-align: center;">{{job.currency}}</i>
+          </div>
+          <div ng-if="jobproposal.budget" style="float: left; width: 100%; margin-top: 20px;   margin-bottom: 20px;  font-size: 17px;">{{"You will Receive" | translate}}  {{job.currency}} {{(jobproposal.budget*85)/100}}</div>
+        </div>
+      </div>
+        
+        <div style="width: 100%; text-align: center;" ng-click="addNewMilestone()" ng-if="milestones_percentage<jobproposal.budget">
+            <a class="milestonelink">{{"CREATE NEW MILESTONE" | translate}}</a>
+        </div>
+       
+
+      
+     
+      <div class="newMilestone">
+      <!--<div class="placeholder">
+            <datepicker date-format="dd-MM-yyyy">
+                            <input  type="text" ng-model="newMilestoneData.deliveryTime" placeholder="Delivery Time " />
+                          </datepicker>
+            </div>-->
+             <select class="select" ng-model="newMilestoneData.deliveryTime" ng-init="newMilestoneData.deliveryTime='DeliveryTime'">
+            <option value="DeliveryTime">{{"Delivery Time" | translate}}</option>
+            <option value="1 day">1 {{"day" | translate}}</option>
+            <option value="2 days">2 {{"days" | translate}}</option>
+            <option value="3 days">3 {{"days" | translate}}</option>
+            <option value="4 days">4 {{"days" | translate}}</option>
+            <option value="5 days">5 {{"days" | translate}}</option>
+            <option value="6 days">6 {{"days" | translate}}</option>
+            <option value="7 days">7 {{"days" | translate}}</option>
+            <option value="8 days">8 {{"days" | translate}}</option>
+            <option value="9 days">9 {{"days" | translate}}</option>
+            <option value="10 days">10 {{"days" | translate}}</option>
+            <option value="11 days">11 {{"days" | translate}}</option>
+            <option value="12 days">12 {{"days" | translate}}</option>
+            <option value="13 days">13 {{"days" | translate}}</option>
+            <option value="14 days">14 {{"days" | translate}}</option>
+            <option value="15 days">15 {{"days" | translate}}</option>
+            <option value="16 days">16 {{"days" | translate}}</option>
+            <option value="17 days">17 {{"days" | translate}}</option>
+            <option value="18 days">18 {{"days" | translate}}</option>
+            <option value="19 days">19 {{"days" | translate}}</option>
+            <option value="20 days">20 {{"days" | translate}}</option>
+            <option value="21 days">21 {{"days" | translate}}</option>
+            <option value="22 days">22 {{"days" | translate}}</option>
+            <option value="23 days">23 {{"days" | translate}}</option>
+            <option value="24 days">24 {{"days" | translate}}</option>
+            <option value="25 days">25 {{"days" | translate}}</option>
+            <option value="26 days">26 {{"days" | translate}}</option>
+            <option value="27 days">27 {{"days" | translate}}</option>
+            <option value="28 days">28 {{"days" | translate}}</option>
+            <option value="29 days">29 {{"days" | translate}}</option>
+            <option value="30 days">30 {{"days" | translate}}</option>
+       </select>
+
+       <input type="text" class="placeholder-grey" placeholder="{{ 'Milestone Title' | translate }}" ng-model="newMilestoneData.title" maxlength="30" />
+         
+      <input type="tel" class="placeholder-grey" placeholder="{{ 'Milestone budget' | translate }}" ng-model="newMilestoneData.budget" only-digits  />
+      <p style="margin-left:10px;" ng-if="newMilestoneData.budget>0">Progress :{{((newMilestoneData.budget*100)/jobproposal.budget) | number:2}}% </p>
+        <textarea class="milestone-textarea placeholder-grey" placeholder="{{ 'Milestone details' | translate }}" ng-model="newMilestoneData.details"></textarea>
+        <div class="create-milestone-btn" ng-click="createMilestone()">
+          {{"Create" | translate}}
+        </div>
+        <div class="cancel-milestone-btn" ng-click="cancelMilestone()">
+          {{"Cancel" | translate}}
+        </div>
+      </div>
+     <div class="jobs-toggle"  id="milestone-{{$index}}" ng-repeat="milestone in milestones">
+              <div class="heading-tabs" ng-click="toggleTabs('milestone-'+$index)">
+                  <div class="title"> {{milestone.title | limitTo:20}}    <i ng-if="milestone.progress<=100" style="float:right;font-size: 12px;">{{job.currency}} {{milestone.budget}} ({{milestone.progress | number:2}}%)</i>
+                  <i ng-if="milestone.progress>100" style="color:red;">{{"Invalid" | translate}}</i>
+                  </div>
+                  
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content">
+                <div style="padding:20px;">
+                  <p>{{milestone.details}}</p>
+                  <p>{{"Progress" | translate}} :  {{milestone.progress | number:2}}%</p>
+                  <p>{{"Budget" | translate}} :  {{job.currency}} {{milestone.budget}}</p>
+                  <p>{{"Delivery Time" | translate}} :  {{milestone.deliveryTime}}</p>
+                </div>
+                <div class="milestone-delete-btn" ng-click="deleteMilestone($index);">{{"Delete" | translate}}</div>
+              </div><!-- end of toggle-content div -->
+
+        </div><!-- end of jobs-toggle div -->
+</div>
+</div>
+    </ion-content><!-- end of ion-content  div -->
+     <div style="width: 100%;text-align: center;bottom: 10px;position: absolute;color: #fff;"  ng-click="submitProposal();" ng-if="$root.userdata.availableForHiring">
+            <i class="material-icons milestonebtn">send</i>
+        </div>
+
+     
+</ion-view><!-- end of ion-view div -->

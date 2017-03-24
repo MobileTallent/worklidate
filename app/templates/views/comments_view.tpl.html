@@ -1,0 +1,227 @@
+<!-- this is linked in my profile bottom tabs 'Comment' option-->
+<!-- this is linked in my profile bottom tabs 'Comment' option-->
+
+<div class="profile-comment profile-tabs-content" ng-if="$root.viewUser" ng-init="asTalentfeedback=$root.viewUser.asTalentfeedback;asEmployerfeedback=$root.viewUser.asEmployerfeedback">
+	<div class="profile-comments-summery">
+		
+		
+		<div class="all-reviews-select" ng-init="comment.showreviews='all';showRatings(comment.showreviews,asTalentfeedback,asEmployerfeedback);" >
+			<select ng-model="comment.showreviews" ng-change="showRatings(comment.showreviews,asTalentfeedback,asEmployerfeedback);">
+				<option value="all">{{"All Reviews" | translate}} ({{getObjectLength(asTalentfeedback) + getObjectLength(asEmployerfeedback) }})</option>
+				<option value="from_employer">{{"Reviews from employer" | translate}} ({{getObjectLength(asTalentfeedback)}})</option>
+				<option value="from_talents">{{"Reviews from talents" | translate}} ({{getObjectLength(asEmployerfeedback) }})</option>
+			</select>
+		</div><!-- end of  all-reviews-select div -->
+		<!--<div ng-if="comment.show==false" style="float:left;width:100%;text-align:center;font-size:15px;margin-top:10px;margin-bottom:10px;">
+			{{"No reviews" | translate}}
+		</div>-->
+		
+		<div class="profile-comment-rating" ng-if="comment.show">
+			<div class="profile-comment-rating-outer">
+				<i class="material-icons" ng-if="(attitude/totalRatings)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(attitude/totalRatings)<5 && (attitude/totalRatings)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(attitude/totalRatings)<4 && (attitude/totalRatings)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(attitude/totalRatings)<3 && (attitude/totalRatings)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(attitude/totalRatings)<2 && (attitude/totalRatings)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Attitude" | translate}}</div>
+			</div>
+			<div class="profile-comment-rating-outer">
+				<i class="material-icons" ng-if="(understanding/totalRatings)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(understanding/totalRatings)<5 && (understanding/totalRatings)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(understanding/totalRatings)<4 && (understanding/totalRatings)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(understanding/totalRatings)<3 && (understanding/totalRatings)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(understanding/totalRatings)<2 && (understanding/totalRatings)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Understanding" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+				<i class="material-icons" ng-if="(communication/totalRatings)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(communication/totalRatings)<5 && (communication/totalRatings)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(communication/totalRatings)<4 && (communication/totalRatings)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(communication/totalRatings)<3 && (communication/totalRatings)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(communication/totalRatings)<2 && (communication/totalRatings)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Communication" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+				<i class="material-icons" ng-if="(payment/totalRatings)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(payment/totalRatings)<5 && (payment/totalRatings)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(payment/totalRatings)<4 && (payment/totalRatings)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(payment/totalRatings)<3 && (payment/totalRatings)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(payment/totalRatings)<2 && (payment/totalRatings)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Payment" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+				<i class="material-icons" ng-if="(responsibility/totalRatings)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(responsibility/totalRatings)<5 && (responsibility/totalRatings)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(responsibility/totalRatings)<4 && (responsibility/totalRatings)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(responsibility/totalRatings)<3 && (responsibility/totalRatings)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(responsibility/totalRatings)<2 && (responsibility/totalRatings)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Responsibility" | translate}}</div>	
+			</div>
+
+			
+		</div><!-- end of  progressbars div -->
+</div><!-- end of profile-comment-summery div -->
+
+	<div class="jobs-toggle"  id="comment-1-{{userid}}">
+			<div class="heading-tabs green" ng-click="toggleTabs('comment-1-{{userid}}')">
+					<div class="title"> <div><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">lightbulb_outline</i></div>{{"Completed Jobs" | translate}}</div>
+					<div class="total-count">{{getObjectLength(asTalentfeedback)}}</div>
+					<img class="arrow" src="img/down_arrow.png" />
+			</div><!-- end of  heading-tabs div -->
+			<div class="toggle-content">
+					
+					<div ng-repeat="contract in telentEndContracts" ng-if="contract.feedbackbyEmployer" ng-init="job=(contract.jobid | getJob)"  class="comment_summery">
+				<div  >
+							<div class="comment_summery-project-title">{{job.title}}</div>
+							<div class="comment_summery-project-date">{{convertToDate(job.publishAt) | date : 'MMM dd,yyyy'}}</div>
+							<p class="comment_summery-project-description"  ng-bind-html="job.description">
+							
+							</p>
+				</div><!-- end of project_summery div -->
+				
+				<div class="project-comment" ng-init="employer=(contract.employer_id | getUser)">
+						<div class="employer-detials">
+						<img ng-if="!employer.picture" src="img/user.png"  />
+                   		<img ng-if="employer.picture" ng-src="{{employer.picture}}"   />
+
+						<span> {{employer.name}} (Employer)</span></div>
+					<div class="profile-comment-rating">
+			<div class="profile-comment-rating-outer">
+		
+				<i class="material-icons" ng-if="(contract.feedbackbyEmployer.attitude)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.attitude)<5 && (contract.feedbackbyEmployer.attitude)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.attitude)<4 && (contract.feedbackbyEmployer.attitude)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.attitude)<3 && (contract.feedbackbyEmployer.attitude)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.attitude)<2 && (contract.feedbackbyEmployer.attitude)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Attitude" | translate}}</div>
+			
+			</div>
+			<div class="profile-comment-rating-outer">
+			
+					<i class="material-icons" ng-if="(contract.feedbackbyEmployer.understanding)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.understanding)<5 && (contract.feedbackbyEmployer.understanding)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.understanding)<4 && (contract.feedbackbyEmployer.understanding)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.understanding)<3 && (contract.feedbackbyEmployer.understanding)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.understanding)<2 && (contract.feedbackbyEmployer.understanding)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Understanding" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+			
+				<i class="material-icons" ng-if="(contract.feedbackbyEmployer.communication)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.communication)<5 && (contract.feedbackbyEmployer.communication)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.communication)<4 && (contract.feedbackbyEmployer.communication)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.communication)<3 && (contract.feedbackbyEmployer.communication)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.communication)<2 && (contract.feedbackbyEmployer.communication)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Communication" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+		
+					<i class="material-icons" ng-if="(contract.feedbackbyEmployer.payment)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.payment)<5 && (contract.feedbackbyEmployer.payment)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.payment)<4 && (contract.feedbackbyEmployer.payment)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.payment)<3 && (contract.feedbackbyEmployer.payment)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.payment)<2 && (contract.feedbackbyEmployer.payment)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Payment" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+					<i class="material-icons" ng-if="(contract.feedbackbyEmployer.responsibility)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.responsibility)<5 && (contract.feedbackbyEmployer.responsibility)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.responsibility)<4 && (contract.feedbackbyEmployer.responsibility)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.responsibility)<3 && (contract.feedbackbyEmployer.responsibility)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyEmployer.responsibility)<2 && (contract.feedbackbyEmployer.responsibility)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Responsibility" | translate}}</div>	
+			</div>
+
+			
+		</div><!-- end of  progressbars div -->
+						<p class="comment_summery-project-description"  ng-bind-html="contract.feedbackbyEmployer.feedback">
+							
+							</p>
+				</div><!-- end of project-comment div -->
+			</div><!-- end of  div -->
+				</div><!-- end of toggle-content div -->
+	</div><!-- end of jobs-toggle div -->
+	<div class="jobs-toggle" id="comment-2-{{userid}}">
+			<div class="heading-tabs blue" ng-click="toggleTabs('comment-2-{{userid}}')">
+					<div class="title"><div><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">perm_identity</i></div>{{"Funded Jobs" | translate}}</div>
+					<div class="total-count">{{getObjectLength(asEmployerfeedback)}}</div>
+					<img class="arrow" src="img/down_arrow.png">
+			</div><!-- end of heading-tabs div -->
+		<div class="toggle-content">
+			
+			<div ng-repeat="contract in employerEndContracts" class="comment_summery" ng-init="job=(contract.jobid | getJob)" ng-if="contract.feedbackbyTalent">
+				<div  >
+							<div class="comment_summery-project-title">{{job.title}}
+								
+							</div>
+							<div class="comment_summery-project-date">{{convertToDate(job.publishAt) | date : 'MMM dd,yyyy'}}</div>
+							<p class="comment_summery-project-description" ng-bind-html="job.description">
+							
+							</p>
+				</div><!-- end of project_summery div -->
+				
+				<div class="project-comment" ng-init="talent=(contract.talent_id | getUser)">
+						<div class="employer-detials">
+						<img ng-if="!talent.picture" src="img/user.png"  />
+                   		<img ng-if="talent.picture" ng-src="{{talent.picture}}"   />
+
+						<span> {{talent.name}} (Talent)</span></div>
+						<div class="profile-comment-rating">
+			<div class="profile-comment-rating-outer">
+	
+				<i class="material-icons" ng-if="(contract.feedbackbyTalent.attitude)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.attitude)<5 && (contract.feedbackbyTalent.attitude)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.attitude)<4 && (contract.feedbackbyTalent.attitude)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.attitude)<3 && (contract.feedbackbyTalent.attitude)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.attitude)<2 && (contract.feedbackbyTalent.attitude)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Attitude" | translate}}</div>
+			
+			</div>
+			<div class="profile-comment-rating-outer">
+			
+					<i class="material-icons" ng-if="(contract.feedbackbyTalent.understanding)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.understanding)<5 && (contract.feedbackbyTalent.understanding)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.understanding)<4 && (contract.feedbackbyTalent.understanding)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.understanding)<3 && (contract.feedbackbyTalent.understanding)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.understanding)<2 && (contract.feedbackbyTalent.understanding)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Understanding" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+		
+				<i class="material-icons" ng-if="(contract.feedbackbyTalent.communication)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.communication)<5 && (contract.feedbackbyTalent.communication)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.communication)<4 && (contract.feedbackbyTalent.communication)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.communication)<3 && (contract.feedbackbyTalent.communication)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.communication)<2 && (contract.feedbackbyTalent.communication)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Communication" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+		
+					<i class="material-icons" ng-if="(contract.feedbackbyTalent.payment)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.payment)<5 && (contract.feedbackbyTalent.payment)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.payment)<4 && (contract.feedbackbyTalent.payment)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.payment)<3 && (contract.feedbackbyTalent.payment)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.payment)<2 && (contract.feedbackbyTalent.payment)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Payment" | translate}}</div>	
+			</div>
+			<div class="profile-comment-rating-outer">
+		
+					<i class="material-icons" ng-if="(contract.feedbackbyTalent.responsibility)==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.responsibility)<5 && (contract.feedbackbyTalent.responsibility)>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.responsibility)<4 && (contract.feedbackbyTalent.responsibility)>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.responsibility)<3 && (contract.feedbackbyTalent.responsibility)>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="(contract.feedbackbyTalent.responsibility)<2 && (contract.feedbackbyTalent.responsibility)>=0">sentiment_very_dissatisfied</i>
+                 <div class="profile-comment-rating-text">{{"Responsibility" | translate}}</div>	
+			</div>
+
+			
+		</div><!-- end of  progressbars div -->
+						<p class="comment_summery-project-description" ng-bind-html="contract.feedbackbyTalent.feedback">
+							
+							</p>
+				</div><!-- end of project-comment div -->
+			</div><!-- end of  div -->
+		</div><!-- end of toggle-content div -->
+</div><!-- end of jobs-toggle div -->
+</div><!-- end profile-comment -->
+

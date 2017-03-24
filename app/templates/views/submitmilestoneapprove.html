@@ -1,0 +1,255 @@
+
+<ion-view view-title="Milestone" ng-init="m=[]" class="gradient-red">
+    <div class="header-bar shadow">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of  backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+      
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader-nofooter submit-milestone" overflow-scroll="true">
+    <div ng-if="!showpage" style="font-size: 20px;text-align: center;margin-top: 30px;">Please wait...</div>
+    <div ng-init="job=(contract.jobid | getJob);talent=(contract.talent_id | getUser)" ng-if="contract && showpage">
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Talent' | translate }} :</b>
+       <img ng-if="!talent.picture" src="img/user.png"  class="profile-pic-milestone"/>
+        <img ng-if="talent.picture" ng-src="{{talent.picture}}"  class="profile-pic-milestone" />
+        <div class="milestone-approve-talent-name">{{talent.name}}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Milestone' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{milestone.title}}</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Milestone Information' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{milestone.details}}</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Deadline' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{milestone.deliveryTime}}</div>
+      </div>
+    </div>
+   
+   <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Amount' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{job.currency}} {{(milestone.progress*contract.budget)/100}}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Progress' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{milestone.progress|number:2}}%</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Message' | translate }} :</b>
+        <div class="milestone-approve-talent-name">{{milestone.message}}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Attchamnets' | translate }} :</b>
+        <div class="milestone-approve-talent-name"><a style="width:100%;float:left;" target="_blank" href="{{attach.data}}" ng-repeat="attach in milestone.attachments">{{attach.name}}</a></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title"><input type="checkbox" name="bonus" ng-model="addabonus"> {{'Add a bonus' | translate }} :</b>
+        <div ng-if="addabonus"><div style="float: left;margin-top: 6px;">{{job.currency}}</div><input style="width: 60%;border: 1px solid lightgray; padding-left: 5px;" type="text" name="amount" ng-model="m.bonusamount" placeholder="Bonus Amount" only-digits></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">{{'Approval' | translate }} :</b>
+        <div class="milestone-approve-talent-name"> 
+        <input type="radio" ng-model="m.milestoneaction" class="milestone-approve-check" name="milestoneaction" value="approve" checked> 
+      <div class="milestone-approve-option-name">{{'Approve' | translate }}</div><div class="milestone-approve-option-info">{{'The milestone was completed successfully' | translate }}</div></div>
+
+       <div class="milestone-approve-talent-name"> <input class="milestone-approve-check" type="radio"  ng-model="m.milestoneaction" name="milestoneaction" value="changesrequired">
+     <div  class="milestone-approve-option-name">{{'Request Changes' | translate }}</div><div class="milestone-approve-option-info">{{'The milestone needs additional work' | translate }} </div></div>
+
+      </div>
+    </div>
+    
+    <!--<div class="card" ng-if="m.milestoneaction=='approve'">
+      <div class="item item-text-wrap">
+       <b class="milestone-approve-option-title">End Contract :</b>
+        <div class="milestone-approve-talent-name"> <input class="milestone-approve-check" type="radio" ng-model="m.contractaction" name="contractaction" value="endcontract" checked> 
+      <div class="milestone-approve-option-name">End the contract</div><div class="milestone-approve-option-info">Work is completed</div></div>
+
+       <div class="milestone-approve-talent-name"> <input class="milestone-approve-check" type="radio"  ng-model="m.contractaction" name="contractaction" value="morework">
+     <div class="milestone-approve-option-name">Keep the contract open</div><div class="milestone-approve-option-info">I've got more work for {{talent.firstname}}</div></div>
+
+      </div>
+    </div>-->
+    <div class="full-pink-btn"  ng-click="approve(m,'');" ng-if="!m.bonusamount && showPaymentbtn || m.bonusamount<=0">  {{ 'Submit' | translate }}</div>
+
+    <div class="full-pink-btn" ng-click="approve(m,'bycard');" ng-if="m.bonusamount && showPaymentbtn && m.bonusamount>0 && m.milestoneaction=='approve'">  {{ 'Make bonus payment by Card' | translate }} ({{contract.currency}} {{m.bonusamount}})</div>
+
+    <!--<div class="full-btn" ng-click="payPaypal(m.bonusamount);" ng-if="m.bonusamount && showPaymentbtn && m.bonusamount>0 && m.milestoneaction=='approve'">  {{ 'Make bonus payment by Paypal' | translate }} ({{contract.currency}} {{m.bonusamount}})</div>-->
+
+    <div class="full-pink-btn" ng-click="approve(m,'myaccount');" ng-if="m.bonusamount && showPaymentbtn && MyAccountBalance>=m.bonusamount && m.bonusamount>0 && m.milestoneaction=='approve'">  {{ 'Make bonus payment from my Worklidate account' | translate }} ({{contract.currency}} {{m.bonusamount}})</div>
+
+
+</div>
+    </ion-content><!-- end of ion-content  div -->
+    
+      <script id="bonuscardDetails.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">{{'Payment' | translate }}</h1>
+        </ion-header-bar>
+        <ion-content>
+          <div class="container card-details-form" ng-show="showForm">
+  <div id="Checkout" class="inline">
+      <div class="card-row">
+          <span class="visa"></span>
+          <span class="mastercard"></span>
+          <span class="amex"></span>
+          <span class="discover"></span>
+      </div>
+      <form name="ccForm">
+          <div class="form-group">
+              <label for="PaymentAmount">{{'Payment amount' | translate }}</label>
+              <div class="amount-placeholder">
+                  <span>{{contract.currency}}</span>
+                  <span>{{bonusamount}}</span>
+              </div>
+          </div>
+          
+          <div class="form-group">
+              <label for="CreditCardNumber">{{'Card number' | translate }}</label>
+              <input type="text" class="card-image form-control" id="cardNumber" cc-number cc-eager-type name="ccNumber" ng-model="card.number" required>
+           
+          </div>
+          <div class="expiry-date-group form-group">
+              <label for="ExpiryDate">{{'Expiry Month' | translate }}</label>
+               <input placeholder="MM" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="card.expiration.month" required>
+             
+          </div>
+          <div class="expiry-date-group form-group">
+              <label for="ExpiryDate">{{'Expiry Year' | translate }}</label>
+              <input placeholder="YY" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year" required>
+             
+          </div>
+          <div class="security-code-group form-group">
+              <label for="SecurityCode">{{'CVV Number' | translate }}</label>
+              <div class="input-container" >
+                 <input type="text" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc" required>
+                  <i id="cvc" class="fa fa-question-circle"></i>
+              </div>
+              <div class="cvc-preview-container two-card hide">
+                  <div class="amex-cvc-preview"></div>
+                  <div class="visa-mc-dis-cvc-preview"></div>
+              </div>
+          </div>
+         <div class="form-group" style="float: left;    width: 50%;">
+              <label or="NameOnCard">{{'First Name' | translate }}</label>
+              <input id="NameOnCard" class="form-control" type="text" maxlength="255" ng-model="card.fname" required></input>
+          </div>
+          <div class="form-group" style="float: left;    width: 50%;">
+              <label or="NameOnCard">{{'Last Name' | translate }}</label>
+              <input id="NameOnCard" class="form-control" type="text" maxlength="255" ng-model="card.lname" required></input>
+          </div>
+          <button ng-if="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && ccForm.ccExpMonth.$valid && ccForm.ccExpYear.$valid && card.fname && card.lname" id="PayButton" class="btn btn-block btn-success submit-button" type="submit" ng-click="payNow(card,ccForm.ccNumber.$ccType)">
+              <span class="submit-button-lock"></span>
+              <span class="align-middle">{{'Pay' | translate }} {{contract.currency}} {{bonusamount}}</span>
+          </button>
+          <button ng-if="!ccForm.ccNumber.$valid || !ccForm.ccCvc.$valid  || !ccForm.ccExpMonth.$valid || !ccForm.ccExpYear.$valid || !card.fname || !card.lname"  id="PayButton" class="btn btn-block btn-success submit-button" style="background:lightgray;cursor: not-allowed;" type="submit">
+              <span class="submit-button-lock"></span>
+              <span class="align-middle">{{'Pay' | translate }} {{contract.currency}} {{bonusamount}}</span>
+          </button>
+      </form>
+  </div>
+</div>
+<div ng-show="!showForm && !showresult">{{'Processing.... Please wait. Please do not press back button or refresh' | translate }}</div>
+<div ng-show="showresult">{{result | json}}</div>
+ <!--<form name="ccForm">
+        <div class="form-group">
+          <label for="card-number">Card Number</label>
+          <input type="text" class="form-control" id="cardNumber" cc-number cc-eager-type name="ccNumber" ng-model="card.number">
+        </div>
+        <table class="table">
+          <tr>
+            <th>Valid</th>
+            <th>Eager Type</th>
+            <th>Type</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccNumber.$valid | yesNo}}
+            </td>
+            <td>
+              {{ccForm.ccNumber.$ccEagerType || 'Unknown'}}
+            </td>
+            <td>
+              {{ccForm.ccNumber.$ccType || 'Unknown'}}
+            </td>
+          </tr>
+        </table>
+        <div class="form-group">
+          <label for="cvc">CVC</label>
+          <input type="text" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc">
+        </div>
+        <table class="table">
+          <tr>
+            <th>Valid</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccCvc.$valid | yesNo}}
+            </td>
+          </tr>
+        </table>
+        <div class="form-group">
+          <label for="card-number">Expiration</label>
+          <div class="row" cc-exp>
+            <div class="col-xs-3">
+              <input placeholder="MM" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="card.expiration.month">
+            </div>
+            <div class="col-xs-3">
+              <input placeholder="YY" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year">
+            </div>
+          </div>
+        </div>
+        <table class="table">
+          <tr>
+            <th>Valid Month</th>
+            <th>Valid Year</th>
+            <th>Valid Pair</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccExpMonth.$valid | yesNo}}
+            </td>
+            <td>
+              {{ccForm.ccExpYear.$valid | yesNo}}
+            </td>
+            <td>
+              {{!ccForm.$error.ccExp | yesNo}}
+            </td>
+          </tr>
+        </table>
+      </form>-->
+        </ion-content>
+      </ion-modal-view>
+    </script>
+</ion-view><!-- end of ion-view div -->

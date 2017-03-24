@@ -1,0 +1,10 @@
+<div class="list" style="margin:10px;">
+
+    <a class="item item-avatar" ng-repeat="liker in $root.likesData" ng-init="user=(liker.userid | getUser)">
+	      <img ng-if="!user.picture" src="img/user.png"  />
+	      <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+	      <h2>{{user.name}}</h2>
+	      <p>{{user.location}}</p>
+    </a>
+
+</div><!-- end of list div -->

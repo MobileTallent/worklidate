@@ -1,0 +1,82 @@
+<ion-view view-title="Login" hide-back-button="true">
+  <ion-content class="gradient-red">
+    <div class="header-bar">
+    <div class="menubtn" ng-click="popover.show($event)">
+      <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+       <!--<div class="language-selector">
+            <div ng-click="setLang('en')" ng-if="currentLang!='en'">EN</div>
+            <div ng-click="setLang('zh')" ng-if="currentLang!='zh'">中文</div>
+        </div>--><!-- end of language-selector div -->
+    </div><!-- end of  header-bar div -->
+      <div class="login-form" style="height:{{$root.windowHeight-60}}px;">
+             <div  class="login-form-inner" >
+               <div>
+                     <div class="login-logo">{{ 'Login' | translate }}</div>
+                      <input type="text" class="placeholder-grey" placeholder="{{ 'Email' | translate }}" ng-model="data.username">
+                      <input type="password" class="placeholder-grey" placeholder="{{ 'Password' | translate }}" ng-model="data.password">
+                     
+
+                      <div class="login" ng-click="userlogin(data)">
+                       <i class="material-icons md-48">keyboard_arrow_right</i>
+                     </div><!-- end of login div -->
+                      <div class="forgot-password-btn" ng-click="goto('forgotpassword')">
+                       {{ 'Forgot Password' | translate }}
+                     </div><!-- end of forgot-password-btn div -->
+                      <!--<div class="signup-btn" ng-click="goto('signup')">
+                        {{ 'Sign Up' | translate }}
+                      </div>--><!-- end of signup-btn div -->
+                          <!--<button class="button button-block button-positive" ng-click="login('facebook')">
+                              {{ 'Login with Facebook' | translate }}
+                          </button>-->
+                          <!--<button class="button button-block button-positive " ng-click="login('google')">
+                              {{ 'Login with Google' | translate }}
+                          </button>-->
+                         
+               </div><!-- end of  div -->
+             </div><!-- end of login-form-inner div -->
+         </div><!-- end of login-form div -->
+       
+    </ion-content><!-- end of ion-content div -->
+     <script id="interested_category_1.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">  {{ 'Interested Topics' | translate }}</h1>
+       <!--<button class="button button-clear button-primary" ng-click="connectionmodel.hide()"> {{ 'Close' | translate }}</button>-->
+    </ion-header-bar>
+    <ion-content>
+  <div class="upload-title ng-binding">
+        Select at least 5 interested topics.
+  </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        You have selected {{userdata.interested_categories.length}} 
+    </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        <div ng-repeat="cat in userdata.interested_categories" style="float:left;line-height: 11px;font-size:11px;text-transform:capitalize;"> {{cat.name}},&nbsp</div>
+    </div>
+  <div class="upload-title ng-binding" ng-if="!userdata.interested_categories">
+        You have selected 0
+    </div>
+ <div class="card-list">
+    <div class="main-category-card-bar " ng-repeat="cat in category_level_1 track by $index" >
+            <div class="category-card-bar" ng-click="getCategories(cat.id);">
+            {{cat.name}}
+            </div><!-- end of category-card div -->
+          <div id="category{{cat.id}}" class="category-setting-outer " >
+          <div class="main-category-card-box" ng-repeat="subcat in $root.categories_tree[cat.id]">
+            <div class="category-card-box unchecked"  id="category{{subcat.id}}"  ng-click="markCategory(subcat.id,subcat)">
+             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+              <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                <div>{{subcat.name}}</div>
+                </div>
+            </div><!-- end of sub-category-card unchecked div -->
+          </div><!-- end of category-setting-outer div -->
+     </div><!-- end of  main-category-card div -->
+  </div> <!-- end of  card-list div -->
+   </ion-content>
+    <div class="full-gray-btn" ng-click="interested_categoriesDone(userdata);" ng-if="userdata.interested_categories && userdata.interested_categories.length>4"> {{ 'Done' | translate }}</div>
+  </ion-modal-view>
+
+
+</script>
+</ion-view><!-- end of ion-view div -->

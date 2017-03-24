@@ -1,0 +1,21 @@
+
+  <ion-modal-view class="gradient-red">
+    <ion-header-bar>
+      <h1 class="title"> {{ 'Group Members' | translate }}</h1>
+       <button class="button button-clear button-primary" ng-click="groupAdmin.hide()">  {{ 'Cancel' | translate }}</button>
+    </ion-header-bar><!-- end of header-bar div -->
+  <ion-content overflow-scroll="true">
+
+      <div class="list">
+          <a class="item item-thumbnail-left" ng-repeat="(id,member) in group.members" ng-init="user=(member.userid | getUser)">
+             <img ng-if="!user.picture" src="img/user.png"  />
+           <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+            <h2>{{user.name}}</h2>
+            <p>{{user.location}}</p>
+            <p class="kickoutbtn" ng-click="makeAdmin(id,member.userid);" ng-if="!(group.admin | checkPresent :member.userid)"> {{ 'Set Admin' | translate }}</p>
+            <p class="kickoutbtn" ng-click="removeAdmin(id,member.userid,group.admin);" ng-if="(group.admin | checkPresent :member.userid) && (group.owner_userid!=member.userid)"> {{ 'Remove Admin' | translate }}</p>
+          </a>
+      </div><!-- end of list div -->
+
+  </ion-content><!-- end of  ion-content div -->
+</ion-modal-view><!-- end of modal-view div -->

@@ -1,0 +1,74 @@
+<ion-view view-title="Search" class="gradient-red">
+    <div class="header-bar">
+       <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+        <div class="title"></div>
+    </div><!-- end of header-bar div -->
+  <ion-content class="hasheader" overflow-scroll="true">
+    <div class="list list-inset">
+         <label class="item item-select">
+            <div class="search_text">
+                 <label class="item item-input">
+                 <i class="icon ion-search placeholder-icon"></i>
+                  <input type="text" placeholder="{{ 'Search' | translate }}" ng-model="search" class="search_text">
+                  </label>
+            </div><!-- end of search_text div -->
+                <select ng-model="searchoption">
+                  <option value="Project"> {{ 'Project' | translate }}</option>
+                  <option value="People"> {{ 'People' | translate }}</option>
+                  <!--<option value="Group"> {{ 'Group' | translate }}</option>-->
+                  <option value="Job"> {{ 'Job' | translate }}</option>
+                </select>
+         </label>
+            <button class="button button-full button-positive" ng-if="search" ng-click="mainSearch(search,searchoption)">
+               {{ 'Search' | translate }}
+            </button>
+     </div><!-- end of list list-inset div -->
+        <div class="card-list" ng-if="!searchType">
+              <div class="main-category-card" ng-click="show_filters('Project');">
+                <div class="category-card" style="background-image:url('img/3D.jpg');" >
+                  <div class="circle">
+                   {{ 'Project' | translate }}
+                  </div><!-- end of circle div -->
+                </div><!-- end of  category-card div -->
+              </div><!-- end of main-category-card div -->
+              <div class="main-category-card" ng-click="show_filters('People');">
+                <div class="category-card" style="background-image:url('img/architect.jpg');" >
+                  <div class="circle">
+                    {{ 'People' | translate }}
+                  </div><!-- end of circle div -->
+                </div><!-- end of  category-card div -->
+              </div><!-- end of main-category-card div -->
+              <!--<div class="main-category-card" ng-click="show_filters('Group');">
+                <div class="category-card" style="background-image:url('img/photography.jpg');" >
+                  <div class="circle">
+                   {{ 'Group' | translate }}
+                  </div>
+                </div>
+              </div>--><!-- end of main-category-card div -->
+              <div class="main-category-card" ng-click="show_filters('Job');">
+                  <div class="category-card" style="background-image:url('img/3D.jpg');" >
+                      <div class="circle">
+                        {{ 'Job' | translate }}
+                      </div><!-- end of circle div -->
+                  </div><!-- end of  category-card div -->
+              </div><!-- end of main-category-card div -->
+        </div><!-- end of card-list div -->
+        <div class="card-list" ng-if="searchType && (searchType=='Project' || searchType=='Job')">
+          <div class="main-category-card" ng-click="show_filters_2(cat_id);" ng-repeat="(cat_id,category) in $root.categoriesObjects" ng-if="category.parent_id==id">
+              <div class="category-card" style="background-image:url('img/photography.jpg');" >
+                    <div class="circle" ng-if="category.name.length>13" style="padding-top:40px;">
+                      {{category.name}}
+                    </div><!-- end of circle div -->
+                    <div class="circle" ng-if="category.name.length<=13" style="padding-top:50px;">
+                      {{category.name}}
+                    </div><!-- end of circle div -->
+              </div><!-- end of category-card div -->
+          </div><!-- end of main-category-card div -->
+      </div><!-- end of card-list div -->
+  </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of  ion-view div -->

@@ -1,0 +1,90 @@
+
+<ion-view view-title="Sign Up" hide-back-button="true" ng-init="userdata=[];">
+  <ion-content overflow-scroll="true"  class="gradient-red">
+        <div class="header-bar">
+        
+          <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+            
+          <!--<div class="language-selector">
+            <div ng-click="setLang('en')" ng-if="currentLang!='en'">EN</div>
+            <div ng-click="setLang('zh')" ng-if="currentLang!='zh'">中文</div>
+        </div>--><!-- end of language-selector div -->  
+        </div><!-- end of header-bar div -->
+    <div class="login-form" style="height:{{$root.windowHeight-60}}px;">
+
+         <div  class="login-form-inner" >
+               <div>
+                      <div class="login-logo">{{ 'Sign Up' | translate }}</div>
+                        <input type="text" class="placeholder-grey" placeholder="{{ 'Invitation Code' | translate }}" ng-model="userdata.invitationcode" required>
+                        <input type="text" class="placeholder-grey" placeholder="{{ 'First Name' | translate }}" ng-model="userdata.firstname" required>
+                        <input type="text" class="placeholder-grey" placeholder="{{ 'Last Name' | translate }}" ng-model="userdata.lastname" required>
+                        <input type="password" class="placeholder-grey" placeholder="{{ 'Password' | translate }}" ng-model="userdata.password" required>
+                        <input type="password" class="placeholder-grey" placeholder="{{ 'Confirm Password' | translate }}" ng-model="userdata.cpassword" required>
+                        <input type="email" class="placeholder-grey" placeholder="{{ 'Email' | translate }}" ng-model="userdata.email" required>
+                        <input type="text" class="placeholder-grey" ng-class="!userdata.location?'ng-invalid-location':''" ng-autocomplete ng-model="userdata.location" placeholder="{{ 'Location' | translate }}" options="{ types: '(cities)'}" details="$root.mapdetails"  required>
+                        <!--ng-blur="validateLocation('html')"-->
+                         <i class="icon ion-checkmark-round" style="color: green;float: right;margin-top: -34px;margin-right: 6%;" ng-if="locationVarify"></i>
+                    
+                     <!--<div class="signup-timezone" ng-class="!userdata.timezone?'ng-invalid':'ng-valid'">
+                        <timezone-selector display-utc="true" sort-by="offset" show-local="true" primary-choices="UTC GB WET GMT Asia/Macau" class="timeZone" ng-model="userdata.timezone" ng-init="translations.placeholder = ('Select your timezone' | translate)"></timezone-selector>
+                      </div>-->
+                      <!--<input type="text" placeholder="{{ 'Security Question' | translate }}" ng-model="userdata.security_question" required>
+                      <input type="text" placeholder="{{ 'Security Answer' | translate }}" ng-model="userdata.security_Answer" required>-->
+                       <div class="login" ng-click="next()" ng-if="userdata.firstname && userdata.lastname && userdata.password && userdata.cpassword && userdata.email && userdata.location && userdata.invitationcode">
+                       <i class="material-icons md-48">keyboard_arrow_right</i>
+                     </div><!-- end of login div -->
+
+                      <div class="login"  ng-if="!userdata.firstname || !userdata.lastname || !userdata.password || !userdata.cpassword || !userdata.email || !userdata.location || !userdata.invitationcode">
+                       <i class="material-icons md-48">keyboard_arrow_right</i>
+                     </div>
+                    <!-- end of login div -->
+              </div>
+
+         </div><!-- end of login-form-inner div -->
+   </div><!-- end of login-form div -->
+</ion-content><!-- end of content div -->
+<script id="interested_category.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">  {{ 'Interested Topics' | translate }}</h1>
+       <!--<button class="button button-clear button-primary" ng-click="connectionmodel.hide()"> {{ 'Close' | translate }}</button>-->
+    </ion-header-bar>
+    <ion-content>
+  <div class="upload-title ng-binding">
+        Select at least 5 interested topics.
+  </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        You have selected {{userdata.interested_categories.length}} 
+    </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        <div ng-repeat="cat in userdata.interested_categories" style="float:left;line-height: 11px;font-size:11px;text-transform:capitalize;"> {{cat.name}},&nbsp</div>
+    </div>
+  <div class="upload-title ng-binding" ng-if="!userdata.interested_categories">
+        You have selected 0
+    </div>
+ <div class="card-list">
+    <div class="main-category-card-bar " ng-repeat="cat in category_level_1 track by $index" >
+            <div class="category-card-bar" ng-click="getCategories(cat.id);">
+            {{cat.name}}
+            </div><!-- end of category-card div -->
+          <div id="category{{cat.id}}" class="category-setting-outer " >
+          <div class="main-category-card-box" ng-repeat="subcat in $root.categories_tree[cat.id]">
+            <div class="category-card-box unchecked"  id="category{{subcat.id}}"  ng-click="markCategory(subcat.id,subcat)">
+             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+              <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                <div>{{subcat.name}}</div>
+                </div>
+            </div><!-- end of sub-category-card unchecked div -->
+          </div><!-- end of category-setting-outer div -->
+     </div><!-- end of  main-category-card div -->
+  </div> <!-- end of  card-list div -->
+   </ion-content>
+    <div class="full-gray-btn" ng-click="signup(userdata);" ng-if="userdata.firstname && userdata.lastname && userdata.password && userdata.cpassword && userdata.email && userdata.location && userdata.interested_categories && userdata.interested_categories.length>4"> {{ 'Sign Up' | translate }}</div>
+  </ion-modal-view>
+
+
+</script>
+
+</ion-view><!-- end of view div -->

@@ -1,0 +1,123 @@
+
+<ion-view view-title="Search" class="gradient-red">
+  <div class="header-bar">
+      <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="back();" />
+      </div>--><!-- end of  backbtn div -->
+     <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+   
+  </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader">
+
+       <div class="groups-container search-page">
+               <div class="group-card">
+                  <div class="groups_info">
+                     <div class="left_box searchimg">
+                       <img src="img/search_pic.jpg" alt="search picture">
+                     </div><!-- end of left_box searching div -->
+                     <div class="right_box">
+                          <h5>Castlight Health </h5>
+                          <h5>Sr. Manager Production</h5>
+                          <h5>Design, UX</h5>
+                          <p>San Franciso,CA</p>
+                     </div>  <!--end of div right box here-->
+                     <button class="apply-job-btn"> {{ 'Apply for this job' | translate }}</button>
+                     <div class="groups_info_text">
+                           <p>Our Company is in need of a Senior Manager production ,Design, and UX. you should must be very capable of working in Adobe creative suite and very proffesional in hand
+                           sketching</p>
+                     </div>
+                  </div>  <!-- end of div group info here -->
+              </div> <!-- end of div group-card here -->
+            <div class="placeholder">
+                      {{ 'Send Message' | translate }}<div class="upload-btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+            </div><!-- end of placeholder div -->
+      </div>   <!-- end of div groups-container  -->
+
+      <div class="proposal">
+          <div class="message">
+                  <div> {{ 'Proposal' | translate }}</div>
+                <p>
+
+                  <p>Hi,</p>
+
+                  <p>I am an experienced and creative Graphic Designer and i have more than
+                  10 years experience. I have worked on various projects like this an I am very
+                  much aware of new technologies.</p>
+
+                  <p>Thanks,</p>
+                  <p>Bilal</p>
+
+                </p>
+          </div><!-- end of message div -->
+          <div class="proposal_milestone">
+                  <div class="message"><div class="title"> {{ 'Milestone' | translate }}</div>
+                      <div class="budget">{{ 'Budget For this project' | translate }}: $150 <i class="fa fa-pencil-square-o"></i></div>
+                  </div><!-- end of message div -->
+                  <div class="jobs-toggle"  id="milestone-1">
+                        <div class="heading-tabs" ng-click="toggleTabs('milestone-1')">
+                          <div class="title"> {{ 'Budget For this project' | translate }}1 (Design Inspiration)  </div>
+                           <i class="fa fa-pencil-square-o"></i>
+                           <i class="fa fa-trash-o" aria-hidden="true"></i>
+                           <i class="fa fa-chevron-down arrow" aria-hidden="true"></i>
+                        </div><!-- end of heading-tabs div -->
+                        <div class="toggle-content">
+                            <p> {{ 'Deadline' | translate }}:            7 March (2 days remaining)   </p>
+                            <p> {{ 'Hour Estimate' | translate }}:  10 hours</p>
+                            <p> {{ 'Progress ' | translate }}:            10%    </p>
+                            <p>I will gather some inspiration for your work to complete your task
+                            with creativity</p>
+                        </div><!-- end of toggle-content div -->
+                   </div><!-- end of jobs-toggle div -->
+                   <div class="jobs-toggle"  id="milestone-2">
+                        <div class="heading-tabs" ng-click="toggleTabs('milestone-2')">
+                            <div class="title">{{ 'Milestone' | translate }} 2 (Design Inspiration)   </div>
+                             <i class="fa fa-pencil-square-o"></i>
+                             <i class="fa fa-trash-o" aria-hidden="true"></i>
+                             <i class="fa fa-chevron-down arrow" aria-hidden="true"></i>
+                        </div><!-- end of heading-tabs div -->
+                        <div class="toggle-content">
+                            <p>{{ 'Deadline' | translate }} :            7 March (2 days remaining)   </p>
+                            <p>{{ 'Hour Estimate' | translate }}:  10 hours</p>
+                            <p>{{ 'Progress ' | translate }} :            10%    </p>
+                            <p>I will gather some inspiration for your work to complete your task
+                            with creativity</p>
+                        </div><!-- end of toggle-content div -->
+                   </div><!-- end of  jobs-toggle div -->
+                   <div class="jobs-toggle"  id="milestone-3">
+                        <div class="heading-tabs" ng-click="toggleTabs('milestone-3')">
+                           <div class="title">{{ 'Milestone' | translate }} 3 (Design Inspiration)   </div>
+                           <i class="fa fa-pencil-square-o"></i>
+                           <i class="fa fa-trash-o" aria-hidden="true"></i>
+                           <i class="fa fa-chevron-down arrow" aria-hidden="true"></i>
+                        </div><!-- end of  heading-tabs div -->
+                        <div class="toggle-content">
+                              <p>{{ 'Deadline' | translate }} :            7 March (2 days remaining)   </p>
+                              <p>{{ 'Hour Estimate' | translate }} :  10 hours</p>
+                              <p>{{ 'Progress ' | translate }} :            10%    </p>
+                              <p>I will gather some inspiration for your work to complete your task
+                              with creativity</p>
+                        </div><!-- end of toogle-content div -->
+                   </div><!-- end of jobs-toggle div -->
+                   <div class="jobs-toggle"  id="milestone-4">
+                          <div class="heading-tabs" ng-click="toggleTabs('milestone-4')">
+                                 <div class="title">{{ 'Milestone' | translate }} 4 (Design Inspiration)   </div>
+                                 <i class="fa fa-pencil-square-o"></i>
+                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                 <i class="fa fa-chevron-down arrow" aria-hidden="true"></i>
+                          </div><!-- end of  heading-tabs div -->
+                          <div class="toggle-content">
+                                <p>{{ 'Deadline' | translate }}  :            7 March (2 days remaining)   </p>
+                                <p>{{ 'Hour Estimate' | translate }} :  10 hours</p>
+                                <p>{{ 'Progress ' | translate }}  :            10%    </p>
+                                <p>I will gather some inspiration for your work to complete your task
+                                with creativity</p>
+                          </div><!-- end of toggle-content div -->
+                   </div><!-- end of jobs-toggle div -->
+           </div><!-- end of proposal_milestone div -->
+        </div><!-- end of proposal div -->
+    </ion-content><!-- end of ion-content div -->
+  <div class="full-gray-btn"> {{ 'Submit ' | translate }} </div>
+</ion-view><!-- end of ion-view div -->

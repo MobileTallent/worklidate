@@ -1,0 +1,587 @@
+
+
+<ion-view view-title="Search" class="search-page gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+             <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"></i>
+    </div>
+       <div class="header-btn" ng-click="goto('inbox');"> 
+          <i class="material-icons">message</i>
+       </div>
+
+   <div class="header-btn" ng-click="viewSorts()" ng-if="type=='Job'">
+     
+        <img ng-if="!JobFilterOn" src="img/nav.png">
+        <img ng-if="JobFilterOn" src="img/nav_blue.png" >
+      
+    </div>
+<div class="header-btn" ng-click="viewSorts()" ng-if="type=='People'">
+     
+        <img ng-if="!PeopleFilterOn" src="img/nav.png">
+        <img ng-if="PeopleFilterOn" src="img/nav_blue.png" >
+      
+    </div>
+   <div class="header-btn" ng-if="type=='Job'">
+      <a menu-close href="#/app/searchresult/Job/">
+         <i class="material-icons">work</i>
+      </a>
+    </div>
+
+   <div class="header-btn" ng-if="type=='Job'">
+    <a href="#/app/mainpage"> <i class="material-icons">color_lens</i></a>
+    </div>
+
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader-nofooter" overflow-scroll="true">
+       <!-- end of list job-filter-list div -->
+                <div class="list talent-filter-list" ng-if="type=='People'">
+                          <!--<div class="item range range-positive">
+                                    <p> {{ 'Job success' | translate }}</p>
+                                    <i class="icon">0%</i>
+                                    <input type="range" name="volume" min="0" max="100" value="5">
+                                        <i class="icon">100%</i>
+                          </div>--><!-- end of item range range-positive div -->
+                           <!--<div class="item range range-positive">
+                                    <p> {{ 'Hourly rate' | translate }}</p>
+                                    <i class="icon">$1</i>
+                                    <input type="range" name="volume" min="1" max="100" value="5">
+                                    <i class="icon">$100</i>
+                          </div>--><!-- end of item range range-positive div -->
+                         <!--<div class="item range range-positive">
+                                   <p>{{ 'Job completed' | translate }}</p>
+                                   <i class="icon">0</i>
+                                   <input type="range" name="volume" min="0" max="11" value="5">
+                                   <i class="icon">>10</i>
+                          </div>--><!-- end of item range range-positive div -->
+                           <!--<div class="item range range-positive">
+                                    <p> {{ 'Project Posted' | translate }}</p>
+                                    <i class="icon">0</i>
+                                    <input type="range" name="volume" min="0" max="11" value="5">
+                                    <i class="icon">>10</i>
+                          </div>--><!-- end of item range range-positive div -->
+
+                        <!--   <label class="item item-input">
+                                    <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                                   
+                          </label>
+ -->
+                            <label class="item item-input bgwhite">
+                          <i class="icon ion-search placeholder-icon" style="color: #ff0035;font-size: 25px;"></i>
+                           <input type="text" ng-model="searchFilters.location"  class="placeholder-grey" options="options" details="searchpeople_details"/>
+                         </label>
+                          <!-- <label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Group' | translate }}
+                              </div>
+                                <select>
+                                          <option selected>{{ 'Select' | translate }}</option>
+                              </select>
+                          </label>-->
+                         <!-- <label class="item item-select">
+                              <div class="input-label">
+                                Language
+                              </div>
+                              <select>
+                                          <option selected>{{ 'Select' | translate }}</option>
+                                          <option> {{ 'English' | translate }}</option>
+                                          <option> {{ 'Chinese' | translate }}</option>
+                              </select>
+                          </label>-->
+                            <!--   <label class="item item-input"><input type="text" ng-model="searchFilters.categories" /></label>-->
+                           <!--<label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Last activities' | translate }}
+                              </div>
+                                <select>
+                                          <option selected>{{ 'Select' | translate }}</option>
+                                          <option> {{ 'online' | translate }}</option>
+                                          <option> {{ 'within 1 week' | translate }}</option>
+                                          <option> {{ 'others' | translate }}</option>
+                              </select>
+                          </label>-->
+                          <!--<label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Sort By' | translate }}
+                              </div>
+                             <select>
+                                        <option selected>{{ 'Select' | translate }}</option>
+                                        <option>{{ 'most commented' | translate }}</option>
+                                        <option> {{ 'most viewed' | translate }}</option>
+                                        <option> {{ 'Latest' | translate }}</option>
+                                        <option> {{ 'Rewarded' | translate }}</option>
+                              </select>
+                          </label>-->
+                          <!--<label class="item item-select">
+                                <div class="input-label">
+                                  {{ 'time duration' | translate }}
+                                </div>
+                                  <select>
+                                    <option selected>{{ 'Select' | translate }}</option>
+                                    <option> {{ 'today' | translate }}</option>
+                                    <option>{{ 'this week' | translate }}</option>
+                                    <option>{{ 'customer range' | translate }}</option>
+                                </select>
+                          </label>
+                          <label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Rewarded' | translate }}
+                              </div>
+                              <select>
+                                      <option selected>{{ 'Select' | translate }}</option>
+                                      <option> {{ 'Most creative' | translate }}</option>
+                                      <option> {{ 'Most meaningful' | translate }}</option>
+                              </select>
+                          </label>-->
+             </div><!-- end of list talent-filter-list div -->
+         
+              <div class="list group-filter-list" ng-if="type=='Group'">
+                        <div class="item range range-positive" >
+                                  <p>  {{ 'Number of members' | translate }}</p>
+                                
+                                  <input type="range" name="volume" min="0" max="100" value="0" ng-model="searchFilters.groupsmenbersFrom" ng-init="searchFilters.groupsmenbersFrom=0" ng-change="groupSort()">
+                               
+                              <i class="icon">{{searchFilters.groupsmenbersFrom}}</i>
+                        </div><!-- end of item range range-positive div -->
+                        <div class="item range range-positive" >
+                                
+                                  
+                                  <input type="range" name="volume" min="0" max="100" value="0" ng-model="searchFilters.groupsmenbersUpto" ng-init="searchFilters.groupsmenbersUpto=100" ng-change="groupSort()">
+                                  
+                                  <i class="icon">{{searchFilters.groupsmenbersUpto}}</i>
+                        </div><!-- end of item range range-positive div -->
+                        <!--<div class="item range range-positive">
+                                  <p> {{ 'Number of Followers' | translate }}</p>
+                                
+                                  <input type="range" name="volume" min="0" max="100" value="0" ng-model="searchFilters.groupsFollowersFrom" ng-init="searchFilters.groupsFollowersFrom=0" ng-change="groupSort()">
+                                  <i class="icon">{{searchFilters.groupsFollowersFrom}}</i>
+                        </div>--><!-- end of item range range-positive div -->
+                         <!--<div class="item range range-positive">
+                                 
+                                  <input type="range" name="volume" min="0" max="100" value="0" ng-model="searchFilters.groupsFollowersUpto" ng-init="searchFilters.groupsFollowersUpto=100" ng-change="groupSort()">
+                                  <i class="icon">{{searchFilters.groupsFollowersUpto}}</i>
+                        </div>--><!-- end of item range range-positive div -->
+                                  <!-- <label class="item item-input"><input type="text" placeholder="Category"></label>-->
+                                  <label class="item item-input">
+                                        <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                                        <input type="text" ng-model="searchFilters.location" options="options" details="searchpeople_details"/>
+                                  </label>
+                </div><!-- end of list project-filter-list div -->
+                  <div class="groups-container">
+                      
+
+                  <div class="group-card" ng-if="type=='Job'"  ng-repeat="job in searched_group_result | filter:searchFilters.location | orderBy:searchFilters.orderBy | filter:searchFilters.jobCurrency:'currency' | filter:searchFilters.joblength:'jobLength' | filter:searchFilters.experienceLevel:'experienceLevel' " >
+                       <div class="groups_info" >
+                       
+                      
+
+                         <div class="job-search-data-singlejob" ng-if="job.user.name" >
+                            <div class="job-search-budget">
+                              <div class="job-search-budget-placeholder">$$</div>
+                              <div class="job-search-budget-currency">{{job.currency}}{{job.budget}}</div>
+                            </div>
+                            <div class="job-search-title">{{job.title}}</div>
+                            <div ng-if="job.skills"><i ng-repeat="skill in job.skills">#{{skill.name}}, </i></div>
+                            <div ng-if="job.jobLength">{{'Job Length' | translate }} : {{job.jobLength}}</div>
+                            <div ng-if="job.status">{{'Job Status' | translate }} : {{job.status}} </div>
+                          </div>  <!--end of div right box here-->
+                       
+                        <div class="view-job-details-btn"  ng-click="goto('jobdetails/{{job.id}}')">{{ 'View Details & Send Proposal' | translate }}</div>
+
+                      </div>  <!-- end of div group info here -->
+                  </div> <!-- end of div group-card here -->
+
+<!-- End Job type-->
+
+                          <div class="custom-card" ng-if="mainsearchType==2 && type=='Project'" ng-click="gotoprojectDetails(project.id)" ng-repeat="project in searched_group_result">
+                                  <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)" style="background-image:url({{project.coverPicture.data}})" ng-if="project.coverPicture && project.coverPicture.type=='image'"></div>
+              
+               <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'">{{project.coverPicture.data}}</div>
+                                      <div class="details" ng-if="project.userid" ng-init="user=(project.userid | getUser)" style=" background-color: rgba(204, 204, 204, 0.49);">
+                                           <!--  <div class="user-pic">
+                                                      <img ng-if="!user.picture" src="img/user.png"  />
+                                                      <img ng-if="user.picture" ng-src="{{user.picture}}" />
+                                            </div> --><!-- end of user-pic div -->
+                                            <div class="user-details" >
+                                                <div class="user-heading">
+                                                        <h5>{{project.projectTitle}}</h5>
+                                                            <div>by
+                                                                <span>{{user.name}}</span> on {{project.publishAt | date:'MMM dd,yyyy'}}
+                                                            </div>
+                                                                <div class="card-sub-tag">{{project.category}}</div>
+                                                </div><!-- end of user-heading div -->
+                                            <!--     <div class="user-action">
+                                                        <div class="up-part">
+                                                            <div class="card-tag"> {{ 'Hot' | translate }}</div>
+                                                                  <div class="card-star">
+                                                                       <i class="icon ion-android-star-outline"></i>
+                                                                  </div>
+                                                        </div>
+                                                        <div class="down-part">
+                                                                <div class="card-view">
+                                                                        <img src="img/eye.png"/>{{getObjectLength(project.views)}}
+                                                                </div>
+                                                                <div class="card-like">
+                                                                        <img src="img/like.png"/>{{getObjectLength(project.likes)}}
+                                                                </div>
+                                                                 <div class="card-like">
+                                                                       <i class="icon ion-chatboxes" style="color: #111;font-size: 14px;margin-right:2px;"></i>{{getObjectLength(project.comments)}}
+                                                                </div>
+                                                        </div>
+                                               </div> --><!-- end of user-action div -->
+                                          </div><!-- end of user-details div -->
+                                  </div><!-- end of details div -->
+                          </div><!-- end of custom-card div -->
+                          <div class="custom-card" ng-if="mainsearchType==1 && type=='Project'" ng-click="gotoprojectDetails(project.id)" ng-repeat="project in searched_group_result | filter:searchFilters.location">
+                                  <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)" style="background-image:url({{project.coverPicture.data}})" ng-if="project.coverPicture && project.coverPicture.type=='image'"></div>
+              
+               <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'">{{project.coverPicture.data}}</div>
+                                        <div class="details">
+                                              <div class="user-pic">
+                                                      <img ng-if="!user.picture" src="img/user.png"  />
+                                                      <img ng-if="user.picture" ng-src="{{user.picture}}" />
+                                             </div><!-- end of user-pic div -->
+                                             <div class="user-details" ng-if="project.userid" ng-init="user=(project.userid | getUser)">
+                                                    <div class="user-heading">
+                                                          <h5>{{project.projectTitle}}</h5>
+                                                          <div> {{ 'by' | translate }}
+                                                                <span>{{user.name}}</span> on {{project.publishAt | date:'MMM dd,yyyy'}}
+                                                          </div>
+                                                            <div class="card-sub-tag">{{project.category}}</div>
+                                                    </div><!-- end of user-heading div -->
+                                                    <div class="user-action">
+                                                            <div class="up-part">
+                                                                  <div class="card-tag">{{ 'Hot' | translate }}</div>
+                                                                     <div class="card-star">
+                                                                            <i class="icon ion-android-star-outline"></i>
+                                                                    </div><!-- end of card-star div -->
+                                                            </div><!-- end of up-part div -->
+                                                            <div class="down-part">
+                                                                       <div class="card-view">
+                                                                            <img src="img/eye.png"/>{{getObjectLength(project.views)}}
+                                                                       </div><!-- end of card-view div -->
+                                                                       <div class="card-like">
+                                                                            <img src="img/like.png"/>{{getObjectLength(project.likes)}}
+                                                                       </div><!-- end of  card-like div -->
+                                                                       <div class="card-like">
+                                                                       <i class="icon ion-chatboxes" style="color: #111;font-size: 14px;margin-right:2px;"></i>{{getObjectLength(project.comments)}}
+                                                                </div><!-- end of card-like div -->
+                                                            </div><!-- end of down-part div -->
+                                                    </div><!-- end of user-action div -->
+                                               </div><!-- end of user-details div -->
+                                         </div><!-- end of details div -->
+                              </div><!-- end of custom-card div -->
+                              <div ng-if="type=='Group'">
+                                    <div class="group-card" ng-click="gotogroupDetails(group.id);" ng-repeat="group in searched_group_result | filter:searchFilters.location" >
+                                            <div class="groups_info">
+                                                    <div class="left_box searchimg">
+                                                          <img ng-src="{{'/upload/groups/'+group.id}}" />
+                                                    </div><!-- end of  left_box searchimg div -->
+                                                    <div class="right_box">
+                                                            <h5>{{group.grouptitle}}</h5>
+                                                      
+                                                            <p> {{ 'Location' | translate }}: {{group.location}}</p>
+                                                    </div><!--end of div right box here-->
+                                            </div><!-- end of div group info here -->
+                                    </div><!-- end of div group-card here -->
+                              </div><!-- end of div groups-container  -->
+                              <div ng-if="type=='People'" class="people-serach-group">
+                                    <div class="group-card"  ng-repeat="user in data_for_search_user_array | filter:searchFilters.location:'name' | orderBy:'-signUpDate'" ng-if="user.userid != $root.loggedUserId" ng-init="userdata=(user.userid | getUser)">
+                            
+                                        <div class="groups_info" ng-if="userdata" >
+                                              <div class="left_box searchimg">
+                                  <img ng-click="gotouserDetails(user.userid);" ng-if="userdata.picture" ng-src="{{userdata.picture}}" />
+                                  <img ng-click="gotouserDetails(user.userid);" ng-if="!userdata.picture" src='img/user.png'  />
+                                   <div class="details rating-user-serach" ng-if="userdata.asTalentfeedback || userdata.asEmployerfeedback">
+           
+                                      <div  ng-if="userdata.asTalentfeedback && userdata.asEmployerfeedback" ng-init="ratings=((calculateRating(userdata.asTalentfeedback)/getObjectLength(userdata.asTalentfeedback))+(calculateRating(userdata.asEmployerfeedback)/getObjectLength(userdata.asEmployerfeedback)))/2">
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+                                       
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="userdata.asTalentfeedback && !userdata.asEmployerfeedback" ng-init="ratings=(calculateRating(userdata.asTalentfeedback)/getObjectLength(userdata.asTalentfeedback))">
+                                     
+                                  <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="!userdata.asTalentfeedback && userdata.asEmployerfeedback" ng-init="ratings=(calculateRating(userdata.asEmployerfeedback)/getObjectLength(userdata.asEmployerfeedback))">
+                                     
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+                                    
+                                </div><!-- end of details div -->
+                                              </div><!-- end of left_box searching div -->
+                                              <div class="right_box">
+                                                   
+                                                    <div class="user-title" ng-click="gotouserDetails(user.userid);">{{user.title}}</div>
+                                                    
+                                                    <div>{{userdata.title}}</div>
+
+                                                    <div ng-if="userdata.skills"><i ng-repeat="cat in userdata.skills">#{{cat.name}}, </i></div>
+                                                    <div>
+                                                      <div class="subtitle  fsize" ng-if="user.hourlyRateHKD">HKD {{user.hourlyRateHKD}}</div>
+                                                      <div class="subtitle  fsize" ng-if="user.hourlyRateUSD">USD {{user.hourlyRateUSD}}</div>
+                                                    </div>
+                                                    <p ng-click="gotouserDetails(user.userid);">{{ 'Location' | translate }}: {{user.location}}</p>
+
+                                                     <div class=" button-clear" style="padding: 5px;;border-radius: 5px;text-align: center;color: #fff; font-weight: bold;text-decoration: underline;" ng-if="userdata.availableForHiring" ng-click="goto('jobinvitation/{{user.userid}}')"> {{ 'INVITE FOR JOB' | translate }}</div>
+                                             </div> <!--end of div right box here-->
+                                      </div><!-- end of div group info here -->
+                                  </div><!-- end of div group-card here -->
+                              </div><!-- end of div groups-container  -->
+                </div><!-- end of  groups-container div -->
+
+      </ion-content>
+</ion-view>
+
+<script id="sort.html" type="text/ng-template">
+  <ion-modal-view class="gradient-red">
+  <!--   <ion-header-bar class="gradient-red">
+      <h1 class="title"> {{ 'My Stats' | translate }}</h1>
+      
+    </ion-header-bar> -->
+    <ion-content>
+     <div style="text-align: center;width: 100%;top: 0;">
+         <img src="img/nav.png" style="width: 20px;height: 20px;margin-top: 18px;">
+    </div>
+      
+      <button class="button button-clear ion-close popupclose" ng-click="model.hide()" style="position: absolute; top: 0;left: 0;"></button>
+       <button class="button button-clear ion-arrow-return-right popupclose" ng-click="reset()" style="position: absolute; top: 0;right: 0;"></button> <div style="color: #fff;float: right;margin-right: 8px;">{{ 'Reset Below' | translate }} </div>
+
+       <div class="list project-filter-list" ng-if="type=='Project'" style="width: 100%;margin-top: 22px;">
+                          <!-- <label class="item item-input"><input type="text" placeholder="Category"></label>-->
+                          <label class=" item-select" >
+                              <div class="input-label">
+                                {{ 'Sort By' | translate }}
+                              </div><!-- end of input-label div -->
+
+                   <div class="bggrey" style="width: 100%;display:flex;" ng-init="searchFilters.sort='select'">
+
+              <ion-radio name="unit" ng-model="searchFilters.sort" ng-value="'all'"><div class="serchradio">All</div></ion-radio>
+              <ion-radio name="unit" ng-model="searchFilters.sort" ng-value="'mostcommented'"><div class="serchradio">{{ 'most commented' | translate }}</div> </ion-radio>
+              <ion-radio name="unit" ng-model="searchFilters.sort" ng-value="'mostviewed'"><div class="serchradio">{{ 'most viewed' | translate }}</div></ion-radio>
+              <ion-radio  name="unit" ng-model="searchFilters.sort" ng-value="'latest'"><div class="serchradio">{{ 'Latest' | translate }}</div></ion-radio>
+              <ion-radio  name="unit" ng-model="searchFilters.sort" ng-value="'rewarded'"><div class="serchradio">{{ 'Rewarded' | translate }}</div></ion-radio>
+                        
+        </div>           </label>
+
+
+                          <label class=" item-select" style="width: 100%;">
+                                <div class="input-label">
+                                  {{ 'Time Duration' | translate }}
+                                </div><!-- end of input-label div -->
+
+              <div class="bggrey" style="width: 100%; display: flex;">
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'all'"><div class="serchradio" >{{ 'All' | translate }}</div></ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'today'"><div class="serchradio"> {{ 'today' | translate }}</div> </ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'this_week'"><div class="serchradio">{{ 'this week' | translate }}</div></ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'customer_range'"><div class="serchradio"> {{ 'customer range' | translate }}</div></ion-radio>
+               </div>
+                               
+                          </label>
+                          <div class="datepicker-div" ng-if="searchFilters.timeDuration=='customer_range'">
+                                  <i class="icon ion-ios-calendar-outline placeholder-icon"></i>
+
+                           <datepicker date-format="dd-MM-yyyy">
+                            <input ng-model="searchFilters.customer_rangefrom" type="text" placeholder="Select date" />
+                          </datepicker>
+                          </div>
+                          <div class="datepicker-div" ng-if="searchFilters.timeDuration=='customer_range'">
+                                  <i class="icon ion-ios-calendar-outline placeholder-icon"></i>
+                                <datepicker date-format="dd-MM-yyyy" ng-if="searchFilters.timeDuration=='customer_range'">
+                            <input ng-model="searchFilters.customer_rangeto" type="text"  placeholder="Select date" />
+                          </datepicker>
+                          </div>
+                          
+                          
+                          <label class="item item-input white" ng-if="mainsearchType==1">
+                                  <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                                  <input type="text" ng-model="searchFilters.location" options="options" details="searchpeople_details"/>
+                          </label>
+              </div><!-- end of list project-filter-list div -->
+   
+
+
+    <div class="list job-filter-list" ng-if="type=='Job'">
+
+      <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Employer Score' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+        <ion-radio ng-model="searchFilters.jobAveragetEmployer" name="EmployerScore" ng-value="''"><div style="    margin-top: 5px;" class="serchradio" >All</div></ion-radio>
+              <ion-radio  ng-model="searchFilters.jobAveragetEmployer"  ng-click="jobAveragetEmployerSort(5)" name="EmployerScore" ng-value="'5'"><i class="material-icons serchradio">sentiment_very_satisfied</i></ion-radio>
+              <ion-radio  ng-model="searchFilters.jobAveragetEmployer" ng-click="jobAveragetEmployerSort(4)" name="EmployerScore" ng-value="'4'"><i class="material-icons serchradio">sentiment_satisfied</i></ion-radio>
+              <ion-radio  ng-model="searchFilters.jobAveragetEmployer" ng-click="jobAveragetEmployerSort(3)" name="EmployerScore" ng-value="'3'"><i class="material-icons serchradio">sentiment_neutral</i></ion-radio>
+              <ion-radio  ng-model="searchFilters.jobAveragetEmployer" ng-click="jobAveragetEmployerSort(2)" name="EmployerScore" ng-value="'2'"><i class="material-icons serchradio">sentiment_dissatisfied</i></ion-radio>
+              <ion-radio  ng-model="searchFilters.jobAveragetEmployer" ng-click="jobAveragetEmployerSort(1)" name="EmployerScore" ng-value="'1'"><i class="material-icons serchradio">sentiment_very_dissatisfied</i></ion-radio>
+        </div>
+
+      <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Experience Level' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+
+              <ion-radio ng-model="searchFilters.experienceLevel" name="ExperienceLevel" ng-value="''"><div class="serchradio" style="padding-bottom: 7px; padding-top: 11px;">{{ 'All' | translate }}</div></ion-radio>
+              <ion-radio ng-model="searchFilters.experienceLevel" name="ExperienceLevel" ng-value="'expert'"><div class="serchradio">$$$</div><div class="serchradio">{{ 'Proffesional' | translate }}</div> </ion-radio>
+              <ion-radio ng-model="searchFilters.experienceLevel" name="ExperienceLevel" ng-value="'intermediate'"><div class="serchradio">$$</div><div class="serchradio">{{ 'Standard Exp.' | translate }}</div></ion-radio>
+              <ion-radio ng-model="searchFilters.experienceLevel" name="ExperienceLevel" ng-value="'entry'"><div class="serchradio" >$</div><div class="serchradio">{{ 'Less Exp.' | translate }}</div></ion-radio>
+            
+        </div>
+
+        <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Job Length' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+
+              <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="''" ><div class="serchradio" style="padding-bottom: 7px; padding-top: 11px;">{{ 'All' | translate }}</div></ion-radio>
+              <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="'day'"><div class="serchradio" style="margin-left: 10px;"><</div><div class="serchradio">{{ 'a day' | translate }}</div> </ion-radio>
+              <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="'week'"><div class="serchradio" style="margin-left: 20px;"><</div><div class="serchradio">{{ 'a week' | translate }}</div></ion-radio>
+              <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="'month'"><div class="serchradio" style="margin-left: 27px;"><</div><div class="serchradio">{{ 'a month' | translate }}</div></ion-radio>
+               <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="'3month'"><div class="serchradio" style="margin-left: 35px;">></div><div class="serchradio">{{ '3 months' | translate }}</div></ion-radio>
+                <ion-radio name="JobLength" ng-model="searchFilters.joblength" ng-value="'notSpecified'"><div class="serchradio" style="margin-left: 35px;"></div><div class="serchradio" style="padding-bottom: 7px; padding-top: 11px;">N/A</div></ion-radio>
+            
+        </div>
+
+
+      <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Status' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+
+              <ion-radio name="jobStatus2"  ng-model="searchFilters.jobStatus2" ng-value="''" ><div class="serchradio">{{ 'All' | translate }}</div></ion-radio>
+              <ion-radio name="jobStatus2"  ng-model="searchFilters.jobStatus2" ng-value="'open'"><div class="serchradio">{{ 'Open' | translate }}</div> </ion-radio>
+              <ion-radio name="jobStatus2" ng-model="searchFilters.jobStatus2" ng-value="'working'"><div class="serchradio">{{ 'Working' | translate }}</div></ion-radio>
+              <ion-radio name="jobStatus2"  ng-model="searchFilters.jobStatus2" ng-value="'end'"><div class="serchradio">{{ 'Completed' | translate }}</div></ion-radio>
+            
+        </div>
+
+
+         <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Currency' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+
+              <ion-radio name="jobCurrency" ng-model="searchFilters.jobCurrency" ng-value="''" ><div class="serchradio">{{ 'All' | translate }}</div></ion-radio>
+              <ion-radio name="jobCurrency" ng-model="searchFilters.jobCurrency" ng-value="'HKD'"><div class="serchradio">HKD</div> </ion-radio>
+              <ion-radio name="jobCurrency" ng-model="searchFilters.jobCurrency" ng-value="'USD'"><div class="serchradio">USD</div></ion-radio>
+              
+            
+        </div>
+
+          <div class="item range range-positive" style="padding: 15px;float: left;width: 100%;margin-bottom: 10px;margin-top: 10px;">
+                          <p> {{ 'Order By' | translate }}</p>
+      </div>
+        <div class="bggrey" style="width: 100%; display: flex;">
+
+              <ion-radio name="OrderBy" ng-model="searchFilters.orderBy" ng-value="'-publishAt'" ><div class="serchradio" >{{ 'Latest' | translate }}</div></ion-radio>
+              <ion-radio name="OrderBy" ng-model="searchFilters.orderBy" ng-value="'-budget'"><div class="serchradio">{{ 'Budget' | translate }}</div> </ion-radio>
+         
+              
+            
+        </div>
+
+                   <div class="white"> {{ 'Client history' | translate }}</div>
+                      <div class="item range range-positive">
+                      
+                           <div style="width:100%;height:100px;">
+                            <ion-range-slider min="0" ng-model="searchFilters.jobClienthistory" max="50" step="1" from="0" to="50" type="double"  prefix="" id="testionslider" on-finish="jobClienthistorySort"></ion-range-slider>
+
+                    </div>
+                      </div>
+                    
+
+                    <div class="white"> {{ 'Budget' | translate }}</div>
+                       <div class="item range range-positive">
+                             <div style="width:100%;height:100px;">
+                            <ion-range-slider min="1" ng-model="searchFilters.jobBudget" max="10000" step="1" from="0" to="10000" type="double"   prefix="$" on-finish="jobBudgetSort"></ion-range-slider>
+
+                    </div>
+                          
+                      </div>
+            <div class="white"> {{ 'Categories' | translate }}</div>
+             <ui-select multiple ng-model="searchFilters.categories" class="bgwhite placeholder-grey mart" theme="select2" ng-disabled="disabled" style="width:100%;">
+                  <ui-select-match class="ui-select-match"  placeholder="{{ 'Tap to pick category' | translate }}">{{$item.name}}</ui-select-match>
+                  <ui-select-choices  position="down" class="ui-select-choices" repeat="cat in $root.withoutYellowcategories | filter:$select.search">
+                  {{cat.name}}
+
+                  </ui-select-choices>
+                </ui-select>
+
+        <div style="text-align: center;width: 100%;bottom: 0;" ng-click="timeDuration(searchFilters.timeDuration);model.hide();" ng-if="type=='Project'">
+          <img src="img/nav.png" style="width: 20px;height: 20px;margin-top: 10px;margin-bottom:10px;">
+          <p class="white">{{ 'Filter & Search' | translate }}</p>
+       </div>
+        <div style="text-align: center;width: 100%;bottom: 0;"  ng-click="applyFilters();model.hide();" ng-if="type=='Job'">
+          <img src="img/nav.png" style="width: 20px;height: 20px;margin-top: 10px;margin-bottom:10px;">
+          <p class="white">{{ 'Filter & Search' | translate }}</p>
+       </div>         
+        </div>
+           <div class="list talent-filter-list" ng-if="type=='People'">
+                          <div class="item range range-positive">
+                                    <p> {{ 'Job success' | translate }}</p>
+                                    <i class="icon">0%</i>
+                                    <input type="range" name="volume" min="0" max="100" value="5">
+                                        <i class="icon">100%</i>
+                          </div><!-- end of item range range-positive div -->
+                           <div class="item range range-positive">
+                                    <p> {{ 'Hourly rate' | translate }}</p>
+                                    <i class="icon">$1</i>
+                                    <input type="range" name="volume" min="1" max="100" value="5">
+                                    <i class="icon">$100</i>
+                          </div><!-- end of item range range-positive div -->
+                         <div class="item range range-positive">
+                                   <p>{{ 'Job completed' | translate }}</p>
+                                   <i class="icon">0</i>
+                                   <input type="range" name="volume" min="0" max="11" value="5">
+                                   <i class="icon">>10</i>
+                          </div><!-- end of item range range-positive div -->
+                           <div class="item range range-positive">
+                                    <p> {{ 'Project Posted' | translate }}</p>
+                                    <i class="icon">0</i>
+                                    <input type="range" name="volume" min="0" max="11" value="5">
+                                    <i class="icon">>10</i>
+                          </div><!-- end of item range range-positive div -->
+
+                       
+                            <!--<label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Group' | translate }}
+                              </div>
+                                <select>
+                                          <option selected>{{ 'Select' | translate }}</option>
+                              </select>
+                          </label>-->
+                         <label class="item item-select">
+                              <div class="input-label">
+                                {{ 'Language' | translate }}
+                              </div>
+                              <select>
+                                          <option selected>{{ 'Select' | translate }}</option>
+                                          <option> {{ 'English' | translate }}</option>
+                                          <option> {{ 'Chinese' | translate }}</option>
+                              </select>
+                          </label>
+                            
+                      
+                         
+                         
+             </div><!-- end of list talent-filter-list div -->
+
+    </ion-content>
+  </ion-modal-view>
+</script>

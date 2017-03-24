@@ -1,0 +1,63 @@
+
+<ion-view view-title="Edit Project"  ng-init="project=(projectid | getProject)" class="gradient-red">
+  <div class="header-bar">
+ <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+          <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="back();" />
+          </div>--><!-- end of backbtn div -->
+          
+          <div class="title"></div>
+          <div class="header-btn"><i class="fa fa-floppy-o" ng-click="save(project)"></i></div>
+  </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader" overflow-scroll="true">
+    <!-- <div class="upload-title">
+          {{ 'Upload' | translate }}
+      </div>
+      <div class="upload-options-outer">
+            <div class="upload-option"><input type="file" ngf-resize="{width: 706, height: 284, quality: .8, type: 'image/jpeg', 
+                       ratio: '1:2', centerCrop: false, restoreExif: false}" ngf-select="onFileSelect($files)" /><img src="img/photo.png" /></div>
+            <div class="upload-option"><input type="file" ngf-resize="{width: 706, height: 284, quality: .8, type: 'image/jpeg', 
+                       ratio: '1:2', centerCrop: false, restoreExif: false}" ngf-select="onFileSelect($files)" accept="image/*;capture=camera"><img src="img/camera.png" /></div>
+            <div class="upload-option"><input type="file" ngf-resize="{width: 706, height: 284, quality: .8, type: 'image/jpeg', 
+                       ratio: '1:2', centerCrop: false, restoreExif: false}" ngf-select="onFileSelect($files)" /><img src="img/page.png" /></div>
+      </div>--><!-- end of upload-options-outer div -->
+      
+
+  <div class="uploaded-project" ng-repeat="file in editfilesdata">
+
+      <div class="delete"><img src="img/delete.png" ng-click="delete($index)"/></div>
+      <div class="more"><img src="img/more.png" /></div>
+      <img ngf-src="file"  />
+  </div><!-- end of uploaded-project div -->
+  <div class="uploaded-project" ng-repeat="(id,image) in project.images">
+          <div class="delete"><img src="img/delete.png" ng-click="removePhoto(id)" /></div>
+          <div class="more"><img src="img/more.png" /></div>
+          <img ng-src="{{image}}" />
+  </div><!-- end of uploaded-project div -->
+
+ 
+  <div class="more-info-form">
+          <div class="upload-cover-photo">
+           
+                <input type="text" placeholder="Project Title" ng-model="project.projectTitle" maxlength="30" />
+                <textarea placeholder="Description" ng-model="project.description" maxlength="200"></textarea>
+                <ui-select multiple ng-model="project.categories" theme="select2" ng-disabled="disabled" style="width:100%;">
+                    <ui-select-match placeholder="Tap to pick category">{{$item.name}}</ui-select-match>
+                    <ui-select-choices  position="down" repeat="cat in $root.categories | filter:$select.search">
+                    {{cat.name}}
+
+                    </ui-select-choices>
+                  </ui-select>
+
+                <!--<tags-input ng-model="project.tags">
+                 <auto-complete ></auto-complete>
+                </tags-input>-->
+          </div><!-- end of upload-cover-photo div -->
+    </div><!-- end of more-info-form div -->
+    </ion-content><!-- end of content div -->
+     <div class="full-gray-btn"  ng-click="save(project)">  {{ 'Save' | translate }}</div>
+</ion-view><!-- end of view div -->
+    

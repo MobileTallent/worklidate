@@ -1,0 +1,56 @@
+
+<ion-view view-title="My Finance" class="gradient-red">
+  <div class="header-bar">
+    <div class="menubtn" ng-click="popover.show($event)">
+      <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+      <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+      </div>--><!-- end of backbtn div -->
+      <div class="title"></div>
+  </div><!-- end of  header-bar div -->
+
+    <ion-content class="hasheader hasbottom">
+
+    	
+  <div class="finance-container" overflow-scroll="true"> 
+
+
+  <div  ng-click="goto('transactions');" style="text-align: center;width: 100%;float: left;margin-bottom: 30px">
+    <div class="item item-text-wrap myfinbtn">
+      <div style="width: 230px;margin: auto;">
+        <div style="float: left; margin-right: 10px"><i class="material-icons">storage</i></div>
+        <div style="float: left;">{{ 'My Transactions' | translate }}</div>
+       </div>
+    </div>
+  </div>
+  
+  <div ng-click="goto('mymoney');" style="text-align: center;width: 100%;float: left;">
+   <div style="width: 205px;margin: auto;">
+    <div class="item item-text-wrap myfinbtn">
+    <div style="float: left; margin-right: 10px"><i class="material-icons">account_balance</i></div>
+      <div style="float: left;">{{ 'My Money' | translate }}</div>
+    </div>
+    </div>
+  </div>
+  <!--<div class="card" ng-click="goto('statements');">
+    <div class="item item-text-wrap">
+      Statements
+    </div>
+  </div>
+  <div class="card" ng-click="goto('inovices');">
+    <div class="item item-text-wrap">
+      Invoices
+    </div>
+  </div>-->
+
+  <!--<div class="card" ng-click="goto('paymentmethods');">
+    <div class="item item-text-wrap">
+      {{ 'Payment Methods' | translate }}
+    </div>
+  </div>-->
+
+  </div>   <!-- end of div finance-container  -->
+
+    </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of ion-view div -->

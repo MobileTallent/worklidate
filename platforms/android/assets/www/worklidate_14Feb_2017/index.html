@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>worklidate</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- inject:app-styles:css --><link rel="stylesheet" href="styles/main-57a732bdc7.css"><!-- endinject -->
+    <!-- uncomment if using your own iconfont -->
+    <!-- <link rel="stylesheet" href="styles/own-icons.css"> -->
+    <!-- Firebase -->
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+    <script src="json/resplendent-inferno-3434-skills-export.json"></script>
+    <script src="aap_config.json"></script>
+    <script src="json/en.json"></script>
+    <script src="json/ch.json"></script>
+  
+    <!-- AngularFire -->
+    <link href="styles/other.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/font-awesome.min.css" rel="stylesheet">
+    <link href="styles/angular-datepicker.css" rel="stylesheet">
+
+
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+       <script type="text/javascript">
+    var serverTime;
+      function myCallback(json) {
+        serverTime=new Date(json.dateString);
+      }
+    </script>
+    
+  <script type="text/javascript" src="other/jquery-2.2.3.min.js"></script> 
+  <script type="text/javascript" src="other/ion.rangeSlider.min.js"></script>
+  <script type="text/javascript" src="other/simditor-all.js"></script>
+ 
+</head>
+<body ng-app="Worklidate">
+
+<ion-nav-view></ion-nav-view>
+
+<!-- inject:vendor:js --><script src="vendor-2ddabe5368.js"></script><!-- endinject -->
+<!-- inject:app:js --><script src="scripts/app-1b49ca916c.js"></script><!-- endinject -->
+
+<!--<script src="cordova.js"></script>-->
+ 
+</body>
+ 
+
+     <script type="text/javascript" src="other/ionic-range-slider.js"></script> 
+      <script type="text/javascript" src="other/doc_directive.js"></script> 
+ <!-- Timezone-->
+  <!-- <script type="text/javascript" src="https:////cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script> 
+  <script type="text/javascript" src="https:////cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data.min.js"></script>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/mishguruorg/angular-timezone-selector/master/dist/angular-timezone-selector.js"></script> -->
+  
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBx5arh6LpM9U6NghQDSikgG2GPiX8xYQk"></script>
+ <script type="text/javascript" src="other/angularfire.min.js"></script>
+
+<script type="text/javascript">
+  // Initialize Firebase
+  var config = {
+    apiKey: app_config.apiKey,
+    authDomain: app_config.authDomain,
+    databaseURL: app_config.databaseURL,
+    storageBucket: app_config.storageBucket,
+    messagingSenderId: app_config.messagingSenderId
+  };
+  firebase.initializeApp(config);
+  var storage = firebase.storage();
+</script>
+  <script type="text/javascript">
+      function nocontext(e) {
+        var clickedTag = (e==null) ? event.srcElement.tagName : e.target.tagName;
+        if (clickedTag == "IMG")
+          return false;
+      }
+      document.oncontextmenu = nocontext;
+    </script>
+</html>

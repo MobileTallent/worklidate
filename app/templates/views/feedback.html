@@ -1,0 +1,81 @@
+
+<ion-view view-title="Feedback" class="gradient-red">
+      <div class="header-bar">
+     <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+
+          <!--<div class="backbtn">
+              <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+          </div>--><!-- end of backbtn div -->
+   
+        <div class="feedbacksearch"> 
+            <label class="item item-input bgwhite">
+              <i class="icon ion-search placeholder-icon" style="color: #ff0035;font-size: 25px;"></i>
+               <input type="text" id="ticket-search" class="placeholder-grey" placeholder="Search" ng-model="search.text">
+             </label>
+      </div>
+      </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader" overflow-scroll="true">
+    
+
+    <div class="feedback_card1" ng-repeat="ticket in usertickets | filter:search.text">
+           <a href="#/app/feedback/{{ticket.id}}/public">
+            <div class="feedback_text">
+             <h3 style="color: #929090;">{{ticket.issue}}</h3>
+              <div class="status-feedback-note-completed1" ng-if="ticket.status=='closed'">{{ 'Completed' | translate }}</div>
+              <div class="status-feedback-note-open1" ng-if="ticket.status=='open'"> {{ 'Open' | translate }}</div>
+              <!--<h6>{{ticket.publishAt| date:'dd MMM yyyy hh:mm a'}}</h6>
+            <div>Status : {{ticket.status}}</div>
+             <div>Ticket reference number is <b>{{ticket.id}}</b></div>-->
+            </div><!-- end of feedback_text div -->
+          </a>
+   </div><!-- end of feedback_card div -->
+
+  <div class="feedback_card" ng-repeat="ticket in userPrivateTickets | filter:search.text">
+           <a href="#/app/feedback/{{ticket.id}}/private">
+                <div class="feedback_text">
+                   <h3 style="color: #929090;">{{ticket.issue}}</h3>
+                     <div class="status-feedback-note-completed1" ng-if="ticket.status=='closed'">{{ 'Completed' | translate }}</div>
+                      <div class="status-feedback-note-open1" ng-if="ticket.status=='open'">Open {{ 'Open' | translate }}</div>
+                      <!--<h6>{{ticket.publishAt| date:'dd MMM yyyy hh:mm a'}}</h6>
+                    <div>Status : {{ticket.status}}</div>
+                     <div>Ticket reference number is <b>{{ticket.id}}</b></div>-->
+                     <div class="private-feedback-note"> {{ 'Private' | translate }}</div>
+                </div><!-- end of feedback_text div -->
+           </a>
+   </div><!-- end of feedback_card div -->
+  </ion-content>
+
+   <div class="full-gray-btn" ng-click="openNewTicket()"> {{ 'Open New Ticket' | translate }}</div>
+
+  <script id="create_ticket.html" type="text/ng-template">
+      <ion-modal-view class="gradient-red">
+       <ion-content>
+        <div style="text-align: center;font-size: 21px;font-weight: bold;right: 0;left: 0;top: 14px;color: #ffffff;position: absolute;"> {{ 'Create Ticket' | translate }}</div>
+           <button class="button button-clear ion-close popupclose" ng-click="modal.hide()"></button>
+         <div class="list">
+         <label class="item item-input" ng-init="data.type='Public'">
+          
+            <textarea class="ticket-textarea placeholder-grey w98" style="padding: 8px;" ng-model="data.ticketIssue" placeholder="{{ 'Write here...' | translate }}"></textarea>
+            
+         </label>
+         <!--<label class="item item-input">
+          
+            <textarea class="ticket-textarea placeholder-grey w98" ng-model="data.feedback" style="padding: 8px;" placeholder="{{ 'Write your feedback here...(This message only view by Support team)' | translate }}"></textarea>
+            
+         </label>-->
+         <ion-radio ng-model="data.type" ng-value="'Public'" class="button-block bggrey radiobtn">{{ 'Make it Public' | translate }}</ion-radio>
+            
+         <ion-radio ng-model="data.type" ng-value="'Private'" class="button-block bggrey radiobtn mart">{{ 'Make it Private' | translate }}</ion-radio>
+        
+         
+          
+          </div>
+          <div style="margin-top: 10px;"><button class="prosubmit" style="font-size: 14px;" ng-click="createTicket()">{{ 'Create' | translate }}</button></div>
+        </ion-content>
+      </ion-modal-view>
+</script>
+</ion-view><!-- end of view div -->
+    

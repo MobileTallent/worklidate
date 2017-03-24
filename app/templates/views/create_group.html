@@ -1,0 +1,46 @@
+ 
+  <ion-modal-view class="gradient-red">
+	    <ion-header-bar>
+	      	<h1 class="title"></h1>
+	     	  <button class="button button-clear button-primary" ng-click="modal.hide()"> {{ 'Cancel' | translate }}</button>
+	    </ion-header-bar><!-- end of header-bar div -->
+    <ion-content overflow-scroll="true" >
+
+		  <div class="list list-inset create-group-modal">
+					 	 <div ngf-fix-orientation="true" class="upload-new-picture-btn"><input type="file" ng-model="file" ngf-select="onFileSelect($files)" /> {{ 'Select picture' | translate }}
+					 	 </div>
+					  	<img ngf-src="file" style="max-width:100%;"/>
+						<label class="item item-input">
+						    	 <input type="text" ng-model="data.grouptitle" placeholder="{{ 'Group Title' | translate }}" maxlength="20">
+						  </label>
+						  <label class="item item-input">
+						    	<input type="text" ng-model="data.groupdescription" placeholder="{{ 'Group Description' | translate }}" >
+						  </label>
+
+					 
+						 <ui-select multiple ng-model="data.interested_categories" theme="select2" ng-disabled="disabled" style="width:100%; margin-bottom:10px">
+						            <ui-select-match placeholder="{{ 'Tap to pick category' | translate }}">{{$item.name}}</ui-select-match>
+
+						            <ui-select-choices  position="down" repeat="cat in $root.categories | filter:$select.search">
+						            {{cat.name}}
+
+						            </ui-select-choices>
+						  </ui-select>
+
+
+						   <label class="item item-input">
+						          <div class="placeholder create-group-modal-location">
+						          <input type="text"  placeholder="{{ 'Location' | translate }}" ng-autocomplete ng-model="data.location" options="options"  details="details"/> <div class="upload-btn"><i class="fa fa-location-arrow"></i></div>
+						          </div>
+						  </label>
+					 
+						  <label class="item item-input">
+						    <textarea placeholder="{{ 'Group rules' | translate }}" ng-model="data.rules"></textarea>
+						  </label>
+					  	  <button class="button button-positive" ng-click="createGroup(data)"> {{ 'Create Group' | translate }}</button>
+				  
+		</div><!-- end of list list-inset create-group-modal div -->
+
+    
+    </ion-content><!-- end of content div -->
+  </ion-modal-view><!-- end of modal-view div -->

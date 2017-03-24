@@ -1,0 +1,89 @@
+
+<ion-view view-title="Transactions" class="gradient-red">
+  <div class="header-bar">
+      <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="back();" />
+      </div>--><!-- end of backbtn div -->
+      <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+      <div class="title"></div>
+  </div><!-- end of  header-bar div -->
+
+    <ion-content class="hasheader hasbottom" overflow-scroll="true">
+      <div class="myfinbtn" style="text-align: center;margin-bottom: 10px;"><i class="material-icons">storage</i>
+     
+    </div>
+   <div style="width: 100%;float: left;min-height:20px;">
+   <div class="bgdark" style="width: 25%;float: left;min-height:20px;color: #fff;padding-top: 13px;padding-bottom: 13px;padding-left: 27px;">{{ 'Date' | translate }}</div>
+   <div class="bgdark" style="width: 25%;float: left;min-height:20px;color: #fff;padding-top: 13px;padding-bottom: 13px;padding-left: 23px;">{{ 'Type' | translate }}</div>
+   <div class="bgdark " style="width: 25%;float: left;min-height:20px;color: #fff;padding-top: 13px;padding-bottom: 13px;padding-left: 47px;">{{ 'Amount' | translate }}</div>
+   <div class="bgdark " style="width: 25%;float: left;min-height:20px;color: #fff;padding-top: 13px;padding-bottom: 13px;padding-left: 60px;">{{ 'View' | translate }}</div>
+
+   	<div class="bggrey white pad13" ng-repeat="transaction in AllTransations | orderBy:'-newDate'" style="width: 100%;float: left;min-height:20px;">
+   		<div ng-if="transaction.employer_id==loggedUserId" style="width: 100%;float: left;min-height:20px;">
+   			<div style="width:20%;float: left;min-height:20px;">{{getUTCdate(transaction.date) | date:'dd MMM yy'}}</div>
+   			<div style="width:40%;float: left;min-height:20px;">
+   				<i ng-if="transaction.payment_status=='escrow' || transaction.payment_status=='escrow_transefered'">Paid for Milestone(escrow)</i>
+   				<i ng-if="transaction.type=='bonus'">{{ 'Bonus' | translate }}</i>
+   				<i ng-if="transaction.refund=='true' && transaction.isDispute=='yes'">{{ 'Refund from dispute' | translate }}</i>
+          <i ng-if="transaction.refund=='true' && transaction.isDispute!='yes'">{{ 'Refund' | translate }}</i>
+   				<i ng-if="(transaction.payment_status=='available' || transaction.payment_status=='escrow_refund') && transaction.type!='bonus' && !transaction.withdraw_status && !transaction.serviceFees && transaction.paidFrom=='myaccount'">{{ 'Debited from your worklidate account' | translate }}</i>
+          <i ng-if="(transaction.payment_status=='available' || transaction.payment_status=='escrow_refund') && transaction.type!='bonus' && !transaction.withdraw_status && !transaction.serviceFees && transaction.paidFrom!='myaccount'">{{ 'Paid for Milestone from escrow' | translate }}</i>
+   			</div>
+   			<div style="width: 30%;float: left;min-height:20px;">{{transaction.currency}} {{transaction.amount | positive}}</div>
+   			<div style="width: 10%;float: left;min-height:20px;" ng-click="viewTransactionDetails(transaction)">View</div>
+   		</div>
+
+   		<div ng-if="transaction.moneyof==loggedUserId && (transaction.refund=='true' ||  transaction.withdrawFee=='true' ||  transaction.serviceFees=='true' || transaction.withdraw_status)" style="width: 100%;float: left;min-height:20px;">
+   			<div style="width:20%;float: left;min-height:20px;">{{getUTCdate(transaction.date) | date:'dd MMM yy'}}</div>
+   			<div style="width:40%;float: left;min-height:20px;">
+   				<i ng-if="transaction.refund=='true'">{{ 'Refund' | translate }}</i>
+   				<i ng-if="transaction.serviceFees=='true'">{{ 'Service Fee' | translate }}</i>
+          <i ng-if="transaction.withdrawFee=='true'">{{ 'Withdrawal Fee' | translate }}</i>
+   				<i ng-if="transaction.withdraw_status">{{ 'Withdrawal' | translate }}</i>
+   			</div>
+   			<div style="width: 30%;float: left;min-height:20px;">{{transaction.currency}} {{transaction.amount | positive}}</div>
+   			<div style="width: 10%;float: left;min-height:20px;" ng-click="viewTransactionDetails(transaction)">{{ 'View' | translate }}</div>
+   		</div>
+
+   		<div ng-if="transaction.talent_id==loggedUserId && transaction.moneyof==transaction.talent_id" style="width: 100%;float: left;min-height:20px;">
+   			<div style="width:20%;float: left;min-height:20px;">{{getUTCdate(transaction.date) | date:'dd MMM yy'}}</div>
+   			<div style="width:40%;float: left;min-height:20px;">
+   				<i ng-if="transaction.serviceFees=='true'">{{ 'Service Fee' | translate }}</i>
+   				<i ng-if="transaction.type=='bonus'">{{ 'Bonus' | translate }}</i>
+   				<i ng-if="transaction.withdraw_status">{{ 'Withdrawal' | translate }}</i>
+   				<i ng-if="transaction.payment_status=='available' && transaction.type!='bonus' && !transaction.withdraw_status && !transaction.serviceFees">{{ 'Milestone Payment' | translate }}</i>
+   			</div>
+   			<div style="width: 30%;float: left;min-height:20px;">{{transaction.currency}} {{transaction.amount | positive}}</div>
+   			<div style="width: 10%;float: left;min-height:20px;" ng-click="viewTransactionDetails(transaction)">{{ 'View' | translate }}</div>
+   		</div>
+
+   	</div>
+   </div>
+    	<script id="transation-modal.html" type="text/ng-template">
+      <ion-modal-view class="gradient-red">
+        <ion-content class='padding'>
+          <i class="material-icons popupheader">storage</i>
+          <button class="button button-clear ion-close popupclose" ng-click="closeModal()"></button>
+
+          <div class="item popuplist" style="line-height: 22px;">
+            
+                <div ng-if="trans.amount">{{ 'Amount' | translate }} : {{trans.currency}} {{trans.amount | positive}}</div>
+                <div ng-if="trans.date">{{ 'Date' | translate }} : {{trans.date}}</div>
+                <div ng-if="trans.employername">{{ 'Employer' | translate }} : {{trans.employername}}</div>
+                <div ng-if="trans.TalentName">{{ 'Talent' | translate }} : {{trans.TalentName}}</div>
+                <div ng-if="trans.job_name">{{ 'Job' | translate }} : {{trans.job_name}}</div>
+                <div ng-if="milestone">
+                    {{ 'Milestone' | translate }} : {{milestone.title}} ({{milestone.details}})
+                </div>
+          </div>
+       
+        </ion-content>
+        <div ng-if="trans.refund!='true'" class="full-gray-btn" ng-click="donwonloadInvoice();">  {{ 'Invoice' | translate }}</div>
+      </ion-modal-view>
+    </script>
+   
+    </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of ion-view div -->
+ 

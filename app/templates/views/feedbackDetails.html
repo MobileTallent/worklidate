@@ -1,0 +1,44 @@
+
+<ion-view view-title="Feedback" class="gradient-red">
+    <div class="header-bar">
+      <!--<div class="backbtn">
+        <img src="img/back_arrow_white.png" ng-click="back();" />
+      </div>--><!-- end of backbtn div -->
+      <div class="menubtn" ng-click="popover.show($event)">
+        <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+      </div>
+      <div class="title"></div>
+      <div class="header-btn" ng-if="ticketdetails.userid==loggedUserId"><p style="margin-top:20px;" ng-click="deleteTicket()">Delete</p></div>
+    </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader feedbackdetails" overflow-scroll="true">
+
+ 
+    <h4 class="ticket-title1 comment bggrey" style="border-top-left-radius: 4px;border-top-right-radius: 4px;" ng-if="ticketdetails.issue">{{ticketdetails.issue}}</h4>
+    <h4 class="ticket-title1 comment bggrey" style="border-top-left-radius: 4px;border-top-right-radius: 4px;" ng-if="ticketdetails.question">{{ticketdetails.question}}</h4>
+     <div class="comment bggrey" ng-if="ticketdetails.answer">
+          <div class="desc bggrey">{{ticketdetails.answer}}</div>
+    </div>
+ 
+     <div  ng-repeat="(id,comment) in comments" ng-init="user=(comment.userid | getUser)" class="comment bggrey" ng-class="comment.addedBySupport=='true'?'admin-comment':''">
+                <div class="user-pic-comment bggrey">
+                  <img ng-if="!user.picture" src="img/user.png" style="border-radius: 50%;" />
+                  <img ng-if="user.picture" ng-src="{{user.picture}}" style="border-radius: 50%;"  />
+                  <div class="user-desc bggrey">
+                    <div class="username bggrey" style="margin-top: 8px;">{{user.name}}</div>
+                    <div class="date chatdate bggrey">{{comment.publishAt | date:'dd-MM-yyyy' }}</div>
+                  </div>
+                </div>
+                <div class="desc bggrey">{{comment.comment}}</div>
+                <div class="admin-comment-message bggrey" ng-if="comment.addedBySupport=='true'">  {{ 'Admin reply' | translate }}</div>
+
+      </div><!-- end of comment div -->
+      <div class="bggrey comment" style="border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;    padding: 1px;"></div>
+    
+  </ion-content><!-- end of content div -->
+   <div class="chat-message-input1" ng-if="ticketdetails.status=='open'">
+        <textarea ng-model="data.message" class="placeholder-grey" placeholder="write a comment here"></textarea>
+        <div class="chatsend1" ng-click="send();"><i class="material-icons" style="padding: 9px;">send</i></div>
+    </div><!-- end of chat-message-input div -->
+</ion-view><!-- end of view div -->
+    

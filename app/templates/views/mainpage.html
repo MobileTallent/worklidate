@@ -1,0 +1,243 @@
+
+<ion-view view-title="Main Page" hide-back-button="true" class="gradient-red">
+    <!--<div class="mainpage-header">
+      Worklidate
+    </div>--><!-- end of mainpage-header div -->
+    <div class="header-bar" > 
+    
+      <!-- <div class="menubtn" ng-click="popover.show($event)">  -->
+      <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon" ></i>
+    </div>
+     
+<!--<div class="title"> Worklidate</div>-->
+   <div class="header-btn" ng-if="$root.loggedUserId" ng-click="goto('inbox');"><a> <i class="material-icons">message</i></a><div class="main-page-badge" ng-if="unReadNotificationsCount>0">{{unReadNotificationsCount}}</div></div>
+   <div class="header-btn" ng-click="viewmainSorts()"><a> <img ng-if="!ProjectFilterOn" src="img/nav.png"><img ng-if="ProjectFilterOn" src="img/nav_blue.png"></div>
+   <div class="header-btn" ng-if="$root.loggedUserId" ><a menu-close href="#/app/searchresult/Job/"> <i class="material-icons">work</i></a></div>
+   <div class="header-btn" ng-if="$root.loggedUserId"><a href="#/app/mainpage"> <i class="material-icons">color_lens</i></a></div>
+<!-- <div class="header-btn" ng-if="unReadNotificationsCount>0" ng-click="goto('inbox');"><div class="badge-box">{{unReadNotificationsCount}}</div></div> -->
+</div>
+    <!--<div class="main-menu">
+
+          <div class="menu-item menu-icon"   ><i class="fa fa-bars" aria-hidden="true"></i></div>
+           <div class="menu-item active"><a href="#/app/mainpage">{{ 'Home' | translate }}</a></div>
+            <div class="menu-item"><a href="#/app/inbox">{{ 'Inbox' | translate }}<div class="main-page-badge" ng-if="unReadNotificationsCount>0">{{unReadNotificationsCount}}</div></a></div>
+            <div class="menu-item"><a href="#/app/group"> {{ 'Group' | translate }}</a></div>
+            <div class="menu-item"><a href="#/app/sortby"> {{ 'Sortby' | translate }}</a></div>
+            <div class="menu-item"><a href="#/app/search">{{ 'Search' | translate }}</a></div>
+            <div class="menu-item"><a href="#/app/setting">{{ 'Settings' | translate }}</a></div>
+    </div>--><!-- end of main-menu div -->
+ <ion-content has-bouncing="false" class="mainpage_ion_content" overflow-scroll="true">
+            <ion-refresher
+              pulling-text="Pull to refresh..."
+              on-refresh="pageReload()">
+            </ion-refresher>
+  <ion-list>
+  
+
+    <!--<div class="mainpage-banner-outer" id="mainpage-banner-outer">
+              <div class="mainpage-banner">
+                  <div class="hire-post-model">
+                     <img src="img/ads.jpg" />
+                  </div>
+              </div>
+              <div class="toggle-arrow" ng-click="hideAds()"><i class="icon ion-chevron-down"></i></div>
+    </div>--><!-- end of mainpage-banner div -->
+      <div class="main-page-content">
+      
+          <div class="custom-card" ng-repeat="project in homePageProjects | filter:projectsearch" >
+               <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='image'"><img ng-src="{{project.coverPicture.data}}"></div>
+              
+               <div class="custom-card-image textdata" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'" ng-bind-html="project.coverPicture.data"></div>
+
+                <div class="details" ng-if="project.userid" ng-init="user=(project.userid | getUser)" style="
+    background-color: rgba(204, 204, 204, 0.66);">
+                       <!--<div class="user-pic" ng-click="gotouserDetails(project.userid)" ng-if="loggedUserId"> 
+                          <img ng-if="!user.picture" src="img/user.png"  />
+                          <img ng-if="user.picture" ng-src="{{user.picture}}" />
+                       </div>--><!-- end of user-pic div -->
+                       <!--<div class="user-pic"  ng-if="!loggedUserId"> 
+                          <img ng-if="!user.picture" src="img/user.png"  />
+                          <img ng-if="user.picture" ng-src="{{user.picture}}" />
+                       </div>--><!-- end of user-pic div -->
+                      <div class="user-details">
+                                <div class="user-heading">
+                                          <h5 ng-click="gotoprojectDetails(project.id)">{{project.projectTitle}}</h5>
+                                          <div> {{ 'by' | translate }} <span ng-click="gotouserDetails(project.userid)" ng-if="loggedUserId">{{user.name}}</span> <span  ng-if="!loggedUserId">{{user.name}}</span> on {{project.publishAt | date : 'MMM dd,yyyy'}}</div>
+                                         <!-- <div class="card-sub-tag" ng-click="gotoprojectDetails(p.project_id)"><i ng-repeat="cat in project.categories">{{cat.name}}, </i></div>-->
+                                </div><!-- end of user-heading div -->
+                                <div class="user-action">
+                                             <div class="up-part" ng-if="project.type">
+                                                    <div class="card-tag" >{{project.type}}</div>
+                                                    <div class="card-star">
+                                                       <i class="icon ion-android-star-outline"></i>
+                                                    </div><!-- end of card-star div -->
+                                             </div><!-- end of up-part div -->
+                                             <!--<div class="down-part">
+                                                  <div class="card-view"><img src="img/eye.png"/> {{getObjectLength(project.views)}}</div>
+                                                  <div class="card-like" ng-if="(project.likes | checkPresent : loggedUserId) != true" ng-click="like(p.project_id,project.userid);"><img src="img/like.png"/> {{getObjectLength(project.likes)}}</div>
+                                                  <div class="card-like" ng-if="(project.likes | checkPresent : loggedUserId) == true" ng-click="unlike(p.project_id,project.userid);"><img src="img/icon_2.png"/> {{getObjectLength(project.likes)}}</div>
+                                                   <div class="card-like"><i class="icon ion-chatboxes" style="color: #111;font-size: 14px;"></i> {{getObjectLength(project.comments)}}</div>
+                                            </div>--><!-- end of down-part div -->
+                                </div><!-- end of user-action div -->
+                      </div><!-- end of user-details div -->
+                </div><!-- end of details div -->
+          </div><!-- end of custom-card div -->
+    </div><!-- end of main-page-content div -->
+  </ion-list>
+          <ion-infinite-scroll
+           ng-if="moreDataCanBeLoaded"
+            on-infinite="loadMore()"
+            distance="1%">
+          </ion-infinite-scroll>
+
+
+       
+
+  </ion-content><!-- end of content div -->
+
+    <ion-floating-menu menu-color="#ff0033" menu-open-color="#ff0033" menu-open-icon="ion-close-round" ng-if="$root.loggedUserId">
+               
+               <ion-floating-item icon-color="#fff" is-centered:"true" button-color="#00a2e2" icon="ion-android-color-palette" click="addproject()"></ion-floating-item>
+
+               <ion-floating-item icon-color="#fff"  button-color="#00a2e2" icon="fa fa-briefcase" click="postproject()"></ion-floating-item>
+          
+    </ion-floating-menu>
+          
+  <script id="interested_category_1.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">  {{ 'Interested Topics' | translate }}</h1>
+       <!--<button class="button button-clear button-primary" ng-click="connectionmodel.hide()"> {{ 'Close' | translate }}</button>-->
+    </ion-header-bar>
+    <ion-content>
+  <div class="upload-title ng-binding">
+        {{ 'Select at least 5 interested topics.' | translate }}
+  </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        {{ 'You have selected' | translate }} {{userdata.interested_categories.length}} 
+    </div>
+     <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        <div ng-repeat="cat in userdata.interested_categories" style="float:left;line-height: 11px;font-size:11px;text-transform:capitalize;"> {{cat.name}},&nbsp</div>
+    </div>
+  <div class="upload-title ng-binding" ng-if="!userdata.interested_categories">
+        {{ 'You have selected' | translate }} 0
+  </div>
+ <div class="card-list">
+    <div class="main-category-card-bar " ng-repeat="cat in category_level_1 track by $index" >
+            <div class="category-card-bar" ng-click="getCategories(cat.id);">
+            {{cat.name}}
+            </div><!-- end of category-card div -->
+          <div id="category{{cat.id}}" class="category-setting-outer " >
+          <div class="main-category-card-box" ng-repeat="subcat in $root.categories_tree[cat.id]">
+            <div class="category-card-box unchecked"  id="category{{subcat.id}}"  ng-click="markCategory(subcat.id,subcat)">
+             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+              <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                <div>{{subcat.name}}</div>
+                </div>
+            </div><!-- end of sub-category-card unchecked div -->
+          </div><!-- end of category-setting-outer div -->
+     </div><!-- end of  main-category-card div -->
+  </div> <!-- end of  card-list div -->
+   </ion-content>
+    <div class="full-gray-btn" ng-click="interested_categoriesDone(userdata);" ng-if="userdata.interested_categories && userdata.interested_categories.length>4"> {{ 'Done' | translate }}</div>
+  </ion-modal-view>
+
+
+</script>
+
+
+</ion-view><!-- end of view div -->
+
+  
+
+
+
+<script id="mainpagesort.html" type="text/ng-template">
+  <ion-modal-view class="gradient-red">
+  <!--   <ion-header-bar class="gradient-red">
+      <h1 class="title"> {{ 'My Stats' | translate }}</h1>
+      
+    </ion-header-bar> -->
+    <ion-content>
+     <div style="text-align: center;width: 100%;top: 0;">
+         <img src="img/nav.png" style="width: 20px;height: 20px;margin-top: 18px;">
+    </div>
+      
+      <button class="button button-clear ion-close popupclose" ng-click="model.hide()" style="position: absolute; top: 0;left: 0;"></button>
+       <button class="button button-clear ion-arrow-return-right popupclose" ng-click="reset()" style="position: absolute; top: 0;right: 0;"></button> <div style="color: #fff;float: right;margin-right: 8px;">{{ 'Reset Below' | translate }} </div>
+
+ <div class="list project-filter-list"  style="width: 100%;margin-top: 22px;">
+                          <!-- <label class="item item-input"><input type="text" placeholder="Category"></label>-->
+
+                          <label class="item item-input bgwhite">
+                          <i class="icon ion-search placeholder-icon" style="color: #ff0035;font-size: 25px;"></i>
+                           <input type="text" ng-model="projectsearch_filter" class="placeholder-grey" options="options" details="searchpeople_details">
+                         </label>
+
+
+                          <label class=" item-select" >
+                              <div class="input-label">
+                                {{ 'Sort By' | translate }}
+                              </div><!-- end of input-label div -->
+
+                   <div class="bggrey" style="width: 100%; display: flex;">
+
+           <ion-radio  name="unit" ng-model="searchFilters.sort" ng-value="'latest'"><div class="serchradio">{{ 'Latest' | translate }}</div></ion-radio>
+              <ion-radio name="unit" ng-model="searchFilters.sort" ng-value="'mostcommented'"><div class="serchradio">{{ 'most commented' | translate }}</div> </ion-radio>
+              <ion-radio name="unit" ng-model="searchFilters.sort" ng-value="'mostviewed'"><div class="serchradio">{{ 'most viewed' | translate }}</div></ion-radio>
+             
+              <ion-radio  name="unit" ng-model="searchFilters.sort" ng-value="'rewarded'"><div class="serchradio">{{ 'Most liked' | translate }}</div></ion-radio>
+                        
+        </div>           </label>
+
+
+                          <label class=" item-select" style="width: 100%;">
+                                <div class="input-label">
+                                  {{ 'time duration' | translate }}
+                                </div><!-- end of input-label div -->
+
+              <div class="bggrey" style="width: 100%; display: flex;">
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'all'"><div class="serchradio" >{{ 'All' | translate }}</div></ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'today'"><div class="serchradio"> {{ 'today' | translate }}</div> </ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'this_week'"><div class="serchradio">{{ 'this week' | translate }}</div></ion-radio>
+                  <ion-radio name="unit1" ng-model="searchFilters.timeDuration" ng-value="'customer_range'"><div class="serchradio"> {{ 'customer range' | translate }}</div></ion-radio>
+               </div>
+                               
+                          </label>
+                          <div class="datepicker-div" ng-if="searchFilters.timeDuration=='customer_range'">
+                                  <i class="icon ion-ios-calendar-outline placeholder-icon"></i>
+
+                           <datepicker date-format="dd MMM yyyy" default-text="''">
+                            <input ng-model="searchFilters.customer_rangefrom" type="text" placeholder="Select date" />
+                          </datepicker>
+                          </div>
+                          <div class="datepicker-div" ng-if="searchFilters.timeDuration=='customer_range'">
+                                  <i class="icon ion-ios-calendar-outline placeholder-icon"></i>
+                                <datepicker date-format="dd MMM yyyy" default-text="''">
+                                 <input ng-model="searchFilters.customer_rangeto" type="text"  placeholder="Select date" />
+                              </datepicker>
+                          </div>
+                          
+                          
+                          <label class="item item-input" ng-if="mainsearchType==1">
+                                  <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                                  <input type="text" ng-model="searchFilters.location" options="options" details="searchpeople_details"/>
+                          </label>
+                          <ui-select multiple ng-model="searchFilters.categories" class="bgwhite placeholder-grey mart" theme="select2" ng-disabled="disabled" style="width:100%;">
+                  <ui-select-match class="ui-select-match"  placeholder="{{ 'Tap to pick category' | translate }}">{{$item.name}}</ui-select-match>
+                  <ui-select-choices  position="down" class="ui-select-choices" repeat="cat in $root.withoutYellowcategories | filter:$select.search">
+                  {{cat.name}}
+
+                  </ui-select-choices>
+                </ui-select>
+              </div><!-- end of list project-filter-list div -->
+   
+      <div style="text-align: center;width: 100%;bottom: 0;" ng-click="applyFilter(searchFilters.timeDuration,searchFilters.sort,projectsearch_filter);model.hide()">
+          <img src="img/nav.png" style="width: 20px;height: 20px;margin-top: 10px;margin-bottom:10px;">
+       <p class="white">{{ 'Filter & Search' | translate }}</p>
+       </div>
+
+    </ion-content>
+  </ion-modal-view>
+</script>

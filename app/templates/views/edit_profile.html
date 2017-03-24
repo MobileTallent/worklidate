@@ -1,0 +1,148 @@
+
+<ion-view view-title="Edit Profile" class="gradient-red">
+<div class="header-bar" >
+<div class="menubtn" ng-click="popover.show($event)">
+    <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+<!--<div class="backbtn">
+  <img src="img/back_arrow_white.png" ng-click="goto('profile');" />
+</div>-->
+<div class="title"></div>
+<!--<div class="header-btn"><i class="fa fa-floppy-o" ng-click="save(data)"></i></div>-->
+</div>
+
+
+
+ <ion-content class="hasheader" overflow-scroll="true">
+    <div class="edit-profile-pic-outer">
+       <div>
+             <i class="fa fa-circle fa-trash " ng-if="$root.userdata.picture" ng-click="removePorfilePic();"></i>
+             <i class="material-icons" ngf-select="onFileSelect($files)" ngf-resize="{width: 100, height: 100, quality: 1,ratio: '1:1',centerCrop: true}" ngf-fix-orientation="true" accept="image/jpeg,image/jpg,image/png" 
+   ngf-pattern="'image/jpeg,image/jpg,image/png'">add_circle</i>
+            <img ng-if="!$root.userdata.picture" src="img/user.png" />
+            <img ng-if="$root.userdata.picture" ng-src="{{$root.userdata.picture}}" />
+            <div style="text-align: center;color: #fff;margin-top: 10px;">{{uploadBtnText}}</div>
+        </div>
+    </div><!-- end of edit-profile-pic-outer div -->
+
+	<div class="more-info-form">
+   
+          <div class="upload-cover-photo" >
+          <input type="text" placeholder="Title (E.g  Graphic Designer & Photographer)" ng-model="data.title" maxlength="80" class="bgwhite placeholder-grey" class="mart" />
+            <div class="placeholder mart" style="padding-left: 0px;">
+              <input type="text" class="bgwhite placeholder-grey" ng-autocomplete ng-model="data.location" options="{ types: '(cities)'}" details="$root.mapdetails"/><!--ng-blur="validateLocation()"-->
+            </div>
+              <div class="bgwhite placeholder-grey mart" style="position:relative;width: 100%;height: 50px;float: left;"><div style="position:absolute;z-index:1;margin-top: 15px;margin-left: 10px;">USD</div>  <input class="bgwhite placeholder-grey" type="tel" placeholder="Hourly Rate" ng-model="data.hourlyRateUSD" only-digits style="position:absolute;padding-left: 45px;" /></div>
+            <div class="mart"  style="position:relative;width: 100%;height: 50px;float: left;"><div style="position:absolute;z-index:1;margin-top: 15px;margin-left: 10px;">HKD</div>  <input class="bgwhite placeholder-grey" type="tel" placeholder="Hourly Rate" ng-model="data.hourlyRateHKD" only-digits style="position:absolute;padding-left: 45px;"/></div>
+            
+            <input type="text" class="bgwhite placeholder-grey mart" placeholder="Company Name (Optional)" ng-model="data.companyName" />
+            <div class="mart"  class="" style="position:relative;width: 100%;float: left;background-color: #fff;color: gray;    margin-top: 10px;">
+
+            <div class="pad0">{{"Billing Address (This address will print on invoices)" | translate}}</div> 
+         
+            
+            <p>
+            <input type="text" placeholder="Address line 1" class="bgwhite placeholder-grey" ng-model="data.billaddress.addressLine1" />
+            <input type="text" placeholder="Address line 2" class="bgwhite placeholder-grey" ng-model="data.billaddress.addressLine2" />
+            <input type="text" placeholder="Address line3" class="bgwhite placeholder-grey" ng-model="data.billaddress.addressLine3" />
+
+            <input type="text" placeholder="City" class="bgwhite placeholder-grey" ng-model="data.billaddress.city" />
+            <input type="text" placeholder="Country" class="bgwhite placeholder-grey" ng-model="data.billaddress.country" />
+            <input type="tel" placeholder="Post Code" class="bgwhite placeholder-grey" ng-model="data.billaddress.postCode " only-digits />
+            </p>
+            
+           </div>
+          
+           <!-- <input type="text" placeholder="Facebook Profile Link" ng-model="data.fblink"/>
+            https://www.facebook.com/{{data.fblink}}
+            <input type="text" placeholder="Twitter handle" ng-model="data.twitterlink" />-->
+             
+              <ui-select multiple ng-model="data.profession" class="bgwhite placeholder-grey" theme="select2" ng-disabled="disabled" style="width:100%;">
+                <ui-select-match class="bgwhite placeholder-grey" placeholder="Tap to pick profession">{{$item.name}}</ui-select-match>
+                <ui-select-choices position="down" repeat="cat in $root.categories | filter:$select.search">
+                {{cat.name}}
+
+                </ui-select-choices>
+              </ui-select>
+
+               <ui-select multiple ng-model="data.skills" class="bgwhite placeholder-grey" theme="select2" ng-disabled="disabled" style="width:100%;" >
+                <ui-select-match class="bgwhite placeholder-grey" placeholder="Tap to pick skills">{{$item.name}}</ui-select-match>
+                <ui-select-choices  position="down" repeat="cat in $root.skills | filter:$select.search | limitTo:50">
+                {{cat.name}}
+                </ui-select-choices>
+              </ui-select>
+            <!--<tags-input ng-model="data.tags" placeholder="#[add a tag]">
+             <auto-complete ></auto-complete>
+            </tags-input>-->
+           <div style="text-align: center;padding: 10px;font-size: 20px;color: #ffffff;">
+                        {{ 'About' | translate }}
+            </div><!-- end of upload-title div --> 
+                  <div class="upload-options-outer">
+                             <div class="upload-option" style="border-right:none;"><input class="bgwhite placeholder-grey" type="file"   ngf-fix-orientation="false" ngf-select="onAboutFileSelect($files,'image')" /><i class="material-icons white" style="font-size: 32px;">image</i>
+                             </div>
+                            <!--<div class="upload-option"><input type="file" ngf-fix-orientation="false" ngf-capture="true" ngf-resize="{width: 706, height: 284, quality: 1, type: 'image/jpeg', 
+                                centerCrop: false, restoreExif: false}"  ngf-select="onAboutFileSelect($files,'image')" accept="image/*;capture=camera"><img src="img/camera.png" />
+                             </div>-->
+                              <div class="upload-option" style="border-left:none;" ng-click="onAboutFileSelect('','text');">
+                                <i class="material-icons white" style="font-size: 32px;" >create</i>
+                             </div>
+                  </div><!-- end of upload-option-outer div -->
+
+              
+              
+               <div ng-repeat="(id,image) in $root.userdata.aboutPhoto track by $index" class="uploaded-project" ng-if="image">
+               <div class="delete"><img src="img/delete.png" ng-click="deleteAbout(id)"/></div>
+                <img ng-src="{{image.data}}"  ng-if="image.type=='image'" />
+                <p ng-if="image.type=='text'">{{image.data}}</p>
+              </div>     
+              <div class="uploaded-project edit-profile-about-list">
+
+               <ion-list>
+                    <ion-item  ng-repeat="obj in aboutPhoto track by $index"  >
+                   <div class="uploaded-project">
+                       <div class="delete"><img src="img/delete.png" ng-click="delete($index)"/></div>
+                          <img ngf-src="obj" ng-if="obj.objecttype=='image'" />
+                          <div ng-if="obj.objecttype=='text'" style="float:left;width:100%;padding: 5px;margin-top: 10px;margin-bottom: 10px;min-height: 100px; color: #fff;">
+                              <p>{{"Enter your content in following box" | translate}}</p>
+                              <div simditor placeholder="type here..." ng-if="obj.objecttype=='text'" ng-model="textboxdata[$index]" ng-change="fillText(textboxdata[$index],$index);"></div>
+                          </div>
+
+                          
+                    </div>
+                    </ion-item>
+                  </ion-list>
+              </div><!-- end of uploaded-poject div -->
+              <hr>
+              <div class="bgwhite placeholder-grey" style="float:left;width:100%;margin-top: 10px;margin-bottom: 10px;min-height: 100px;padding: 5px;    color: #fff;">
+                <div text-angular ng-model="data.educationdescription" ng-init="data.educationdescription=$root.userdata.educationdescription" placeholder="{{'Enter your education description here...' | translate}}"></div>
+              </div>
+
+              <div  class="bgwhite placeholder-grey" style="color: #fff;float:left;width:100%;margin-top: 10px;margin-bottom: 10px;min-height: 100px;padding: 5px;">
+               <div text-angular ng-model="data.workHistorydescription" ng-init="data.workHistorydescription=$root.userdata.workHistorydescription" placeholder="{{'Enter your work history description...' | translate}}"></div>
+              </div>
+
+          </div><!-- end of upload-cover-photo div -->
+    </div><!-- end of more-info-form div -->
+
+ <div class="upload-title" ng-if="$root.user_projects.length>0">
+                        {{ 'Projects' | translate }}
+                  </div><!-- end of upload-title div --> 
+        <div class="edit-profile-project-list">
+           <div ng-repeat="project in $root.user_projects" class="uploaded-project">
+                        <div class="delete"><img src="img/delete.png" ng-click="deleteProject(project.id);"/></div>
+                      <!--<div class="more"><img src="img/more.png" /></div>-->
+                     
+
+                   <h4 ng-click="gotoprojectDetails(project.id)">{{project.projectTitle}}</h4>
+                     <div class="project-description">
+                {{project.description}}
+              </div><!-- end of project-description div -->
+                   </div><!-- end of uploaded-poject div -->
+
+      
+        </div><!-- end of  div -->
+    </div>
+    </ion-content><!-- end of content div -->
+          <div class="prosave"  ng-click="save(data)"><i class="material-icons" style="padding: 15px;">send</i> </div>
+</ion-view><!-- end of view div -->
+    

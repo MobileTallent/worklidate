@@ -1,0 +1,67 @@
+<div class="profile-timeline profile-tabs-content" ng-init="data=($root.viewUser.timeline | objectToArray)">>
+			<div class="timeline" ng-repeat="line in data | reverse"> <!--Repeat This -->
+						<div class="seperator">
+							<div class="left"></div>
+							<div class="right"></div>
+						</div><!-- end of seperator div -->
+						<div class="timeline-date">
+							<div>{{convertToDate(line.publishAt) | date:'dd'}}</div>
+							<div>{{convertToDate(line.publishAt) | date:'MMM'}}</div>
+						</div><!-- end of timeline-date div -->
+						<div class="timeline-details" ng-if="line.type=='delete_project'">
+									<div class="ring green"></div>
+									<div class="timeline-heading" >
+										<div class="timeline-title" >{{line.title}}</div>
+										<div class="timeline-status" >{{line.statusline}}</div>
+									</div><!-- end of timeline-heading div -->
+									<div class="timeline-description">
+										<h5>{{line.subTitle}}</h5>
+										<div ng-bind-html="line.description"></div>
+								 </div><!-- end of timeline-description div -->
+									<!--<div class="social">
+								      <div> <img src="img/view.png" /><i>1120</i></div>
+								      <div><img src="img/thumbsup_gray.png" class="thumb" /><i>520</i></div>
+								      <div><img src="img/black_icon_3.png" /><i>1250</i></div>
+								    </div>-->
+						</div><!-- end of  timeline-details div -->
+
+						<div class="timeline-details" ng-if="line.type=='projects'">
+									<div class="ring green"></div>
+									<div class="timeline-heading" ng-click="gotoprojectDetails(line.reference)">
+										<div class="timeline-title" ng-click="gotoprojectDetails(line.reference)">{{line.title}}</div>
+										<div class="timeline-status" ng-click="gotoprojectDetails(line.reference)">{{line.statusline}}</div>
+									</div><!-- end of timeline-heading div -->
+									<div class="timeline-description" ng-click="gotoprojectDetails(line.reference)">
+										<h5>{{line.subTitle}}</h5>
+										<div ng-bind-html="line.description"></div>
+								 </div><!-- end of timeline-description div -->
+									<!--<div class="social">
+								      <div> <img src="img/view.png" /><i>1120</i></div>
+								      <div><img src="img/thumbsup_gray.png" class="thumb" /><i>520</i></div>
+								      <div><img src="img/black_icon_3.png" /><i>1250</i></div>
+								    </div>-->
+						</div><!-- end of  timeline-details div -->
+						<div class="timeline-details" ng-if="line.type=='jobs'">
+									<div class="ring yellow"></div>
+									<div class="timeline-heading" >
+										<div class="timeline-title" >{{line.title}}</div>
+										<div class="timeline-status" >{{line.statusline}}</div>
+									</div><!-- end of timeline-heading div -->
+									<div class="timeline-description" >
+										<h5>{{line.subTitle}}</h5>
+										<div ng-bind-html="line.description"></div>
+								 </div><!-- end of timeline-description div -->
+									<!--<div class="social">
+								      <div> <img src="img/view.png" /><i>1120</i></div>
+								      <div><img src="img/thumbsup_gray.png" class="thumb" /><i>520</i></div>
+								      <div><img src="img/black_icon_3.png" /><i>1250</i></div>
+								    </div>-->
+						</div><!-- end of  timeline-details div -->
+
+						<div class="seperator">
+								<div class="left"></div>
+								<div class="right"></div>
+						</div><!-- end of seperator div -->
+			</div><!-- end of timeline div -->
+</div><!-- end of profile-timeline div -->
+

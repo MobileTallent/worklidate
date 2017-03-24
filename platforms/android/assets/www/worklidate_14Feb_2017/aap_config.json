@@ -1,0 +1,9 @@
+app_config={
+    "apiKey": "AIzaSyCHdUkGfSNYsvHlqG9Ec6vhlWZ7G77wG2s",
+    "authDomain": "developing-4307f.firebaseapp.com",
+    "databaseURL": "https://developing-4307f.firebaseio.com",
+    "storageBucket": "developing-4307f.appspot.com",
+    "messagingSenderId": "11123893637",
+    "analyticsKey": "UA-82774976-1",
+    "serverURL": "http://developing.worquay.com",
+  }

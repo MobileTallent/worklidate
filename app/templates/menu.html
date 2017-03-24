@@ -1,0 +1,94 @@
+  <ion-side-menus enable-menu-with-back-views="false" class="gradient-blue">
+          <ion-side-menu-content drag-content="false">
+              <!--<ion-nav-bar class="bar-stable">
+              <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+          </button>
+          </ion-nav-buttons>
+          </ion-nav-bar>-->
+          <ion-nav-view name="menuContent" ></ion-nav-view>
+
+  <script id="templates/popover.html" type="text/ng-template">
+<style type="text/css">
+  .popover
+  {
+    top: 0 !important;
+    left:0px !important;
+    margin-top: 13px !important;
+  }
+</style>
+      <ion-popover-view class="gradient-blue">
+        <ion-content class="gradient-blue fontw">
+          <div class="list" ng-if="$root.loggedUserId">
+            <a class="item" href="#/app/mainpage">
+                  <i class="material-icons" style="float: left;margin-right: 18px;">home</i> 
+                  <div> {{ 'Home' | translate }}</div>
+            </a>
+            <a class="item" href="#/app/profile">
+               <i class="material-icons" style="float: left;margin-right: 18px;">account_box</i>
+                <div class="mart2">{{ 'My Profile' | translate }}</div>
+            </a>
+            <a class="item"  href="#/app/searchresult/People/">
+          
+                     <i class="material-icons" style="float: left;margin-right: 18px;">search</i>
+                      <div class="mart2">{{ 'Find People' | translate }}</div>
+            </a>
+            <a class="item" href="#/app/workorganizer">
+           
+                     <i class="material-icons" style="float: left;margin-right: 18px;">today</i>
+                      <div class="mart2">{{ 'Work Organizer' | translate }}</div>
+            </a>
+            <a class="item" href="#/app/myfinance">
+             
+                     <i class="material-icons" style="float: left;margin-right: 18px;">attach_money</i>
+                      <div class="mart2"> {{ 'My Finance' | translate }}</div>
+            </a>
+             <a class="item" href="#/app/setting">
+              
+                      <i class="material-icons" style="float: left;margin-right: 18px;">settings_applications</i> <div  class="mart2"> {{ 'Settings & Support'  | translate }}</div>
+            </a>
+            <a class="item" >
+                    <i class="material-icons" style="float: left;margin-right: 18px;">language</i>  
+                    <div ng-click="setLang('en')" ng-if="currentLang!='en'">EN</div>
+                    <div ng-click="setLang('zh')" ng-if="currentLang!='zh'">中文</div>
+                 </a>
+             <div class="item"  ng-click="logout()" style="color: #fff">
+                <i class="icon ion-log-out" style="float: left;margin-right: 22px;margin-top: -2px;margin-left: 4px;font-size: 20px;"></i> <div style=" float: left;" class="mart2"> {{ 'Logout' | translate }}</div>
+            </div>
+          </div>
+
+           <div class="list" ng-if="!$root.loggedUserId">
+                <a class="item" href="#/app/mainpage">
+                      <i class="material-icons" style="float: left;margin-right: 18px;">home</i> 
+                      <div > {{ 'Home' | translate }}</div>
+                </a>
+                <a class="item" href="#/app/login">
+                        <i class="material-icons" style="float: left;margin-right: 18px;">perm_identity</i> 
+                      <div > {{ 'Login' | translate }}</div>
+                </a>
+                <a class="item" href="#/app/signup">
+                      <i class="material-icons" style="float: left;margin-right: 18px;">account_circle</i>  
+                      <div >{{ 'Sign Up' | translate }}</div>
+                </a>
+                <a class="item" >
+                    <i class="material-icons" style="float: left;margin-right: 18px;">language</i>  
+                    <div ng-click="setLang('en')" ng-if="currentLang!='en'">EN</div>
+                    <div ng-click="setLang('zh')" ng-if="currentLang!='zh'">中文</div>
+                 </a>
+           </div>
+        </ion-content>
+      </ion-popover-view>
+    </script>
+
+        </ion-side-menu-content><!-- end of side-menu-content div -->
+
+    
+    
+  
+  </ion-side-menus><!-- end of side-menus div -->
+<div style="border:1px solid #111;width:700px;min-height:200px;float:left;" id="serviceFees">
+
+</div>

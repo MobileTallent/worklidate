@@ -1,0 +1,87 @@
+
+<ion-view view-title="Settings" class="gradient-red">
+  <div class="header-bar">
+      <!--<div class="backbtn">
+        <img src="img/back_arrow_white.png" ng-click="settingBack()" />
+      </div>--><!-- end of backbtn div -->
+      <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+      <div class="title"></div>
+  </div><!-- end of header-bar div -->
+
+ <ion-content class="hasheader" overflow-scroll="true">
+ <div ng-if="$root.userdata">
+     <div class="upload-btn bgwhite" style="width: 100%;">
+       <select ng-model="data.languagePreference" ng-init="data.languagePreference=$root.userdata.languagePreference.languagePreference" ng-change="setLanguagePreference(data.languagePreference);setLang(data.languagePreference);" "="" class="ng-pristine ng-valid ng-touched" style="width: 98%; border: none; padding: 10px;">
+          <option value="en">English</option>
+          <option value="zh">Chinese</option>
+       </select>
+    </div> <i class="material-icons arrowdown">keyboard_arrow_down</i>
+
+
+<!--  <div class="upload-title ng-binding">
+       Language preference
+  </div> -->
+
+ <!--  <select ng-model="data.languagePreference"  ng-init="data.languagePreference=$root.userdata.languagePreference.languagePreference" ng-change="setLanguagePreference(data.languagePreference);setLang(data.languagePreference);" class="languagePreference">
+    <option value="en">English</option>
+    <option value="zh">Chinese</option>
+  </select> -->
+ <!-- <div class="upload-title ng-binding">
+        Interested topic show on homescreen.
+  </div>
+  <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        You have selected {{userdata.interested_categories.length}}
+    </div>
+    <div class="upload-title ng-binding" ng-if="userdata.interested_categories.length>0">
+        <div ng-repeat="cat in userdata.interested_categories" style="float:left;line-height: 11px;font-size:11px;text-transform:capitalize;"> {{cat.name}},&nbsp</div>
+    </div>
+  <div class="upload-title ng-binding" ng-if="!userdata.interested_categories">
+        You have selected 0
+    </div>
+  <div class="card-list">
+    <div class="main-category-card-bar " ng-repeat="cat in category_level_1 track by $index" >
+            <div class="category-card-bar" ng-click="getCategories(cat.id);">
+            {{cat.name}}
+            </div>
+          <div id="category{{cat.id}}" class="category-setting-outer " >
+          <div class="main-category-card-box" ng-repeat="subcat in $root.categories_tree[cat.id]">
+            <div class="category-card-box unchecked"  id="category{{subcat.id}}"  ng-click="markCategory(subcat.id,subcat)">
+             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+              <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                <div>{{subcat.name}}</div>
+                </div>
+            </div>
+          </div>
+     </div>
+  </div> -->
+
+  </div>
+    <a class="settingbtn"  href="#/app/feedback" style="top: 62px;"> {{ 'Customer Support' | translate }} </a>
+    <a class="settingbtn" ng-click="openNewTicket();" style="top: 130px;"> {{ 'Feedback' | translate }} </a>
+    <a class="settingbtn" href="#/app/faq" style="top:192px;">  {{'FAQ' | translate }}</a>
+     <!--<div class="settingbtn" ng-click="" style="top: 250px;margin: auto;right: 0;left: 0;width: 50px;"><i class="material-icons" style="padding: 14px 10px;">save</i> </div>-->
+ </ion-content><!-- end of  ion-content div -->
+
+   <script id="create_ticket.html" type="text/ng-template">
+      <ion-modal-view class="gradient-red">
+       <ion-content>
+        <div style="text-align: center;font-size: 21px;font-weight: bold;right: 0;left: 0;top: 14px;color: #ffffff;position: absolute;"> {{ 'Feedback' | translate }}</div>
+           <button class="button button-clear ion-close popupclose" ng-click="modal.hide()"></button>
+         <div class="list">
+         <label class="item item-input">
+          
+            <textarea class="ticket-textarea placeholder-grey w98" ng-model="data.feedback" style="padding: 8px;" placeholder="{{ 'Write your feedback here...(This message only view by Support team)' | translate }}"></textarea>
+            
+         </label>
+    
+         
+          
+          </div>
+          <div style="margin-top: 10px;"><button class="prosubmit" style="font-size: 14px;" ng-click="createTicket()">{{ 'Feedback' | translate }}</button></div>
+        </ion-content>
+      </ion-modal-view>
+</script>
+
+</ion-view><!-- end of ion-view div -->

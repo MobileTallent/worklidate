@@ -1,0 +1,41 @@
+<div class="profile-project profile-tabs-content">
+
+			<div class="project"  ng-repeat="project in $root.user_projects | reverse">
+			  <div class="delete" ng-if="project.userid==$root.loggedUserId"><img src="img/delete.png" ng-click="deleteProject(project.id);" /></div>
+					<div class="screen">
+						<div class="custom-card-image" ng-click="gotoprojectDetails(project.id)" style="background-image:url({{project.coverPicture.data}})" ng-if="project.coverPicture && project.coverPicture.type=='image'"></div>
+              
+               			<div class="custom-card-image textdata" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'" ng-bind-html="project.coverPicture.data"></div>
+
+					</div><!-- end of screen div -->
+					 <!--<div ng-repeat="image in project.images"  class="project-view-image">
+			            <img ng-src="{{image.data}}"  ng-if="image.type=='image'" />
+			            <p ng-if="image.type=='text'" ng-bind-html="image.data">{{image.data}}</p>
+			          </div>-->
+
+					<div class="user-details" ng-click="gotoprojectDetails(project.id)" ng-init="user=(project.userid | getUser)">
+			            <div class="user-heading">
+				              <h5>{{project.projectTitle}}</h5>
+				              <div> {{ 'by ' | translate }} <span>{{user.name}}</span>  {{ 'on' | translate }} {{project.publishAt | date:'MMM dd,yyyy'}}</div>
+				             <!--  <div class="card-sub-tag"><i ng-repeat="category in project.categories">{{category.name}}, </i></div> -->
+			            </div><!-- end of user-heading div -->
+
+			            <!-- <div class="user-action">
+					              <div class="up-part"> -->
+						                <!--<div class="card-tag"> {{ 'Hot' | translate }}</div>-->
+						              <!-- 	<div class="card-star">
+						                	<i class="icon ion-android-star-outline"></i>
+						              	</div> --><!-- end of card-star div -->
+					            	<!-- </div> --><!-- end of up-part div -->
+					              <!-- <div class="down-part">
+					              		<div class="card-view"><img src="img/eye.png"> {{getObjectLength(project.views)}}</div>
+					              		<div class="card-like"><img src="img/like.png"> {{getObjectLength(project.likes)}}</div>
+					              </div> --><!-- end of down-part div -->
+			            <!-- </div> --><!-- end of user-action div -->
+
+
+			      </div><!-- end of user-details div -->
+
+			   <!--  <div class="description">{{project.description}}</div> -->
+			</div><!-- end of project div -->
+</div><!-- end of profile-project profile-tabs-content div -->

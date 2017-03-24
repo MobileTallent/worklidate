@@ -1,0 +1,179 @@
+
+<ion-view view-title="Apply For Job" class="gradient-red">
+    <div class="header-bar shadow">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of  backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+        <div class="title"></div>
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom proposal-list-page" overflow-scroll="true">
+    <div ng-if="getObjectLength(proposals)==0" style="width:100%;text-align:center;margin-top:50px;font-size:15px;">
+    {{'No proposal yet' | translate }}</div>
+    <div class="main-page-content proposalbg" ng-repeat="(id,proposal) in proposals" ng-init="user=(proposal.talent_id | getUser)">
+      <div  ng-if="proposal.mostRelevantProject && proposal.mostRelevantProject!='0'" ng-init="project=(proposal.mostRelevantProject | getProject);getJobStatus(proposal.talent_id)">
+        <div>
+          <div style="width:100%;font-size: 15px;margin: 10px;">{{'Proposal Details' | translate }}</div>
+
+            <div class="card-sub-tag proposalbuget">{{proposal.currency}} {{proposal.budget}}</div>
+              <div class="proposalStatus" >
+                 <i ng-if="proposal.acceptedbyemployer=='1' && acceptedbytalent!='1'">{{'Offered. Need to accepted by talent.' | translate }}</i>
+                 <i ng-if="proposal.acceptedbyemployer=='1' && acceptedbytalent=='1'">{{'Accepted from both side.' | translate }}</i>
+                  <i ng-if="getObjectLength(proposal.message)>1 && proposal.acceptedbyemployer!='1' && acceptedbytalent!='1'">{{'Discussing' | translate }}</i>
+                  <i ng-if="getObjectLength(proposal.message)<=1">{{'New' | translate }}</i>
+              </div>     
+              <div style="width:100%;font-size: 15px;margin: 0px 10px;">{{'Proposal Date' | translate }} : {{convertToDate(proposal.publishAt) | date:'dd-MM-yyyy'}}</div>  
+       </div>
+        <div class="custom-card" ng-if="user" style="margin-top:0px;">
+        <h5 style="margin-left:10px;">{{'Most relevant project' | translate }} : {{project.projectTitle}} </h5>
+        <div class="custom-card-image" ng-click="gotoprojectDetails(proposal.mostRelevantProject)" ng-if="project.coverPicture && project.coverPicture.type=='image'"><img ng-src="{{project.coverPicture.data}}"></div>
+          <a ng-click="gotoprojectDetails(proposal.mostRelevantProject)" class="view-relevant-project-btn"> {{'Review Project Detail' | translate }}</a>
+
+          <div class="details" style="position:relative;font-size: medium;float: left;">
+           <!-- <div style="width:100%;font-weight: bold;font-size: 15px;margin: 10px;">{{'Talent' | translate }}</div> -->
+
+            <div style="margin:5px;width: 15%;float: left;text-align: center;min-width: 50px;">
+                            <img  style="border-radius: 100%;"  ng-click="gotouserDetails(proposal.talent_id);" ng-if="!user.picture" src="img/user.png" width="50"/>
+                            <img style="border-radius: 100%;"  ng-click="gotouserDetails(proposal.talent_id);" ng-if="user.picture" ng-src="{{user.picture}}" width="50"/>
+            
+                     <div  ng-if="user.asTalentfeedback && user.asEmployerfeedback" ng-init="ratings=((calculateRating(user.asTalentfeedback)/getObjectLength(user.asTalentfeedback))+(calculateRating(user.asEmployerfeedback)/getObjectLength(user.asEmployerfeedback)))/2">
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+                                       
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="user.asTalentfeedback && !user.asEmployerfeedback" ng-init="ratings=(calculateRating(user.asTalentfeedback)/getObjectLength(user.asTalentfeedback))">
+                                     
+                                  <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="!user.asTalentfeedback && user.asEmployerfeedback" ng-init="ratings=(calculateRating(user.asEmployerfeedback)/getObjectLength(user.asEmployerfeedback))">
+                                     
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+            </div>
+
+            <div style="margin:10px;margin-left:0px;width: 77%;float: left;">
+            <div class="popupusername1">{{user.name}}</div>
+             <div ng-if="user.hourlyRateHKD || user.hourlyRateUSD"  class="card-sub-tag">
+                    <div ng-if="user.hourlyRateHKD || user.hourlyRateUSD">HKD {{user.hourlyRateHKD}}, USD {{user.hourlyRateUSD}}</div>
+                  
+              </div>
+              <div class="card-sub-tag">{{'Completed Jobs' | translate }}: {{telentEndContracts[proposal.talent_id]}}</div> 
+               <div class="card-sub-tag">{{'Funded Jobs' | translate }}: {{telentWorkingContracts[proposal.talent_id]}}</div> 
+              <div class="card-sub-tag">{{'Location' | translate }}: {{user.location}}</div>
+              <div class="card-sub-tag" ng-if="user.skills">{{'Skills' | translate }}: <i ng-repeat="skill in user.skills">{{skill.name}},</i></div>
+             
+             
+             
+            </div>
+          
+
+      
+      </div>
+      
+       </div>
+
+        
+           <a href="#/app/proposaldetails/{{id}}" style="width:100%;font-weight: bold;font-size: 15px;margin: 10px;margin-top: 20px;float: left;"><button class="button full-pink-btn viewproposalbtn">{{ 'View Proposal' | translate }}</button></a>
+
+     
+    </div>
+    
+    <div  ng-if="(!proposal.mostRelevantProject || proposal.mostRelevantProject=='0')">
+
+    <div class="custom-card proposalbg" ng-if="user" ng-init="getJobStatus(proposal.talent_id)">
+      
+       <div>
+          <div style="width:100%;font-size: 15px;margin: 10px;">{{'Proposal Details' | translate }}</div>
+
+            <div class="card-sub-tag proposalbuget">{{proposal.currency}} {{proposal.budget}}</div>
+              <div class="proposalStatus" >
+                 <i ng-if="proposal.acceptedbyemployer=='1' && acceptedbytalent!='1'">{{'Offered. Need to accepted by talent.' | translate }}</i>
+                 <i ng-if="proposal.acceptedbyemployer=='1' && acceptedbytalent=='1'">{{'Accepted from both side.' | translate }}</i>
+                  <i ng-if="getObjectLength(proposal.message)>1 && proposal.acceptedbyemployer!='1' && acceptedbytalent!='1'">{{'Discussing' | translate }}</i>
+                  <i ng-if="getObjectLength(proposal.message)<=1">{{'New' | translate }}</i>
+              </div>     
+              <div style="width:100%;font-size: 15px;margin: 10px;">{{'Proposal Date' | translate }} : {{convertToDate(proposal.publishAt) | date:'dd-MM-yyyy'}}</div>  
+       </div>
+        <div class="details" style="position:relative;font-size: medium;">
+           <!-- <div style="width:100%;font-weight: bold;font-size: 15px;margin: 10px;">{{'Talent' | translate }}</div> -->
+
+            <div style="margin:5px;width: 15%;float: left;text-align: center;min-width: 50px;">
+                            <img  style="border-radius: 100%;" ng-click="gotouserDetails(proposal.talent_id);" ng-if="!user.picture" src="img/user.png" width="50"/>
+                            <img style="border-radius: 100%;"  ng-click="gotouserDetails(proposal.talent_id);" ng-if="user.picture" ng-src="{{user.picture}}" width="50"/>
+           
+           
+                    <div  ng-if="user.asTalentfeedback && user.asEmployerfeedback" ng-init="ratings=((calculateRating(user.asTalentfeedback)/getObjectLength(user.asTalentfeedback))+(calculateRating(user.asEmployerfeedback)/getObjectLength(user.asEmployerfeedback)))/2">
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+                                       
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="user.asTalentfeedback && !user.asEmployerfeedback" ng-init="ratings=(calculateRating(user.asTalentfeedback)/getObjectLength(user.asTalentfeedback))">
+                                     
+                                  <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+                                      <div class="ratting" ng-if="!user.asTalentfeedback && user.asEmployerfeedback" ng-init="ratings=(calculateRating(user.asEmployerfeedback)/getObjectLength(user.asEmployerfeedback))">
+                                     
+                                       <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                                       <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                                       <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                                       <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                                      </div><!-- end of ratting div -->
+            </div>
+
+            <div style="margin:10px;margin-left:0px;width: 77%;float: left;">
+            <div class="popupusername1">{{user.name}}</div>
+             <div ng-if="user.hourlyRateHKD || user.hourlyRateUSD" class="card-sub-tag">
+                    <div ng-if="user.hourlyRateHKD || user.hourlyRateUSD">HKD {{user.hourlyRateHKD}}, USD {{user.hourlyRateUSD}}</div>
+                  
+              </div>
+              <div class="card-sub-tag">{{'Completed Jobs' | translate }}: {{telentEndContracts[proposal.talent_id]}}</div> 
+               <div class="card-sub-tag">{{'Funded Jobs' | translate }}: {{telentWorkingContracts[proposal.talent_id]}}</div> 
+              <div class="card-sub-tag">{{'Location' | translate }}: {{user.location}}</div>
+              <div class="card-sub-tag" ng-if="user.skills">{{'Skills' | translate }}: <i ng-repeat="skill in user.skills">{{skill.name}},</i></div>
+             
+             
+             
+            </div>
+          
+
+      
+      </div>
+           <a href="#/app/proposaldetails/{{id}}" style="width:100%;font-weight: bold;font-size: 15px;margin: 10px;margin-top: 20px;float: left;"><button class="button full-pink-btn viewproposalbtn">{{ 'View Proposal' | translate }}</button></a>
+           
+        
+       
+         
+
+    </div>
+    </div>
+    </div>                
+  </ion-content><!-- end of ion-content  div -->
+  <div class="full-gray-btn" ng-click="goto('searchresult/People/')" ng-if="job.status=='open'">  {{ 'Invite Talent' | translate }}</div>
+</ion-view><!-- end of ion-view div -->

@@ -1,0 +1,221 @@
+
+<ion-view  class="gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of  backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+        
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom job-details-page" overflow-scroll="true">
+    <div class="blue-header">
+               <div class="header-user-details">
+                 <img src="img/user.png" draggable="false" ng-if="!$root.userdata.picture" />
+                <img ng-src="{{$root.userdata.picture}}" draggable="false" ng-if="$root.userdata.picture" />
+                  {{$root.userdata.name}}
+                </div>
+            
+      </div>
+
+   <div class="gray-header">
+               <div class="header-user-details">
+                  <img ng-if="!talent.picture" src="img/user.png"  />
+                  <img ng-if="talent.picture" ng-src="{{talent.picture}}" />
+                  {{talent.name}}
+                </div>
+              <div class="budget-details" ng-if="job.currency=='USD' && talent.hourlyRateUSD">USD {{talent.hourlyRateUSD}} / hour</div>
+              <div class="budget-details" ng-if="job.currency=='HKD' && talent.hourlyRateHKD">HKD {{talent.hourlyRateHKD}} / hour</div>
+      </div>
+      <div class="job-progress">
+<div class="job-progress-line"></div>
+  <div class="job-progress-part">
+    <img src="img/green_hand.png" />
+    <div class="job-progress-part-title green">{{"Reviewing" | translate}}</div>
+  </div>
+  <div class="job-progress-part">
+    <img src="img/gray_hand.png" ng-if="contract.acceptedbyemployer!=1"/>
+    <img src="img/green_hand.png" ng-if="contract.acceptedbyemployer==1"/>
+    <div class="job-progress-part-title" ng-class="contract.acceptedbyemployer==1?'green':'gray'">{{"Accepted by Employer" | translate}}</div>
+  </div>
+  <div class="job-progress-part">
+    <img src="img/gray_hand.png" ng-if="contract.acceptedbytalent!=1"/>
+    <img src="img/green_hand.png" ng-if="contract.acceptedbytalent==1"/>
+    <div class="job-progress-part-title" ng-class="contract.acceptedbytalent==1?'green':'gray'">{{"Accepted by Talent" | translate}}</div>
+  </div>
+  
+  <div class="job-progress-part">
+    <img src="img/gray_hand.png" ng-if="contract.acceptedbyemployer!=1 || contract.acceptedbytalent!=1"/>
+    <img src="img/green_hand.png" ng-if="contract.acceptedbyemployer==1 && contract.acceptedbytalent==1"/>
+    <div class="job-progress-part-title" ng-class="(contract.acceptedbyemployer==1 && contract.acceptedbytalent==1)?'green':'gray'">{{"Contract accepted by Both" | translate}}</div>
+  </div>
+</div>
+       <div class="item" style="background: #999999;">
+      <div>
+        <div class="detail-job-left-section">{{"Job Details" | translate}}</div>
+        <div class="detail-job-right-section">{{job.title}}</div>
+      </div>
+      <div>
+        <div class="detail-job-left-section">{{"Job Posted" | translate}}</div>
+        <div class="detail-job-right-section">{{convertToDate(job.publishAt) | date:'dd MMM yyyy'}}</div>
+      </div>
+      <div>
+        <div class="detail-job-left-section">{{"Delivery Time" | translate}}</div>
+        <div class="detail-job-right-section">{{job.deliveryTime}}</div>
+      </div>
+      <div>
+        <div class="detail-job-left-section">{{"Initial Budget" | translate}}</div>
+        <div class="detail-job-right-section">{{job.currency}} {{job.budget}}</div>
+      </div>
+      <div ng-if="job.experienceLevel">
+        <div class="detail-job-left-section">{{"Experience" | translate}}</div>
+        <div class="detail-job-right-section">
+            <i ng-if="job.experienceLevel=='entry'">{{"$ Less Experience" | translate}}</i>
+                <i ng-if="job.experienceLevel=='intermediate'">{{"$$ Standard experience" | translate}}</i>
+                <i ng-if="job.experienceLevel=='expert'">{{"$$$ Professional" | translate}}</i></div>
+      </div>
+       <div ng-if="job.jobLength">
+        <div class="detail-job-left-section">{{"Job Length" | translate}}</div>
+        <i ng-if="job.jobLength=='day'"> {{"Less than a day" | translate}}</i>
+                <i ng-if="job.jobLength=='week'"> {{"Less than a week" | translate}}</i>
+                <i ng-if="job.jobLength=='month'"> {{"Less than a month" | translate}}</i>
+                <i ng-if="job.jobLength=='3month'"> > 3 {{"month" | translate}}</i>
+                <i ng-if="job.jobLength=='notSpecified'"> {{"Not specified" | translate}}</i>
+      </div>
+
+       <div ng-if="job.aboutBrand" on-hold="MoreOptions(job.aboutBrand,'aboutBrand{{contractId}}')">
+        <div class="detail-job-left-section">{{'About Brand' | translate }}</div>
+        <div class="detail-job-right-section">{{job.aboutBrand}}</div>
+      </div>
+       <div ng-if="job.targetAudience"  on-hold="MoreOptions(job.targetAudience,'targetAudience{{contractId}}')">
+        <div class="detail-job-left-section">{{'Target Audience' | translate }}</div>
+        <div class="detail-job-right-section" id="targetAudience{{contractId}}">{{job.targetAudience}}</div>
+      </div>
+      <div ng-if="job.designValue"  on-hold="MoreOptions(job.designValue,'designValue{{contractId}}')">
+        <div class="detail-job-left-section">{{'Design Value (Feeling & Message)' | translate }}</div>
+        <div class="detail-job-right-section" id="designValue{{contractId}}">{{job.designValue}}</div>
+      </div>
+       <div ng-if="job.stylisticPreferences"  on-hold="MoreOptions(job.stylisticPreferences,'stylisticPreferences{{contractId}}')">
+        <div class="detail-job-left-section">{{'Style' | translate }}</div>
+        <div class="detail-job-right-section" id="stylisticPreferences{{contractId}}">{{job.stylisticPreferences}}</div>
+      </div>
+      <div ng-if="job.colorsParticular"  on-hold="MoreOptions(job.colorsParticular,'colorsParticular{{contractId}}')">
+        <div class="detail-job-left-section">{{'Colors' | translate }}</div>
+        <div class="detail-job-right-section" id="colorsParticular{{contractId}}">{{job.colorsParticular}}</div>
+      </div>
+      <div>
+        <div class="detail-job-left-section"> {{'Description' | translate }}</div>
+        <div class="detail-job-right-section" ng-bind-html="job.description" on-hold="MoreOptions(job.description,'jobdescription{{contractId}}')" id="jobdescription{{contractId}}"></div>
+      </div>
+      <div>
+        <div class="detail-job-left-section">{{'Skills' | translate }}</div>
+        <div class="detail-job-right-section"><i ng-repeat="skill in job.categories">#{{skill.name}}, </i></div>
+      </div>
+      <div style="float: left;margin-top: 10px;">
+        <p ng-if="job.screeningQuestions">{{'You will be asked to answer the following questions when applying a job' | translate }}:
+             <div ng-repeat="questions in job.screeningQuestions track by $index">{{questions}}</div>
+            </p>
+      </div>
+        <div ng-if="job.attachments">{{"Attchamnets" | translate}}: <a href="{{attach.data}}" target="_blank" ng-repeat="attach in job.attachments">{{attach.name}}</a></div>
+            <p>
+        </div>
+         <div class="job-proposal">
+            <div>{{"Talent Proposal Details" | translate}} :</div>
+            <div>
+              <div class="detail-job-left-section">{{"Description" | translate}}</div>
+              <div class="detail-job-right-section" ng-bind-html="contract.description" on-hold="MoreOptions(contract.description,'contractdescription{{contractId}}')" id="contractdescription{{contractId}}"></div>
+            </div>
+            <div >
+              <div class="detail-job-left-section">{{"Bid Amount" | translate}}</div>
+              <div class="detail-job-right-section">{{contract.budget}}</div>
+            </div>
+            <div style="margin-bottom:10px;" ng-if="contract.screeningQuestions">{{"Anwsers of your questions" | translate}}</div>
+            <div class="proposal-quastion" ng-repeat="(id,screeningQuestions) in contract.screeningQuestions">
+              <p >{{screeningQuestions}}</p>
+              <p ng-bind-html="contract.screeningQuestionsAnswer[id]"></p>
+                
+
+            </div>
+           </div>
+
+
+
+<!--<img src="img/since_year.jpg" class="job-details-image" />-->
+
+<div class="job-details-message-list" id="job-details-message-list{{contractId}}">
+  
+  <div class="job-details-message"  ng-class="message.type=='talent'? 'white':'yellow'" ng-repeat="message in contract.message"  ng-if="message.hide!='true'">
+    <div class="job-details-message-left">
+
+                <img src="img/user.png" draggable="false" ng-if="message.type=='employer' && !$root.userdata.picture" />
+                <img ng-src="{{$root.userdata.picture}}" draggable="false" ng-if="message.type=='employer' && $root.userdata.picture" />
+
+                <img src="img/user.png" draggable="false" ng-if="message.type=='talent' && !talent.picture" />
+                <img ng-src="{{talent.picture}}" draggable="false" ng-if="message.type=='talent' && talent.picture" />
+</div>
+    <div class="job-details-message-right">
+      <h4 ng-if="message.type=='talent'">{{talent.name}}</h4>
+      <h4 ng-if="message.type=='employer'">{{$root.userdata.name}}</h4>
+      <p ng-class="message.system_message=='true'?'system_message':''" on-hold="messageMoreOptions('message-contract-employer',message.message,$index)" id="message-contract-employer{{$index}}">{{message.message}} </p>
+     
+    </div>
+  </div>
+</div>
+<div class="placeholder" style="margin-bottom: 20px;">
+              <input type="text" ng-model="proposalchat.message" placeholder="Send Message" class="proposal-message-textbox" /> <div ng-click="sendMessage();" class="upload-btn"><i class="fa fa-chevron-right"></i></div>
+            </div>
+  
+
+
+   <div class="milestone-details">
+   <!--<div class="m-title">{{"Milestones" | translate}}</div><div class="m-budget">{{"Budget for this Project" | translate}}: {{job.currency}}{{contract.budget}}</div>-->
+  
+     <div class="jobs-toggle milestone-div"  id="milestone-employee-contract-{{$index}}" ng-repeat="(milestoneid,milestone) in contract.milestones track by milestoneid" ng-if="milestone.title">
+              <div class="heading-tabs" ng-click="toggleTabs('milestone-employee-contract-'+$index)">
+                  <div class="title"> {{milestone.title}} <div class="milestone-status" ng-if="milestone.status && contract.status!='end'" ng-class="milestone.status? milestone.status:'pending'">{{milestone.status}}</div><div class="milestone-status pending" ng-if="!milestone.status && contract.status!='end'">{{"Pending" | translate}}</div></div>
+             
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content">
+                <div style="padding:20px;">
+                   <p on-hold="MoreOptions(milestone.details,'milestone-details-{{contractId}}-{{$index}}')" id="milestone-details-{{contractId}}-{{$index}}" id="milestone-details-{{contractId}}-{{$index}}">{{milestone.details}}</p>
+                  <p>{{"Progress" | translate}} :  {{milestone.progress|number:2}}%</p>
+                  <p>{{"Delivery Time" | translate}} :  {{milestone.deliveryTime}}</p>
+                  <p>{{"Description" | translate}} :  {{milestone.description}}</p>
+                  <b class="milestone-approve-option-title">{{"Attchamnets" | translate}} :</b>
+                    <div class="milestone-approve-talent-name">
+                      <a href="attach.data" style="width:100%;float: left;" ng-repeat="attach in milestone.attachments">{{attach.name}}</a>
+                    </div>
+                  <button ng-if="milestone.status=='submitted' && contract.status!='end' && contract.endContractBeforeAppoved!='true'" class="button button-assertive" ng-click="ViewApproveMilestoneWork();">
+                    {{"Click here to view and approve milestone" | translate}}
+                  </button>
+                </div>
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+   </div>
+    </ion-content><!-- end of ion-content  div -->
+
+
+     <ion-floating-menu menu-color="#ff0033" menu-open-color="#ff0033" menu-icon="ion-more" menu-open-icon="ion-android-more-vertical" ng-if="contract.status!='end' &&  contract.status!='completed' && contract.endContractBeforeAppoved!='true'">
+
+              <ion-floating-item icon-color="#fff" is-centered:"true" button-color="#00a2e2" icon="ion-close-round" text="End Job" click="confirmEndcontract()"></ion-floating-item>
+            
+   </ion-floating-menu>
+
+    <div class="full-gray-btn" style="background:lightgray;font-size:14px;color:#000;" ng-if="contract.status!='end' && contract.status!='completed' && contract.endContractBeforeAppoved!='true' && milestoneIsWorking==true && milestoneIsSubmitted!=true">{{"Waiting for talent submit milestone work" | translate}}</div>
+
+    
+ <div class="full-gray-btn" ng-click="ViewApproveMilestoneWork();"  ng-if="contract.status!='end' && contract.status!='completed' && contract.endContractBeforeAppoved!='true' && milestoneIsWorking!=true && milestoneIsSubmitted==true">  {{ 'View and Approve milestone' | translate }}</div>
+
+  <div class="full-gray-btn" ng-click="givefeedback();" ng-if="!contract.feedbackbyEmployer && contract.status=='completed' && (contract.endContractBeforeAppoved!='true' || contract.dispute=='solved')">  {{ 'Give Feedback' | translate }}</div>
+
+  <div class="full-gray-btn" ng-if="contract.assigned_milestone=='false' && milestoneIsRemaining==true && milestoneIsWorking!=true && milestoneIsSubmitted!=true && contract.status!='completed'" ng-click="assingmilestone();"> {{"Assign next milestone for talent" | translate}}</div>
+  
+  <!--<div  class="full-gray-btn" ng-click="dispute();" ng-if="contract.status!='end' && contract.endContractBeforeAppoved=='true' && contract.endby=='talent'">  {{ 'Dispute' | translate }}</div>-->
+
+ 
+
+  
+
+</ion-view><!-- end of ion-view div -->

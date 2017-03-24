@@ -1,0 +1,101 @@
+
+<ion-view view-title="My group" class="group-page" hide-back-button="true" class="gradient-red">
+   <div class="header-bar">
+ <!--<div class="backbtn">
+    <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+  </div>-->
+ <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+  <div class="title"> {{ 'Groups' | translate }}</div>
+  <div class="header-btn"><i class="fa fa-plus" ng-click="createGroupPopup()"></i></div>
+  </div>
+
+ <ion-content has-bouncing="false" class="hasheader-nofooter" overflow-scroll="true">
+
+    <div class="groups-container">
+            <div class="gray-header">
+               {{ 'Groups are allow users to exchange idea with each other.' | translate }}
+            </div><!-- end of gray-header div -->
+           
+            <div class="jobs-toggle"  id="mygroups">
+                <div class="heading-tabs" ng-click="toggleTabs('mygroups')" ng-if="$root.user_groups">
+                    <div class="title">  {{ 'My Groups' | translate }}</div>
+                    <div class="total-count">{{getObjectLength($root.user_groups)}}</div>
+                    <img class="arrow" src="img/down_arrow.png" />
+                </div><!-- end of heading-tabs div -->
+                <div class="toggle-content">
+                    <div class="group-card" ng-repeat="(groupid,group) in $root.user_groups">
+                      <div class="groups_info" >
+                          <div class="left_box" ng-click="groupdetails(groupid);" ng-if="group.image">
+                             <img ng-src="{{group.image}}" ng-if="group.image" alt="{{group.grouptitle}}">
+                          </div><!-- end of left_box div -->
+                          <div class="right_box">
+                              <h2 ng-click="groupdetails(groupid);" on-hold="moreoptions('group-'+groupid,group.grouptitle)" id="group-{{groupid}}">{{group.grouptitle}}</h2>
+                              <p ng-click="groupdetails(groupid);">{{group.location}}<br> <i ng-repeat="cat in group.interested_categories">{{cat.name}}</i>
+                              </p>
+                              <p ng-click="groupdetails(groupid);" on-hold="moreoptions('groupdesc-'+groupid,group.groupdescription)" id="groupdesc-{{groupid}}">{{group.groupdescription}}
+                              </p>
+                              <button class="join-btn" ng-click="deleteGroup(groupid);"> {{ 'Delete
+                                Group' | translate }}</button>
+                          </div>  <!--end of div right box here-->
+                      </div>  <!-- end of div group info here -->
+                  </div> <!-- end of div group-card here -->
+                </div><!-- end of toggle-content div -->
+            </div><!-- end of jobs-toggle div -->
+            <div class="jobs-toggle"  id="joinedgroups" ng-if="$root.user_joined_groups.length>0">
+                  <div class="heading-tabs" ng-click="toggleTabs('joinedgroups')">
+                      <div class="title">  {{ 'Joined Groups' | translate }} </div>
+                      <div class="total-count">{{$root.user_joined_groups.length}}</div>
+                      <img class="arrow" src="img/down_arrow.png" />
+                 </div><!-- end of heading-tabs div -->
+                 <div class="toggle-content">
+                   <div class="group-card" ng-repeat="group in $root.user_joined_groups">
+                     <div class="groups_info" >
+                            <div class="left_box" ng-click="groupdetails(group.groupid);" ng-if="group.image">
+                                <img ng-src="{{group.image}}" ng-if="group.image" alt="{{group.grouptitle}}">
+                           </div><!-- end of  left_box div -->
+                           <div class="right_box">
+                                <h2 ng-click="groupdetails(group.groupid);" on-hold="moreoptions('group-'+group.groupid,group.grouptitle)" id="group-{{group.groupid}}">{{group.grouptitle}}</h2>
+                                <p ng-click="groupdetails(group.groupid);">{{group.location}}<br> <i ng-repeat="cat in group.interested_categories">{{cat.name}}</i>
+                                </p>
+                                <p ng-click="groupdetails(group.groupid);" on-hold="moreoptions('groupdesc-'+group.groupid,group.groupdescription)" id="groupdesc-{{group.groupid}}">{{group.groupdescription}}
+                                </p>
+                                <button class="join-btn"  ng-click="leaveGroup(group.groupid);"> {{ 'Leave Group' | translate }}</button>
+                           </div>  <!--end of div right box here-->
+                    </div>  <!-- end of div group info here -->
+                </div> <!-- end of div group-card here -->
+              </div>
+          </div><!-- end of jobs-toggle div -->
+
+
+           <div>
+                <label class="item item-input">
+                  <i class="icon ion-search placeholder-icon"></i>
+                  <input type="text"  placeholder="{{ 'Search' | translate }}" ng-model="search.groupsearch">
+                </label>
+            </div><!-- end of  div -->
+
+            <div class="group-card" ng-repeat="group in searched_group_result | filter:search.groupsearch">
+                <div class="groups_info" ng-init="group_details=(group.group_id | getGroup)">
+                    <div class="left_box" ng-click="groupdetails(group.group_id);" ng-if="group_details.image">
+                        <img ng-src="{{group_details.image}}"  alt="{{group_details.grouptitle}}">
+                    </div><!-- end of left_box div -->
+                    <div class="right_box">
+                        <h2 ng-click="groupdetails(group.group_id);" on-hold="moreoptions('group-'+group.group_id,group.grouptitle)" id="group-{{group.group_id}}">{{group_details.grouptitle}}</h2>
+                        <p ng-click="groupdetails(group.group_id);">{{group_details.location}}<br> <i ng-repeat="cat in group_details.interested_categories">{{cat.name}}</i>
+                        </p>
+
+                        <p ng-click="groupdetails(group.group_id);" on-hold="moreoptions('groupdesc-'+group.group_id,group.groupdescription)" id="groupdesc-{{group.group_id}}">{{group_details.groupdescription}}
+                        </p>
+
+                        <button class="join-btn" ng-if="isMember(group_details.members)" ng-click="leaveGroup(group.group_id);"> {{ 'Leave Group' | translate }}</button>
+                        <button class="join-btn" ng-click="joinGroup(group.group_id);" ng-if="!isMember(group_details.members)">{{ 'Join Group' | translate }}</button>
+                    </div>  <!--end of div right box here-->
+               </div>  <!-- end of div group info here -->
+           </div> <!-- end of div group-card here -->
+          
+
+      </div><!-- end of  groups-container div -->
+  </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of ion-view div -->

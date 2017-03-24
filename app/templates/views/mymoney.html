@@ -1,0 +1,120 @@
+
+<ion-view view-title="My Finance" class="gradient-red">
+  <div class="header-bar">
+      <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="back();" />
+      </div>--><!-- end of backbtn div -->
+      <div class="menubtn" ng-click="popover.show($event)">
+        <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+      <div class="title"></div>
+  </div><!-- end of  header-bar div -->
+
+    <ion-content class="hasheader hasbottom" overflow-scroll="true">
+
+    	<div class="myfinbtn" style="text-align: center;margin-bottom: 10px;"><i class="material-icons" style="
+    font-size: 36px;">account_balance</i></div>
+     
+  <div class="finance-container"> 
+    <div class="card ">
+      <div class="item-text-wrap bggrey" style="color: #fff;">
+      <div class="bgdark mymoneyheader">
+        {{ 'My Worklidate Account (Available money)' | translate }}
+      </div> 
+        <div class="mymoney-card-heading bggrey">
+          <div class="currency-name">{{ 'Currency' | translate }}</div>
+          <div class="account-amount">{{ 'Amount' | translate }}</div>
+        </div>
+        <a class="item" href="#">
+         US doller
+          <span class="item-note white" ng-if="!myAccountAvailableUSD">
+            $0
+          </span>
+          <span class="item-note white" ng-if="myAccountAvailableUSD">
+            ${{myAccountAvailableUSD}}
+          </span>
+        </a>
+       <a class="item" href="#">
+          Hong Kong dollar
+          <span class="item-note white" ng-if="myAccountAvailableHKD">
+           HKD {{myAccountAvailableHKD | number:0}}
+          </span>
+          <span class="item-note white" ng-if="!myAccountAvailableHKD">
+           HKD 0
+          </span>
+        </a>
+      </div>
+      <button class="prosubmit" ng-if="myAccountAvailableUSD>=3 || myAccountAvailableHKD>=20" ng-click="goto('withdrawmoney')" style="margin-bottom: 13px;margin-top: 13px;">
+       {{'Withdraw Available Amount' | translate }} 
+      </button>
+     
+    </div>
+
+    <div class="card">
+      <div class="item-text-wrap bggrey" style="color: #fff;margin-bottom: 13px;">
+        <div class="bgdark mymoneyheader">
+           {{'Employer Account (Work others are doing for me)' | translate }} 
+        </div>
+       
+        <div class="mymoney-card-heading bggrey">
+          <div class="currency-name">{{'Currency' | translate }}</div>
+          <div class="account-amount">{{'Amount' | translate }}</div>
+        </div>
+        <a class="item" href="#">
+         US doller
+          <span class="item-note white" ng-if="MyEmployerAccountEscrowUSD">
+            ${{MyEmployerAccountEscrowUSD}}
+          </span>
+          <span class="item-note white" ng-if="!MyEmployerAccountEscrowUSD">
+            $0
+          </span>
+        </a>
+       <a class="item" href="#">
+          Hong Kong dollar
+          <span class="item-note white" ng-if="MyEmployerAccountEscrowHKD">
+           HKD {{MyEmployerAccountEscrowHKD}}
+          </span>
+          <span class="item-note white" ng-if="!MyEmployerAccountEscrowHKD">
+           HKD 0
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item-text-wrap bggrey  " style="color: #fff;">
+
+      <div class="bgdark mymoneyheader">
+         {{'Talent Account (Work I am doing for others)' | translate }}
+      </div>
+      
+
+
+        <div class="mymoney-card-heading bggrey" >
+          <div class="currency-name">{{'Currency' | translate }}</div>
+          <div class="account-amount">{{'Amount' | translate }}</div>
+        </div>
+        <a class="item" href="#">
+         US doller
+          <span class="item-note white" ng-if="MyTalentAccountEscrowUSD">
+            ${{MyTalentAccountEscrowUSD}}
+          </span>
+          <span class="item-note white" ng-if="!MyTalentAccountEscrowUSD">
+            $0
+          </span>
+        </a>
+       <a class="item" href="#">
+          Hong Kong dollar
+          <span class="item-note white" ng-if="MyTalentAccountEscrowHKD">
+           HKD {{MyTalentAccountEscrowHKD}}
+          </span>
+          <span class="item-note white" ng-if="!MyTalentAccountEscrowHKD">
+           HKD 0
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>   <!-- end of div finance-container  -->
+
+    </ion-content><!-- end of ion-content div -->
+</ion-view><!-- end of ion-view div -->

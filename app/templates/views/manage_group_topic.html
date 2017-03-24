@@ -1,0 +1,25 @@
+	 
+  <ion-modal-view class="gradient-red">
+    <ion-header-bar>
+	      <h1 class="title">{{ 'Manage Group ' | translate }}</h1>
+	       <button class="button button-clear button-primary" ng-click="manageTopicmodal.hide()"> {{ 'Cancel' | translate }}</button>
+    </ion-header-bar><!-- end of header-bar div -->
+    <ion-content overflow-scroll="true">
+    	   <div class="card" ng-repeat="(id,topic) in group.topics">
+		  <div class="item item-text-wrap">
+			  	<div class="group-topic-title">{{topic.title}}</div>
+			   	 <div class="group-topic-desc">{{topic.description}}</div>
+			   	  <div class="group-topic-delete-btn" ng-click="deleteTopic(id);"> {{ 'Delete Topic' | translate }}</div>
+				   <div ng-repeat="(comment_id,comment) in topic.comments" ng-init="user=(comment.userid | getUser)" class="manage-group-comment">
+				   		 <div class="user-pic-comment">
+						  	 <img ng-if="!user.picture" src="img/user.png"  />
+						  	 <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+						  </div><!-- end of user-pic-comment div -->
+						  <div>{{user.name}}</div>
+						  <div>{{comment.comment}} <div class="group-topic-delete-btn" ng-click="deleteComment(comment_id,id);"> {{ 'Delete Comment' | translate }}</div></div>
+						  <div class="date">{{comment.publishAt | date:'dd-MM-yyyy' }}</div>
+				  </div><!-- end of manage-group-comment div -->
+		</div><!-- end of item item-text-wrap div -->
+    	   </div><!-- end of card div -->
+     </ion-content><!-- end of content div -->
+  </ion-modal-view><!-- end of modal-view div -->

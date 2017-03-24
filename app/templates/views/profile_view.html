@@ -1,0 +1,224 @@
+
+<ion-view view-title="" class="gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+          <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+        <div class="title"></div>
+        <div class="header-btn" ng-if="userid!=$root.loggedUserId && $root.loggedUserId"><a href="#/app/chat/{{userid}}"> <i class="material-icons" style="color: #fff;">message</i></a></div>
+    </div><!-- end of header-bar div -->
+
+ <ion-content class="hasheader-nofooter" overflow-scroll="true">
+
+    <div class="profile-page" ng-if="$root.viewUser">
+            <div class="profile-overview">
+                  <div class="left-side">
+                       <img ng-if="!$root.viewUser.picture" src="img/user.png"  class="profile-pic"/>
+                       <img ng-if="$root.viewUser.picture" ng-src="{{$root.viewUser.picture}}"  class="profile-pic" />
+                        <div class="social">
+                            <a href="https://www.facebook.com/{{$root.viewUser.fblink}}" target="_blank">
+                            <img src="img/fb.png"  ng-if="$root.viewUser.fblink"/>
+                            </a>
+                            <a href="{{$root.viewUser.twitterlink}}" target="_blank">
+                            <img src="img/linkedin.png" ng-if="$root.viewUser.twitterlink" />
+                            </a>
+                        </div><!-- end of social div -->
+                        <div class="availableForHiring-status" style="color: aqua;" ng-if="$root.viewUser.availableForHiring" ng-click="goto('jobinvitation/{{userid}}')">{{ 'Available for Hiring' | translate }}</div>
+                        <div class="availableForHiring-status" style="color: gainsboro;" ng-if="!$root.viewUser.availableForHiring">{{ 'Not available for Hiring' | translate }}</div>
+                  </div><!-- end of left-side div -->
+                  <div class="middel-side">
+                    <h4 ng-if="$root.viewUser.name" ><b>{{$root.viewUser.name}}</b><i ng-if="$root.viewUser.companyName">({{$root.viewUser.companyName}})</i></h4>
+                    <div class="subtitle fsize" ng-if="$root.viewUser.title">{{$root.viewUser.title}}</div>
+                    <div class="location fsize" ng-if="$root.viewUser.location"><i class="icon ion-navigate" style="color: #fff"></i> {{$root.viewUser.location}}</div>
+                    <div class="timezone fsize" ng-if="$root.viewUser.timezone"><i class="icon ion-android-time"></i>{{userLocalTime | date:'hh mm a'}}</div>
+                    <div class="subtitle  fsize" ng-if="$root.viewUser.hourlyRateHKD || $root.viewUser.hourlyRateUSD" class="profile-hourl-rate">
+                     <div class="subtitle  fsize" style="font-weight:bold;"> {{ 'Hourly Rate' | translate }} : </div>
+                      <div class="subtitle  fsize" ng-if="$root.viewUser.hourlyRateHKD">$ HKD {{$root.viewUser.hourlyRateHKD}}</div>
+                      <div class="subtitle  fsize" ng-if="$root.viewUser.hourlyRateUSD">$ USD {{$root.viewUser.hourlyRateUSD}}</div>
+                    </div>
+                  </div><!-- end of middel-side div -->
+                   <div class="right-side">
+              <div ng-click="viewStats();"><i class="material-icons" >assessment</i></div>
+              <i class="material-icons"></i>
+
+              <div ng-click="like();" ng-if="($root.viewUser.liker | checkPresent : loggedUserId) != true && userid!=loggedUserId"><i class="material-icons">favorite_border</i>{{getObjectLength($root.viewUser.liker)}}</div>
+              <div ng-click="unlike();" ng-if="($root.viewUser.liker | checkPresent : loggedUserId) == true && userid!=loggedUserId"><i class="material-icons">favorite</i>{{getObjectLength($root.viewUser.liker)}}</div>
+              
+              <div  ng-if="($root.viewUser.followers | checkPresent : loggedUserId) != true && userid!=loggedUserId"><img src="img/follow.png" ng-click="follow();" style="float:left;margin-right:5px;width:24px;" /><div ng-click="viewConnection();">{{getObjectLength($root.viewUser.followers)}}</div></div>
+              <div  ng-if="($root.viewUser.followers | checkPresent : loggedUserId) == true && userid!=loggedUserId"><i class="material-icons" ng-click="unfollow();">group_work</i><div ng-click="viewConnection();">{{getObjectLength($root.viewUser.followers)}}</div></div>
+
+            </div>
+            </div><!-- end of profile-overview div -->
+
+                      
+             <div class="profile-summery">
+          <div class="details" ng-if="$root.viewUser.asTalentfeedback || $root.viewUser.asEmployerfeedback">
+           
+                <div  ng-if="$root.viewUser.asTalentfeedback && $root.viewUser.asEmployerfeedback" ng-init="ratings=((calculateRating($root.viewUser.asTalentfeedback)/getObjectLength($root.viewUser.asTalentfeedback))+(calculateRating($root.viewUser.asEmployerfeedback)/getObjectLength($root.viewUser.asEmployerfeedback)))/2">
+                 <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+                 
+
+                </div><!-- end of ratting div -->
+                <div class="ratting" ng-if="$root.viewUser.asTalentfeedback && !$root.viewUser.asEmployerfeedback" ng-init="ratings=(calculateRating($root.viewUser.asTalentfeedback)/getObjectLength($root.viewUser.asTalentfeedback))">
+               
+            <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                </div><!-- end of ratting div -->
+                <div class="ratting" ng-if="!$root.viewUser.asTalentfeedback && $root.viewUser.asEmployerfeedback" ng-init="ratings=(calculateRating($root.viewUser.asEmployerfeedback)/getObjectLength($root.viewUser.asEmployerfeedback))">
+               
+                 <i class="material-icons" ng-if="ratings==5">sentiment_very_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<5 && ratings>=4">sentiment_satisfied</i>
+                 <i class="material-icons" ng-if="ratings<4 && ratings>=3">sentiment_neutral</i>
+                 <i class="material-icons" ng-if="ratings<3 && ratings>=2">sentiment_dissatisfied</i>
+                 <i class="material-icons" ng-if="ratings<2 && ratings>=0">sentiment_very_dissatisfied</i>
+
+                </div><!-- end of ratting div -->
+               <div style="font-size: 18px;">{{'Overall Rating' | translate }}</div>
+          </div><!-- end of details div -->
+         
+    </div><!-- end of profile-summery div -->
+
+                    
+                    <div id="tabs" >
+                          <ul>
+                              <li ng-repeat="tab in tabs"
+                                  ng-class="{active:isActiveTab(tab.url)}"
+                                  ng-click="onClickTab(tab)" translate="{{tab.title}}"></li>
+                          </ul>
+                          <div id="mainView">
+                              <div ng-include="currentTab"></div>
+                          </div>
+                    </div><!-- end of tabs div -->
+
+    </div><!-- end of profile-page div -->
+</ion-content>
+ 
+
+
+  <script id="stats.html" type="text/ng-template">
+  <ion-modal-view class="gradient-red">
+  <!--   <ion-header-bar class="gradient-red">
+      <h1 class="title"> {{ 'My Stats' | translate }}</h1>
+      
+    </ion-header-bar> -->
+    <ion-content>
+      <i class="material-icons popupheader" >assessment</i>
+      <button class="button button-clear ion-close popupclose" ng-click="modal.hide()"></button>
+       <div style="width: 100%;text-align: center;float: left;display: flex;">
+       <ul class="list user-stats-list">
+        <li class="item">
+           <div class="popuplist">
+             <div class="user-stats-title">{{ 'Projects' | translate }}</div>
+            <div>{{getObjectLength($root.user_projects)}}</div>
+          </div>
+        </li>
+         <li class="item">
+            <div class="popuplist">
+            <div class="user-stats-title"> {{ 'Project liked' | translate }}</div>
+            <div >{{getObjectLength($root.viewUser.project_likers)}}</div>
+          </div>
+        </li>
+         <li class="item">
+          <div class="popuplist">
+         <div class="user-stats-title"> {{ 'Profile Likes' | translate }}</div>
+             <div>{{getObjectLength($root.viewUser.liker)}}</div>
+          </div>
+        </li>
+         <li class="item">
+          <div class="popuplist">
+          <div class="user-stats-title"> {{ 'Profile View' | translate }}</div>
+             <div>{{getObjectLength($root.viewUser.views)}}</div>
+          </div>
+        </li>
+         <li class="item">
+          <div class="popuplist">
+            <div class="user-stats-title"> {{ 'Comments' | translate }}</div>
+             <div>{{getObjectLength($root.viewUser.comments)}}</div>
+          </div>
+        </li>
+         <li class="item">
+          <div class="popuplist">
+           <div class="user-stats-title"> {{ 'Followers' | translate }}</div>
+             <div>{{getObjectLength($root.viewUser.followers)}}</div>
+          </div>
+        </li>
+         <li class="item">
+          <div class="popuplist">
+          <div class="user-stats-title"> {{ 'Following' | translate }}</div>
+             <div>{{getObjectLength($root.viewUser.follows)}}</div>
+          </div>
+        </li>
+        <li class="item">
+             <div class="popuplist">
+           <div class="user-stats-title">   {{ 'Likes' | translate }}</div>
+               <div>{{getObjectLength($root.viewUser.liker)}}</div>
+            </div>
+        </li>
+    </ul>
+ </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+        <script id="connections.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-content class="gradient-red">
+             <i class="material-icons popupheader">group_work</i>
+              <button class="button button-clear ion-close popupclose" ng-click="connectionmodel.hide()"></button>
+              <div>
+        <ion-tabs class="tabs-top tabs-color-balanced">
+
+           <ion-tab title="Follower"  >
+            <ion-nav-view name="tab-1">
+             
+              <div style="margin-top: 100px;">
+                
+                      <div  ng-repeat="follower in $root.viewUser.followers" ng-init="user=(follower.userid | getUser)" class="followers" ng-click="connectionmodel.hide();gotouserDetails(follower.userid)">
+
+                          <div class="item item-avatar">
+                            <img ng-if="!user.picture" src="img/user.png"/>
+                            <img ng-if="user.picture" ng-src="{{user.picture}}"/>
+                            <div class="popupusername">{{user.name}}</div>
+                          </div>
+                    </div>
+                      </div>
+             
+            </ion-nav-view>
+        </ion-tab>
+
+           <ion-tab title="Following" >
+            <ion-nav-view name="tab-2">
+            
+              <div style="margin-top: 100px;">
+                  
+                   <div class="" ng-repeat="follows in $root.viewUser.follows" ng-init="user=(follows.userid | getUser)" class="followers" ng-click="connectionmodel.hide();gotouserDetails(follows.userid)">
+
+                          <div class="item item-avatar">
+                            <img ng-if="!user.picture" src="img/user.png"/>
+                            <img ng-if="user.picture" ng-src="{{user.picture}}"/>
+                            <div class="popupusername">{{user.name}}</div>
+                          </div>
+                      </div>
+                      </div>
+            
+            </ion-nav-view>
+        </ion-tab>
+   
+    </ion-tabs> 
+     </div>    
+   
+            </ion-content>
+          </ion-modal-view>
+        </script>
+</ion-view><!-- end of ion-view div -->

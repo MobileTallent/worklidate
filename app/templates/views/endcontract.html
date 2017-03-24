@@ -1,0 +1,33 @@
+
+<ion-view view-title="Submit Milestone" class="gradient-red">
+    <div class="header-bar shadow">
+
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of  backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+        <div class="title"></div>
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom end-contract-page" overflow-scroll="true">
+  
+  <select class="select" ng-model="endcontract.reason">
+    <option value="Job Completed Successfully">{{ 'Job Completed Successfully' | translate }}</option>
+  </select>
+  <div class="contract-ratings">
+    <div class="rating-options">{{ 'Communication' | translate }} <input-stars max="5" ng-model="endcontract.communication"></input-stars></div>
+    <div class="rating-options">{{ 'Understanding' | translate }} <input-stars max="5" ng-model="endcontract.understanding"></input-stars></div>
+    <div class="rating-options">{{ 'Responsibility' | translate }} <input-stars max="5" ng-model="endcontract.responsibility"></input-stars></div>
+    <div class="rating-options">{{ 'Payment' | translate }} <input-stars max="5" ng-model="endcontract.payment"></input-stars></div>
+    <div class="rating-options">{{ 'Attitude' | translate }} <input-stars max="5" ng-model="endcontract.attitude"></input-stars></div>
+  </div> 
+   <textarea class="milestone-message contract-feedback-text" placeholder="Feedback" ng-model="endcontract.feedback"></textarea>
+ 
+<div class="gray-header" ng-click="endContract();">
+{{ 'Submit' | translate }}
+</div>
+
+    </ion-content><!-- end of ion-content  div -->
+  
+</ion-view><!-- end of ion-view div -->

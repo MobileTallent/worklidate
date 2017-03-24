@@ -1,0 +1,13 @@
+<!-- this is linked in my profile bottom tabs 'About' option-->
+<div class="profile-about profile-tabs-content">
+<div ng-repeat="image in $root.userdata.aboutPhoto" class="about-profile-photo">
+          <img ng-src="{{image.data}}"  ng-if="image.type=='image'" />
+          <p ng-if="image.type=='text'" ng-bind-html="image.data"></p>
+          </div>
+	<h2> {{ 'About' | translate }}</h2>
+	<p>{{ 'Education' | translate }}  :</p>
+	<div ng-bind-html="$root.userdata.educationdescription" on-hold="MoreOptions($root.userdata.educationdescription,'profile-about-education-{{$root.loggedUserId}}')" id="profile-about-view-education-{{$root.loggedUserId}}}"></div>
+	<hr>
+	<p>{{ 'Work History' | translate }} : </p>
+	<div ng-bind-html="$root.userdata.workHistorydescription" on-hold="MoreOptions($root.userdata.workHistorydescription,'profile-about-history-{{$root.loggedUserId}}')" id="profile-about-view-history-{{$root.loggedUserId}}}"></div>
+</div><!-- end of profile-about profile-tabs-content div-->

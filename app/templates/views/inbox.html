@@ -1,0 +1,119 @@
+
+<ion-view view-title="Inbox" class="gradient-red">
+    <div class="header-bar shadow">
+        <!--<div class="backbtn">
+           <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of backbtn div -->
+        <div class="menubtn" ng-click="popover.show($event)">
+          <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+        </div>
+        <div class="title"></div>
+    </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader" overflow-scroll="true" >
+        <div class="jobs-toggle"  id="inbox-1" >
+              <div class="heading-tabs" ng-click="toggleTabs('inbox-1')">
+                  <div class="title"><i class="material-icons" style="vertical-align: middle;">inbox</i>  {{ 'Inbox' | translate }}</div>
+                  <div class="red total-count">{{inboxUnreadCount}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content">
+                     <div class="inbox_summery" ng-repeat="(id,row) in inboxdata" ng-click="inboxOpen(id,row);" on-hold="inboxMoreOptions(id,row)">
+                          <div class="date">{{row.date|date:'MMM dd / hh:mm a'}}</div>
+                          <div ng-if="row.status=='unread'" class="inbox-badge"> </div>
+                          <div class="sendername">{{row.senderName}}</div>
+                          <p >{{row.message}}</p>
+                      </div><!-- end of inbox-summery div -->
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+
+        <div class="jobs-toggle"  id="inbox-2" >
+
+              <div class="heading-tabs" ng-click="toggleTabs('inbox-2')">
+                  <div class="title"><i class="material-icons" style="vertical-align: middle;">assignment_turned_in</i></i> {{ 'Contracts ' | translate }}</div>
+                  <div class="red total-count">{{contractUnreadMessageCount.length}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+            <div class="toggle-content">
+
+              <div class="inbox_summery" ng-repeat="row in contract | unique:'id' | orderBy:'-publishAt'" ng-click="openContract(row,lastKey);" ng-init="lastKey=(row.message | getLastElementOfObject)">
+              
+                    <div ng-if="row.c_type_role=='employer'" ng-init="talent=(row.talent_id | getUser);job=(row.jobid | getJob);lastmessage=row.message[lastKey];" >
+                      {{addContractUnreadMessageCount(lastmessage,lastKey)}}
+                        <div class="sendername" style="text-transform:uppercase">{{talent.name}}</div>
+                        <div class="inbox-contract-job-title">Job Title: {{job.title}}</div>
+                          <div class="date">{{row.publishAt|date:'MMM dd'}}</div>
+                        <p class="inbox-contract-message"><i ng-if="lastmessage.type=='employer'">{{$root.userdata.name}}: </i><i ng-if="lastmessage.type=='talent'">{{talent.name}}: </i>{{lastmessage.message}}
+                        <div ng-if="lastmessage.status=='unread'" class="inbox-badge"> </div>
+                        </p>
+                        </div>
+
+                        <div ng-if="row.c_type_role=='talent'" ng-init="employer=(row.employer_id | getUser);job=(row.jobid | getJob);lastmessage=row.message[lastKey];">
+                       {{addContractUnreadMessageCount(lastmessage,lastKey)}}
+                        <div class="sendername" style="text-transform:uppercase">{{employer.name}}</div>
+                        <div class="inbox-contract-job-title">Job Title: {{job.title}}</div>
+                        <p class="inbox-contract-message"><i ng-if="lastmessage.type=='employer'">{{employer.name}}: </i><i ng-if="lastmessage.type=='talent'">{{$root.userdata.name}}: </i>{{lastmessage.message}}
+                        <div ng-if="lastmessage.status=='unread'" class="inbox-badge"> </div>
+                        </p>
+                        </div>
+
+                      </div><!-- end of inbox-summery div -->
+            </div>
+        </div><!-- end of  jobs-toggle div -->
+
+        <!--<div class="jobs-toggle"  id="inbox-3">
+            <div class="heading-tabs" ng-click="toggleTabs('inbox-3')">
+              <div class="title"><img class="tab-i" src="img/inbox_jobs.png" /> {{ 'Jobs ' | translate }}</div>
+              <div class="total-count">0</div>
+              <img class="arrow" src="img/down_arrow.png" />
+            </div>
+              <div class="toggle-content">
+                  <div class="project_summery" ng-click="goto('project_details')">
+                        <div class="name"> {{ 'Lettering ' | translate }}
+                            <div class="date">12-2-2016</div>
+                      </div>
+                          <p>
+                            Hello Graphic Designers all over the world  we are going to start an
+                            IT company and we need a High Quailty Caroon Illustrtion
+                          </p>
+                      </div>
+              </div>
+        </div>--><!-- end of jobs-toggle div -->
+
+        <div class="jobs-toggle"  id="inbox-4" ng-if="$root.getObjectLength(notifications)>0">
+              <div class="heading-tabs" ng-click="toggleTabs('inbox-4')">
+                  <div class="title"><i class="material-icons" style="vertical-align: middle;">add_alert</i> {{ 'Notifications ' | translate }}</div>
+                  <div class="red total-count" ng-if="$root.getObjectLength(notifications)>0">{{unReadNotificationsCount_tab}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+            <div class="toggle-content" >
+               <div class="inbox_summery" ng-repeat="row in notifications | objectToArray | reverse" ng-click="readNotification(row)" ng-if="row.type!='chat' && row.delete!='true' ">
+                  <div class="date">{{row.date|date:'MMM dd / hh:mm a'}}</div>
+  
+                          <div ng-if="row.status=='unread'" class="inbox-badge"> </div>
+                          <div class="sendername">{{row.senderName}}</div>
+                          <p>{{row.message}}</p>
+                          <p ng-if="row.type=='job_invitaion'"><a href="#/app/jobdetails/{{row.jobid}}">View Job</a></p>
+                          <div class="delete_notification" ng-click="deleteNotification(row.id);">Delete</div>
+                      </div><!-- end of inbox-summery div -->
+            </div>
+       </div><!-- end of  jobs-toggle div -->
+
+       <div class="jobs-toggle"  id="inbox-5" ng-if="$root.userdata.groups_invitaion">
+              <div class="heading-tabs" ng-click="toggleTabs('inbox-5')">
+                  <div class="title"><i class="fa fa-envelope tab-i" aria-hidden="true"></i>  {{ 'Group Invitations' | translate }}</div>
+                  <div class="total-count">{{getObjectLength($root.userdata.groups_invitaion)}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content">
+                     <div class="inbox_summery" ng-repeat="(id,row) in $root.userdata.groups_invitaion" ng-init="group=(row.groupid |getGroup)">
+                          <div class="groupsendername" ng-if="group">{{group.grouptitle}}</div>
+                          <button class="join-btn" ng-click="groupdetails(row.groupid);">{{ 'Details' | translate }}</button>
+                          <button class="join-btn" ng-click="joinGroup(row.groupid);">{{ 'Join Group' | translate }}</button>
+                          <button class="join-btn" ng-click="rejectInvitation(row.groupid);">{{ 'Reject Invitation' | translate }}</button>
+                          
+                      </div><!-- end of inbox-summery div -->
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+   </ion-content><!-- end of  ion-content div -->
+</ion-view><!-- end of ion-view div -->

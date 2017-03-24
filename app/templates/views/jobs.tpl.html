@@ -1,0 +1,76 @@
+<div class="profile-job profile-tabs-content">
+		<div class="jobs-toggle"  id="job-1-{{loggedUserId}}">
+					<div class="heading-tabs green" ng-click="toggleTabs('job-1-{{loggedUserId}}')">
+							<div class="title"> <div ><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">lightbulb_outline</i></div>{{ 'Completed Jobs' | translate }}</div>
+							<div class="total-count">{{userEndContracts.length}}</div>
+							<img class="arrow" src="img/down_arrow.png" />
+					</div><!-- end of heading-tabs div -->
+					<div class="toggle-content">
+						<div class="talent_tpl_row bgdarkgrey" ng-repeat="contract in userEndContracts" ng-init="jobs=(contract.jobid | getJob)">
+		                    <a href="#/app/jobdetails/{{contract.jobid}}">
+		                    <div class="telent-tab-details job-tpl-row-details">
+		                     <div class="date">{{convertToDate(jobs.publishAt) | date : 'MMM dd,yyyy'}}</div>
+		                    	<div>{{jobs.title}}</div>                
+								<div class="comment_summery-project-description" ng-bind-html="jobs.description"></div>      
+							 </div>
+		                   </a>
+		                   </div>
+
+		       </div><!-- end of  toggle-content div -->
+		</div><!-- end of  jobs-toggle div -->
+		<div class="jobs-toggle green"  id="job-2-{{loggedUserId}}">
+					<div class="heading-tabs green" ng-click="toggleTabs('job-2-{{loggedUserId}}')" >
+							<div class="title"><div><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">business_center</i></div> {{ 'Active Jobs' | translate }}</div>
+							<div class="total-count">{{userWorkingContracts.length}}</div>
+							<img class="arrow" src="img/down_arrow.png" />
+					</div><!-- end of heading-tabs div -->
+					<div class="toggle-content">
+						<div class="talent_tpl_row bgdarkgrey" ng-repeat="contract in userWorkingContracts" ng-init="jobs=(contract.jobid | getJob)">
+		                    <a href="#/app/jobdetails/{{contract.jobid}}">
+		                    <div class="telent-tab-details job-tpl-row-details">
+		                     <div class="date">{{convertToDate(jobs.publishAt) | date : 'MMM dd,yyyy'}}</div>
+		                    	<div>{{jobs.title}}</div>                
+								<div class="comment_summery-project-description" ng-bind-html="jobs.description"></div>      
+							 </div>
+		                   </a>
+		                   </div>
+
+		       </div><!-- end of  toggle-content div -->
+		</div><!-- end of jobs-toggle div -->
+		<div class="jobs-toggle"  id="job-3-{{loggedUserId}}">
+				<div class="heading-tabs blue" ng-click="toggleTabs('job-3-{{loggedUserId}}')">
+						<div class="title"><div><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">perm_identity</i></div> {{ 'Funded Jobs' | translate }}</div>
+						<div class="total-count">{{userWorkingJobs.length+userClosedJobs.length}}</div>
+						<img class="arrow" src="img/down_arrow.png" />
+				</div><!-- end of  heading-tabs div -->
+				<div class="toggle-content">
+						<div class="talent_tpl_row bgdarkgrey" ng-repeat="jobs in userWorkingJobs">
+		                    <a href="#/app/jobdetails/{{jobs.id}}">
+		                    <div class="telent-tab-details job-tpl-row-details">
+		                     <div class="date">{{convertToDate(jobs.publishAt) | date : 'MMM dd,yyyy'}}</div>
+		                    	<div>{{jobs.title}}</div>                
+								<div class="comment_summery-project-description" ng-bind-html="jobs.description"></div>      
+							 </div>
+		                   </a>
+		                   </div>
+			</div><!-- end of toggle-content div -->
+		</div><!-- end of jobs-toggle div -->
+		<div class="jobs-toggle" id="job-4-{{loggedUserId}}">
+					<div class="heading-tabs blue" ng-click="toggleTabs('job-4-{{loggedUserId}}')" >
+							<div class="title"> <div><i class="material-icons" style="float: left;margin-top: 12px;    margin-right: 8px;">business_center</i></div> {{ 'Job Openings' | translate }} </div>
+							<div class="total-count">{{userOpenJobs.length}}</div>
+							<img class="arrow" src="img/down_arrow.png" />
+					</div><!-- end of  heading-tabs div -->
+					<div class="toggle-content">
+						<div class="talent_tpl_row bgdarkgrey" ng-repeat="jobs in userOpenJobs">
+		                    <a href="#/app/job/details/{{jobs.id}}">
+		                    <div class="telent-tab-details job-tpl-row-details">
+		                     <div class="date">{{convertToDate(jobs.publishAt) | date : 'MMM dd,yyyy'}}</div>
+		                    	<div>{{jobs.title}}</div>                
+								<div class="comment_summery-project-description" ng-bind-html="jobs.description"></div>      
+							 </div>
+		                   </a>
+		                   </div>
+			</div><!-- end of toggle-content div -->
+		</div><!-- end of jobs-toggle div -->
+</div><!-- end of profile-job profile-tabs-content div -->

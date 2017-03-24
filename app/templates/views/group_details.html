@@ -1,0 +1,92 @@
+
+<ion-view view-title="Groups" class="gradient-red">
+	  <div class="header-bar">
+		  <!--<div class="backbtn">
+		    	<img src="img/back_arrow_white.png" ng-click="goto('group');" />
+		  </div>--><!-- end of backbtn div -->
+		  <div class="menubtn" ng-click="popover.show($event)">
+		    <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+		   </div>
+		  <div class="title"> {{ 'Groups' | translate }}</div>
+		  <div class="header-btn" ><i menu-toggle="right" class="fa fa-bars"></i></div>
+	  </div><!-- end of header-bar div -->
+
+  <ion-content class="hasheader-nofooter" overflow-scroll="true">
+ 		<div class="group-detials">	
+		 		<img class="pic" ng-src="{{group.image}}" />
+		 		<div class="title" on-hold="moreoptions('group_details-'+group.group_id,group.grouptitle)" id="group_details-{{group.group_id}}">{{group.grouptitle}}</div>
+		 		<div class="location">{{group.location}}</div>
+		 		<p class="description" on-hold="moreoptions('group_details_desc-'+group.group_id,group.groupdescription)" id="group_details_desc-{{group.group_id}}">{{group.groupdescription}}
+				</p>
+				<div class="members">
+
+					<img ng-src="{{'/upload/profile/'+member.userid}}" onerror="this.src='img/user.png'" ng-repeat="member in group.members" />
+					
+				</div><!-- end of members div -->
+				<div class="options">
+					<span>  {{ 'Portfolio' | translate }}:</span> {{group.portfolio}}
+				</div><!-- end of options div -->
+				<!--<div class="options">
+					<span> {{ 'Followers' | translate }}:</span> {{getObjectLength(group.followers)}}
+				</div>-->
+				<div class="options">
+					<span> {{ 'Members' | translate }}:</span> {{getObjectLength(group.members)}}
+				</div>
+				<div class="options">
+					<span> {{ 'Projects' | translate }}:</span> {{$root.members_projects.length}}
+				</div>
+				<!--<div class="action-btn first" ng-click="followgroup(groupId)" ng-if="loggeduserIsFollower==false"> {{ 'Follow us' | translate }}</div>-->
+				<div class="action-btn first" ng-click="unfollowGroup(groupId)" ng-if="loggeduserIsFollower==true"> {{ 'Unfollow' | translate }}</div>
+				<div class="action-btn first" ng-click="getMembersProject(group);">{{ "Members’ project" | translate }}</div>
+				<div class="action-btn" ng-click="discussionProject(groupId);">{{ 'Discussion Topics ' | translate }}</div>
+				<div class="group-custom-card-outer"  id="group_projects">
+				   <div   ng-repeat="project in $root.members_projects" ng-init="user=(project.userid | getUser)" >
+					   <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)" style="background-image:url({{project.coverPicture.data}})" ng-if="project.coverPicture && project.coverPicture.type=='image'"></div>
+              
+               <div class="custom-card-image" ng-click="gotoprojectDetails(project.id)"  ng-if="project.coverPicture && project.coverPicture.type=='text'">{{project.coverPicture.data}}</div>
+					     <div class="custom-card group-custom-card" ng-click="gotoprojectDetails(project.id)">
+					        
+						        <div class="details" >
+							          <div class="user-pic">
+									   <img ng-if="!user.picture" src="img/user.png"  />
+									  <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+								   </div><!-- end of user-pic div -->
+							          <div class="user-details">
+								            <div class="user-heading">
+								              <h5>{{project.projectTitle}}</h5>
+								              <div> {{ 'by ' | translate }}<span>{{user.name}}</span> on {{project.publishAt | date : 'MMM dd,yyyy'}}</div>
+								              <div class="card-sub-tag"><i ng-repeat="category in project.categories">{{category.name}}, </i></div>
+								            </div><!-- end of user-heading div -->
+							            </div><!-- end of user-details div -->
+						         </div><!-- end of details div -->
+					      </div><!-- end of custom-card group-custom-card div -->
+				      </div><!-- end of group-custom-card-outer div -->
+				      </div>
+		  	</div><!-- end of group-details div -->
+		  
+		 
+		   <div class="group-topic-list" id="group_topics_discussion">
+				    <div class="createTopic" ng-click="createTopic();"> {{ 'Create topic' | translate }}</div>
+				   		<div ng-repeat="(id,topic) in group.topics" class="group-topic-card">
+				   			<div class="group-topic-title">{{topic.title}}</div>
+				   			<div class="group-topic-desc">{{topic.description}}</div>
+				   			<div style="color:red;" ng-if="group.admin_userid==loggedUserId">Delete This Topic</div>
+				   			<div class="group-topic-comment-btn" ng-click="comment(id);"> {{ 'Comment' | translate }}</div>
+				   			<div ng-repeat="comment in topic.comments" ng-init="user=(comment.userid | getUser)" class="comment">
+					   			   <div class="user-pic-comment">
+								   <img ng-if="!user.picture" src="img/user.png"  />
+								  <img ng-if="user.picture" ng-src="{{user.picture}}"   />
+								  </div>
+								  <div>{{user.name}}</div>
+								  <div>{{comment.comment}}</div>
+								  <div class="date">{{comment.publishAt | date:'dd-MM-yyyy' }}</div>
+							  
+			
+				   			</div><!-- end of comment div -->
+				   		</div><!-- end of group-topic-card div -->
+		   	
+		   </div><!-- end of group-topic-list div -->
+		 
+  	</ion-content><!-- end of content div -->
+</ion-view><!-- end of view div -->
+    

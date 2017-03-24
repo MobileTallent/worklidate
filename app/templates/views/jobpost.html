@@ -1,0 +1,241 @@
+
+<ion-view view-title="Post a job" class="gradient-red">
+    <div class="header-bar">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+        </div>--><!-- end of  backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom" overflow-scroll="true">
+     <div class="post-job" >
+          <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'Job Title' | translate }}" ng-model="job.title"  />
+          
+          <ui-select multiple ng-model="job.categories" class="bgwhite placeholder-grey mart" theme="select2" ng-disabled="disabled" style="width:100%;">
+                <ui-select-match placeholder="{{'Category' | translate }}" >{{$item.name}}</ui-select-match>
+                <ui-select-choices position="down"  repeat="cat in $root.categories | filter:$select.search">
+                {{cat.name}}
+
+            </ui-select-choices>
+          </ui-select>
+
+           <div style="float:left;width:100%;margin-top: 10px;margin-bottom: 10px;min-height: 100px;">
+           
+            <div text-angular ng-model="job.description" class="bgwhite placeholder-grey mart"  placeholder="{{'Write job description here..' | translate }}"></div>
+           </div>
+           <div class="datepicker-div" >
+                                  <i class="icon ion-ios-calendar-outline placeholder-icon"></i>
+
+                           <datepicker date-format="dd MMM yyyy" date-min-limit="{{$root.serverTime.toString()}}" default-text="''">
+                            <input  type="text" ng-model="job.deliveryTime" class="bgwhite placeholder-grey"  placeholder="{{'Delivery Time' | translate }}"  />
+                          </datepicker>
+                          </div>
+
+            
+
+             <div class="placeholder mart" style="padding-left: 0; border: 0 ;">
+              <input type="tel"  class="bgwhite placeholder-grey" ng-model="job.budget" style="width: 83%;" placeholder="{{'Budget' | translate }}" only-digits/> <div class="upload-btn bgwhite"><select ng-model="job.currency" ng-init="job.currency='HKD'" style="float: left;border: 0px;margin-top: 0px;width: 100%;height: 45px;background: transparent;
+"><option value="USD">USD</option><option value="HKD">HKD</option></select></div> <i class="material-icons arrowdown">keyboard_arrow_down</i>
+            </div>
+            <!--<div class="postjob-options">
+            	<div class="postjob-option-title">How many talent do you need to hire for this job?</div>
+            	<input ng-model="job.talentnumber" type="radio" name="talentnumber" value="1" checked> One<br>
+  				    <input ng-model="job.talentnumber" type="radio" name="talentnumber" value="2"> I need to hire more than one<br>
+            </div>-->
+            <div class="postjob-options bgwhite placeholder-grey mart">
+            	<div class="postjob-option-title">{{'Job Length' | translate }}</div>
+              <div class="fullclear">
+            	<input ng-model="job.jobLength" type="radio" name="jobLength" value="day" checked><div> {{'Less than a day' | translate }}</div></div>
+              <div class="fullclear">
+      				<input ng-model="job.jobLength" type="radio" name="jobLength" value="week"><div> {{'Less than a week' | translate }}</div></div>
+              <div class="fullclear">
+      				<input ng-model="job.jobLength" type="radio" name="jobLength" value="month"><div>{{'Less than a month' | translate }}</div></div>
+              <div class="fullclear">
+      				<input ng-model="job.jobLength" type="radio" name="jobLength" value="3month"><div> > 3 {{'month' | translate }}</div></div>
+              <div class="fullclear">
+      				<input ng-model="job.jobLength" type="radio" name="jobLength" value="notSpecified"><div> {{'Not specified' | translate }}</div></div>
+            </div>
+            <div class="postjob-options  bgwhite placeholder-grey mart">
+            	<div class="postjob-option-title">{{'Experience level?' | translate }}</div>
+              <div class="fullclear">
+            	<input type="radio" ng-model="job.experienceLevel" name="experienceLevel" value="entry" checked> <div>{{'$ Less Experience' | translate }}</div></div>
+              <div class="fullclear">
+  				    <input type="radio" ng-model="job.experienceLevel" name="experienceLevel" value="intermediate"><div>{{'$$ Standard experience' | translate }}</div></div>
+              <div class="fullclear">
+  				    <input type="radio" ng-model="job.experienceLevel" name="experienceLevel" value="expert"><div>{{'$$$ Professional' | translate }} </div></div>
+            </div>
+            <!--<div class="postjob-options">
+            	<div class="postjob-option-title">Time Preference?</div>
+            	<input type="radio" ng-model="job.timePreference" name="timePreference" value="fullTime" checked>Full Time<br>
+  				    <input type="radio"  ng-model="job.timePreference" name="timePreference" value="partTime"> Part Time<br>
+            </div>-->
+            <div class="postjob-options  bgwhite placeholder-grey mart">
+            	<div class="postjob-option-title" ng-init="job.viewtype='users'">{{'Do you want freelancers to find and apply to your job?' | translate }}</div>
+              <div class="fullclear">
+  				    <input type="radio" ng-model="job.viewtype" name="viewtype" value="users" ><div>{{'All worklidate user can see this job' | translate }} </div></div>
+              <div class="fullclear">
+  				    <input type="radio" ng-model="job.viewtype" name="viewtype" value="invited"><div>{{'Only freelancers I have invited can find this job.' | translate }}  </div></div>
+            </div>
+            <div class="postjob-options  bgwhite placeholder-grey mart">
+	              <div class="postjob-option-title">{{'Screening Questions' | translate }}</div>
+	              <p>{{"Add a few questions you'd like your candidates to anwser when applying to your job." | translate }}</p>
+                 <div class="placeholder" ng-repeat="q in job.screeningQuestions">
+                <input type="text" placeholder="Question" ng-model="job.screeningQuestions[$index].text"  />
+                <div class="upload-btn bgwhite" ng-click="removeQuestion($index)"><i class="fa fa-trash-o" style="color:red;"></i></div>
+                </div>
+                <div style="float: left;width: 100%;margin-top: 8px;"> <div class="addquestion">{{'Add Question' | translate }}</div>
+                    <button class="addQuebtn" ng-click="addQuestion();">
+                    <i class="material-icons" style="float: left;">add</i>
+                  
+                   </button>
+                </div>
+	            
+              </div>
+            <ui-select multiple ng-model="job.skills"  class="bgwhite placeholder-grey mart" theme="select2" ng-disabled="disabled" style="width:100%;" >
+                <ui-select-match placeholder="{{'Tap to pick skills' | translate }}">{{$item.name}}</ui-select-match>
+                <ui-select-choices  position="down" repeat="cat in $root.skills | filter:$select.search | limitTo:50">
+                {{cat.name}}
+                </ui-select-choices>
+              </ui-select>
+	          	<div class="upload-options-outer mart">
+                             
+                              <div style="line-height: 50px;float: left;width: 100%;text-align: center;"><i class="material-icons" style="font-size: 40px;    vertical-align: middle;padding-right: 8px;">add_circle</i>{{ 'Attach File' | translate }}</div><div class="upload-option uploadfile mart"><input type="file"  ngf-fix-orientation="true" ngf-select="onFileSelect($files)" ><i class="material-icons" style="font-size: 40px;"">description</i>
+                               </div>
+                               
+                    </div><!-- end of upload-option-outer div -->
+                     <div ng-repeat="file in attachedfilesdata">{{file.name}} <i ng-click="delete($index)">X</i></div>
+            <div class="jobs-toggle"  id="FurtherDetails-1" >
+              <div class="heading-tabs mart blue" ng-click="toggleTabs('FurtherDetails-1')">
+                  <div class="title">{{'Further Details (Optional)' | translate }} </div>
+             
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content">
+                <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'About your brand / Bussiness' | translate }}" ng-model="job.aboutBrand"/>
+                <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'Target Audience' | translate }}" ng-model="job.targetAudience" />
+                <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'Design Value (Feeling & Message)' | translate }}" ng-model="job.designValue" />
+                <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'Style' | translate }} " ng-model="job.stylisticPreferences" />
+                <input type="text" class="bgwhite placeholder-grey mart" placeholder="{{'Colors' | translate }}" ng-model="job.colorsParticular" />
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+          </div><!-- end of v div -->
+
+           
+
+            
+
+    </ion-content><!-- end of ion-content  div -->
+
+    <div class="full-gray-btn" ng-click="confirm_postJob();">  {{ 'Post Job' | translate }}</div>
+    <script id="my-modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">{{'Confirm Details' | translate }}</h1>
+          <div style="position: absolute;right: 5px;margin-top: 11px;" class="icon icon-right ion-ios-close-outline"
+            ng-click="closeModal()"></div>
+        </ion-header-bar>
+        <ion-content>
+        <div class="details-row" ng-if="job.title">
+          <div class="row-lable">{{'Title' | translate }}</div>
+          <div class="row-content">{{job.title}}</div>
+        </div>
+        <div class="details-row" ng-if="job.deliveryTime">
+          <div class="row-lable">{{'Delivery Time' | translate }}</div>
+          <div class="row-content">{{job.deliveryTime}}</div>
+        </div>
+        <div class="details-row">
+          <div class="row-lable">{{'Budget' | translate }}</div>
+          <div class="row-content"> {{job.currency}} {{job.budget}}</div>
+        </div>
+        <div class="details-row" ng-if="job.description">
+          <div class="row-lable">{{'Description' | translate }}</div>
+          <div class="row-content" ng-bind-html="job.description"></div>
+        </div>
+        <div class="details-row" ng-if="job.categories">
+          <div class="row-lable">{{'Category' | translate }}</div>
+          <div class="row-content"><i ng-repeat="categorie in job.categories">{{categorie.name}}, </i></div>
+        </div>
+        <div class="details-row" ng-if="job.skills">
+          <div class="row-lable">{{'Skills' | translate }}</div>
+          <div class="row-content"><i ng-repeat="skill in job.skills">{{skill.name}}, </i></div>
+        </div>
+        
+        <div class="details-row" ng-if="job.experienceLevel">
+          <div class="row-lable">{{'Experience' | translate }}</div>
+          <div class="row-content">
+                <i ng-if="job.experienceLevel=='entry'">{{'$ Less Experience' | translate }}</i>
+                <i ng-if="job.experienceLevel=='intermediate'">{{'$$ Standard experience' | translate }}</i>
+                <i ng-if="job.experienceLevel=='expert'">{{'Expert (Talent with higher rates and more emperiance' | translate }})</i>
+          </div>
+        </div>
+  
+
+        <!--<div ng-if="job.talentnumber">Talent do you need to hire for this job : 
+                <i ng-if="job.talentnumber=='1'">One</i>
+                <i ng-if="job.talentnumber=='2'">I need to hire more than one</i>
+              
+        </div>-->
+        <div class="details-row" ng-if="job.jobLength">
+          <div class="row-lable">{{'Job Length' | translate }}</div>
+          <div class="row-content">
+                <i ng-if="job.jobLength=='day'"> {{'Less than a day' | translate }}</i>
+                <i ng-if="job.jobLength=='week'"> {{'Less than a week' | translate }}</i>
+                <i ng-if="job.jobLength=='month'"> {{'Less than a month' | translate }}</i>
+                <i ng-if="job.jobLength=='3month'"> > 3 {{'month' | translate }}</i>
+                <i ng-if="job.jobLength=='notSpecified'"> {{'Not specified' | translate }}</i>
+          </div>
+        </div>
+        
+         <!--<div ng-if="job.timePreference">Time Preference : 
+                <i ng-if="job.timePreference=='fullTime'">Full Time</i>
+                <i ng-if="job.timePreference=='partTime'">Part Time</i>
+              
+        </div>-->
+         <div class="details-row" ng-if="job.screeningQuestions">
+          <div class="row-lable">{{'Questions when applying a job' | translate }}</div>
+          <div class="row-content">
+            <div ng-repeat="questions in job.screeningQuestions track by $index">{{questions.text}}</div>
+          </div>
+        </div>
+
+        <div class="details-row" ng-if="job.aboutBrand">
+          <div class="row-lable">{{'About Brand' | translate }}</div>
+          <div class="row-content">
+             {{job.aboutBrand}}
+          </div>
+        </div>
+
+         <div class="details-row" ng-if="job.targetAudience">
+          <div class="row-lable">{{'Target Audience' | translate }}</div>
+          <div class="row-content">
+             {{job.targetAudience}}
+          </div>
+        </div>
+
+          <div class="details-row" ng-if="job.designValue">
+          <div class="row-lable">{{'Design Value (Feeling & Message)' | translate }}</div>
+          <div class="row-content">
+             {{job.designValue}}
+          </div>
+        </div>
+
+        <div class="details-row" ng-if="job.stylisticPreferences">
+          <div class="row-lable">{{'Style' | translate }}</div>
+          <div class="row-content">
+             {{job.stylisticPreferences}}
+          </div>
+        </div>
+         <div class="details-row" ng-if="job.colorsParticular">
+          <div class="row-lable">{{'Colors' | translate }}</div>
+          <div class="row-content">
+             {{job.colorsParticular}}
+          </div>
+        </div>
+          
+            <div style="height:100px;float: left;width: 100%;"></div>
+        </ion-content>
+        <div class="full-gray-btn" ng-click="postJob(job);">  {{ 'Post Job' | translate }}</div>
+      </ion-modal-view>
+    </script>
+</ion-view><!-- end of ion-view div -->

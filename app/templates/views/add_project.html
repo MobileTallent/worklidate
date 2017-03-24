@@ -1,0 +1,57 @@
+
+<ion-view view-title="Profile" class="gradient-red">
+      <div class="header-bar">
+          <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="goto('mainpage');" />
+          </div>--><!-- end of backbtn div -->
+          <div class="menubtn" ng-click="popover.show($event)">
+            <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+          </div>
+          <div class="title"></div>
+      </div><!-- end of header-bar div -->
+
+      <ion-content class="hasheader addProject" overflow-scroll="true">
+                  <div  style="text-align: center;color: #fff;">
+                     <i class="material-icons"  style="font-size: 40px;">add_circle</i>
+                  </div><!-- end of upload-title div -->
+                  <div class="upload-options-outer">
+                             <div class="upload-option"><input type="file"  ngf-select="onFileSelect($files,'image')" ngf-fix-orientation="true" ngf-pattern="'image/*'"   ngf-accept="'image/*'"/><i class="material-icons fontw">image</i>
+                             </div>
+                            <!--<div class="upload-option"><input type="file" ngf-fix-orientation="true" ngf-capture="true" ngf-resize="{width: 706, height: 284, quality:1, type: 'image/jpeg', 
+                                centerCrop: false, restoreExif: false}"  ngf-select="onFileSelect($files,'image')" accept="image/*;capture=camera"><img src="img/camera.png" />
+                             </div>-->
+                              <div class="upload-option" ng-click="onFileSelect('','text');">
+                                <i class="material-icons fontw">description</i>
+                             </div>
+                  </div><!-- end of upload-option-outer div -->
+                  <ion-list show-reorder="true">
+                    <ion-item  ng-repeat="obj in $root.filesdata track by $index"  ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+                   <div class="uploaded-project">
+                       <div class="delete" style="right: 31px;"><img src="img/delete.png" ng-click="delete($index)"/></div>
+                          <ion-reorder-button on-reorder="onDropComplete($fromIndex,obj,$toIndex)" class="ion-navicon">
+                            </ion-reorder-button>
+                           <div class="coverpicRadio" ng-if="obj.coverPic">{{ 'Cover' | translate }}</div>
+                           <div class="coverpicRadio" ng-if="!obj.coverPic" style="cursor:pointer;" ng-click="setCoverPic($index)">{{ 'Set as Cover' | translate }}</div>
+                          <img ngf-src="obj" ng-if="obj.objecttype=='image'" />
+                          <div simditor  placeholder="{{ 'type here' | translate }}" ng-if="obj.objecttype=='text'" ng-model="textboxdata[$index]" ng-change="fillText(textboxdata[$index],$index);" ng-init="textboxdata[$index]=obj.text"></div>
+
+                         
+                    </div>
+                    </ion-item>
+                  </ion-list>
+      </ion-content><!-- end of content div -->
+    
+
+      <div class="moreinfo" ng-click="goto('addmoreprojectinfo');" ng-if="$root.filesdata.length>0">
+        <i class="material-icons fontw">keyboard_arrow_right</i>
+         <div style="top: 17px;position: absolute;margin: auto;right: 0;left: 0;"> {{ 'More info' | translate }}</div>
+      </div>
+   
+
+      <div class="moreinfo" onclick="javascript:alert('Please select at least one cover image or text')" ng-if="$root.filesdata.length<=0 || !$root.filesdata">
+        <i class="material-icons fontw">keyboard_arrow_right</i>
+         <div style="top: 22px;position: absolute;margin: auto;right: 0;left: 0;"> {{ 'More info' | translate }}</div>
+      </div>
+
+</ion-view><!-- end of view div -->
+    

@@ -1,0 +1,98 @@
+<!-- this is linked in my profile bottom tabs 'About' option-->
+<div class="jobs-toggle"  id="talent_tpl-1" style="margin-top: 20px;" >
+              <div class="heading-tabs green" ng-click="toggleTabs('talent_tpl-1')">
+                  <div class="title"> {{ 'Proposing' | translate }}</div>
+                  <div class="total-count">{{userOpenProposals.length}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content" style="background: #cccccc">
+                  <div class="job-search-data-singlejob" ng-repeat="proposal in userOpenProposals" ng-init="job=(proposal.jobid | getJob);" ng-click="goto('proposal/details/{{proposal.id}}')">
+                  
+                            <div class="job-search-budget">
+                              <div class="job-search-budget-placeholder">$$</div>
+                              <div class="job-search-budget-currency">{{convertToDate(proposal.publishAt) | date : 'dd-MM-yyyy'}}</div>
+                            </div>
+                            <div class="job-search-title">{{job.title}}</div>
+                            <div ng-if="job.skills"><i ng-repeat="skill in job.skills">#{{skill.name}}, </i></div>
+                            <div ng-if="job.jobLength">{{ 'Job Length' | translate }} : {{job.jobLength}}</div>
+                            <!--<div ng-if="job.status">{{ 'Job Status' | translate }} : {{job.status}} </div>-->
+                      
+                    </div>  <!--end of div right box here-->
+
+
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+
+
+ <div class="jobs-toggle"  id="talent_tpl-2" >
+              <div class="heading-tabs green" ng-click="toggleTabs('talent_tpl-2')">
+                  <div class="title"> {{ 'Contract (Working)' | translate }}</div>
+                  <div class="total-count">{{userWorkingContracts.length}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content" style="background: #cccccc">
+               <div class="job-search-data-singlejob" ng-repeat="contracts in userWorkingContracts"  ng-init="job=(contracts.jobid | getJob);" ng-click="goto('contract/details/{{contracts.id}}')">
+                  
+                            <div class="job-search-budget">
+                              <div class="job-search-budget-placeholder">$$</div>
+                              <div class="job-search-budget-currency">{{convertToDate(contracts.publishAt) | date : 'dd-MM-yyyy'}}</div>
+                            </div>
+                            <div class="job-search-title">{{job.title}}</div>
+                            <div ng-if="job.skills"><i ng-repeat="skill in job.skills">#{{skill.name}}, </i></div>
+                            <div ng-if="job.jobLength">{{ 'Job Length' | translate }} : {{job.jobLength}}</div>
+                            <!--<div ng-if="job.status">{{ 'Job Status' | translate }} : {{job.status}} </div>-->
+                     
+                    </div>  <!--end of div right box here-->
+
+              
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+
+<div class="jobs-toggle"  id="talent_tpl-3" ng-if="userCompletedContracts.length>0">
+              <div class="heading-tabs green" ng-click="toggleTabs('talent_tpl-3')">
+                  <div class="title"> {{ 'Contract Completed (Feedback Remaining)' | translate }}</div>
+                  <div class="total-count">{{userCompletedContracts.length}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content" style="background: #cccccc">
+               <div class="job-search-data-singlejob" ng-repeat="contracts in userCompletedContracts"  ng-init="job=(contracts.jobid | getJob);" ng-click="goto('contract/details/{{contracts.id}}')">
+                   
+                            <div class="job-search-budget">
+                              <div class="job-search-budget-placeholder">$$</div>
+                              <div class="job-search-budget-currency">{{convertToDate(contracts.publishAt) | date : 'dd- MM-yyyy'}}</div>
+                            </div>
+                            <div class="job-search-title">{{job.title}}</div>
+                            <div ng-if="job.skills"><i ng-repeat="skill in job.skills">#{{skill.name}}, </i></div>
+                            <div ng-if="job.jobLength">{{ 'Job Length' | translate }} : {{job.jobLength}}</div>
+                            <!--<div ng-if="job.status">{{ 'Job Status' | translate }} : {{job.status}} </div>-->
+                    
+                    </div>  <!--end of div right box here-->
+
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->
+
+
+
+<div class="jobs-toggle"  id="talent_tpl-4" >
+              <div class="heading-tabs green" ng-click="toggleTabs('talent_tpl-4')">
+                  <div class="title"> {{ 'End Contract' | translate }}</div>
+                  <div class="total-count">{{userEndContracts.length}}</div>
+                  <img class="arrow" src="img/down_arrow.png" />
+              </div><!-- end of heading-tabs div -->
+              <div class="toggle-content" style="background: #cccccc">
+               <div class="job-search-data-singlejob" ng-repeat="contracts in userEndContracts"  ng-init="job=(contracts.jobid | getJob);" ng-click="goto('contract/details/{{contracts.id}}')">
+                  
+                            <div class="job-search-budget">
+                              <div class="job-search-budget-placeholder">$$</div>
+                              <div class="job-search-budget-currency">{{convertToDate(contracts.publishAt) | date : 'dd- MM-yyyy'}}</div>
+                            </div>
+                            <div class="job-search-title">{{job.title}}</div>
+                            <div ng-if="job.skills"><i ng-repeat="skill in job.skills">#{{skill.name}}, </i></div>
+                            <div ng-if="job.jobLength">{{ 'Job Length' | translate }} : {{job.jobLength}}</div>
+                            <!--<div ng-if="job.status">{{ 'Job Status' | translate }} : {{job.status}} </div>-->
+                      
+                    </div>  <!--end of div right box here-->
+
+            
+              </div><!-- end of toggle-content div -->
+        </div><!-- end of jobs-toggle div -->

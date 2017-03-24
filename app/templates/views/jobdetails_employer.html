@@ -1,0 +1,88 @@
+
+<ion-view view-title="Job Details" class="gradient-red">
+    <div class="header-bar shadow">
+        <!--<div class="backbtn">
+            <img src="img/back_arrow_white.png" ng-click="back();" />
+        </div>--><!-- end of  backbtn div -->
+       <div class="menubtn" ng-click="popover.show($event)"> 
+       <i class="icon ion-navicon"  style="font-size: 40px;color: #fff;margin: 8px;line-height: 60px;"></i>
+    </div>
+      
+    </div><!-- end of header-bar div -->
+    <ion-content class="hasheader hasbottom submit-milestone" overflow-scroll="true">
+    <div class="list card" ng-if="job">
+
+          <div style="margin:10px;color: #fff;">
+        
+            <h2 class="softclear">{{job.title}}</h2>
+        
+            <p class="softclear">{{ 'Job posted' | translate }} {{convertToDate(job.publishAt) | date:'dd MMM yyyy'}}</p>
+            <p class="softclear">{{ 'Delivery Date' | translate }} : {{job.deliveryTime}}</p>
+            <p class="softclear">{{ 'Initial Budget' | translate }} : {{job.currency}} {{job.budget}}</p>
+            <p class="softclear">{{ 'Job Status' | translate }} : {{job.status}}</p>
+            <div class="softclear">{{ 'Experience Level' | translate }} : 
+                <i ng-if="job.experienceLevel=='entry'">{{ '$ Less Experience' | translate }}</i>
+                <i ng-if="job.experienceLevel=='intermediate'">{{ '$$ Standard experience' | translate }}</i>
+                <i ng-if="job.experienceLevel=='expert'">{{ '$$$ Professional' | translate }}</i>
+            </div>
+             <div class="softclear" ng-if="job.jobLength">{{ 'Job Length' | translate }} : 
+                <i ng-if="job.jobLength=='day'"> {{ 'Less than a day' | translate }}</i>
+                <i ng-if="job.jobLength=='week'"> {{ 'Less than a week' | translate }}</i>
+                <i ng-if="job.jobLength=='month'"> {{ 'Less than a month' | translate }}</i>
+                <i ng-if="job.jobLength=='3month'"> > 3 {{ 'month' | translate }}</i>
+                <i ng-if="job.jobLength=='notSpecified'"> {{ 'Not specified' | translate }}</i>
+               
+              
+        </div>
+         <p class="softclear">{{ 'Job Type' | translate }} : <i ng-if="job.viewtype=='users'">
+            {{ 'Public (All worklidate user can see this job)' | translate }}</i>
+                          <i ng-if="job.viewtype=='invited'">{{ 'Private (Only freelancers I have invited can find this job)' | translate }}</i>
+            </p>
+            <p class="softclear" ng-if="job.aboutBrand">
+                {{ 'About Brand' | translate }} : {{job.aboutBrand}}
+            </p>
+            <p class="softclear" ng-if="job.targetAudience">
+            {{ 'Target Audience' | translate }} :{{job.targetAudience}}
+            </p>
+            <p class="softclear" ng-if="job.designValue">{{ 'Design Value (Feeling & Message)' | translate }} : {{job.designValue}}</p>
+            <p class="softclear" ng-if="job.stylisticPreferences"> {{ 'Style' | translate }}  : {{job.stylisticPreferences}}</p>
+            <p class="softclear" ng-if="job.colorsParticular">{{ 'Colors' | translate }} : {{job.colorsParticular}}</p>
+
+             <p class="softclear">
+            {{ 'Description' | translate }} : <div style="width: 100%;float: left;" ng-bind-html="job.description"></div>
+            </p>
+            <p class="softclear">{{ 'Skills' | translate }} :
+                <i ng-repeat="skill in job.categories">#{{skill.name}}, </i>
+              </p> 
+
+            <p class="softclear" ng-if="job.screeningQuestions">{{ 'You will be asked to answer the following questions when applying a job' | translate }}:
+             <div ng-repeat="questions in job.screeningQuestions track by $index">{{questions}}</div>
+            </p>
+             
+
+             <div class="softclear" ng-if="job.attachments">{{ 'Attchamnets' | translate }}: <br><a style="width:100%;
+float: left;" href="{{attach.data}}" target="_blank" ng-repeat="attach in job.attachments">{{attach.name}}</a></div>
+           
+            <div class="jobProposalLength">
+               {{ 'Proposal' | translate }} : {{getObjectLength(job.proposals)}}
+            </div>
+          </div>
+
+          <div class="item item-body">
+          
+             <a href="#/app/proposallist/{{jobid}}"> <button class="button full-pink-btn viewproposalbtn">{{ 'View Proposal' | translate }}</button></a>
+             <div  ng-if="$root.loggedUserId==job.userid && job.status=='open'" ng-click='removeJob();'>
+               <div class="deletejobbtn">
+                   <i  class="material-icons removejobbtn">delete_forever</i>
+                 <div>{{'Remove This Job' | translate }}</div>
+               </div>
+             
+             </div>
+             
+              
+           
+          </div>
+    </div>
+    </ion-content><!-- end of ion-content  div -->
+  
+</ion-view><!-- end of ion-view div -->
